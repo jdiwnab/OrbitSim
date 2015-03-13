@@ -110,7 +110,7 @@ engine.setupControlEvents = function() {
         //but each has it's own identifier so we can tell the difference
         var touches = e.changedTouches;
         var touch = touches[0];
-        engine.log('touch start');
+        engine.log('touch start '+touch.identifier);
         switch(touch.identifier) {
             case 0: {
                 //first touch is for panning
