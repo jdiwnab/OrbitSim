@@ -151,7 +151,7 @@ engine.setupControlEvents = function() {
             var touches = e.changedTouches;
             var touch = touches[0];
             var dax = touch.clientX;
-            var dax = touch.clientY;
+            var day = touch.clientY;
             // if two touches, compute new scale
             if(touches.length >1 && engine.oldZoom != undefined) {
                 touch = touches[1];
@@ -172,7 +172,7 @@ engine.setupControlEvents = function() {
                 }
             }
         } catch(err) {
-            console.logDebug(err);
+            console.log(err);
         }
     }, false);
 
