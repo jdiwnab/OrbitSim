@@ -154,9 +154,9 @@ engine.setupControlEvents = function() {
             var day = touch.clientY;
             // if two touches, compute new scale
             if(touches.length >1 && engine.oldZoom != undefined) {
-                touch = touches[1];
-                var dbx = touch.clientX;
-                var dby = touch.clientY;
+                touch2 = touches[1];
+                var dbx = touch2.clientX;
+                var dby = touch2.clientY;
                 var newMag = Math.sqrt(Math.pow(dbx-dax,2)+Math.pow(dby-day,2));
                 var r = newMag/engine.oldMag;
                 engine.zoom = engine.oldZoom * r;
