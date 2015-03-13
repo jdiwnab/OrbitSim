@@ -1,0 +1,42 @@
+<html>
+    <head>
+        <script src="Orbits.js" type="text/javascript"></script>
+        <title>Orbits</title>
+    </head>
+    <body>
+        <canvas id="orbit_disp" style="float:left" width="1000" height="500"></canvas>
+        <div id="input_panel" style="float:left">
+            Time Step: 
+            <input id="timestep" type="range" name="timestep" min="1" max="100" value="10"/> <span id="stepvalue">10</span><br/>
+            Steps per frame: 
+            <input id="framestep" type="range" name="framestep" min="1" max="500" value="1"/> <br/>
+            Engine:
+            <input type="radio" id="algo1" name="algorithm" value="false">Euler</input>
+            <input type="radio" id="algo2" name="algorithm" value="true" checked>Runge-Kutta</input><br/>
+            <button id="stop" name="start" value="start">Start</button>
+            <button id="reset" name="reset" value="reset">Reset</button> <br/>
+
+        </div>
+        <div id="body_panel" style="float:left">
+            <table id="objects_table">
+                <tr>
+                    <th>Name</th>
+                    <th>Position</th>
+                    <th>Radius</th>
+                    <th>Mass</th>
+                    <th>Velocity</th>
+                    <th>Color</th>
+                    <th>Fixed</th>
+                </tr>
+                <tr>
+                    <td><input id="new_name" type="text" name="name" placeholder="Name"/></td>
+                    <td><select id="new_pos" name="pos" placeholder="Position"></select></td>
+                    <td><select id="new_radius" name="radius" placeholder="Radius"></select></td>
+                    <td><select id="new_mass" name="mass" placeholder="Mass"></select></td>
+                    <td><select id="new_vel" name="vel" placeholder="Velocity"></select></td>
+                    <td><select id="new_color" name="color" placeholder="Color"></select></td>
+                    <td><button id="add" name="add" value="add">Add</button><br/></td>
+            </table>
+        </div>
+    </body>
+</html>﻿
