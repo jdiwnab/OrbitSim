@@ -170,7 +170,7 @@ engine.setupControlEvents = function() {
             if(engine.tax === undefined) {
               var touches = e.changedTouches;
               var touch = touches[0];
-              engine.log('touch start');
+              engine.log('touch start backup');
               switch(touch.identifier) {
                 case 0: {
                   //first touch is for panning
