@@ -193,6 +193,7 @@ engine.setupControlEvents = function() {
                   break;
                 }
               
+              }
             }
             
             var dax = touch.clientX;
