@@ -163,16 +163,18 @@ engine.setupControlEvents = function() {
                 engine.mouseMotion();
                 //If zooming, don't pan, or else it will cause weirdness
                 engine.zoomFlag = true;
+                engine.log('zooming')
             }
             else {
                 if(!engine.zoomFlag) {
                     engine.xorig = engine.initX + (dax - engine.tax);
                     engine.yorig = engine.initY + (day - engine.tay);
                     engine.mouseMotion();
+                    engine.log('moving');
                 }
             }
         } catch(err) {
-            alert(err);
+            engine.log(err);
             console.log(err);
         }
     }, false);
@@ -207,6 +209,10 @@ engine.setupControlEvents = function() {
         engine.rk =  e.target.value;
         return false;
     }, false);
+}
+
+engine.log = function(err) {
+  engine.id('console').textContent = err;
 }
 
 engine.pause = function(e) {
