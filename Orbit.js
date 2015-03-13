@@ -110,25 +110,26 @@ engine.setupControlEvents = function() {
         //but each has it's own identifier so we can tell the difference
         var touches = e.changedTouches;
         var touch = touches[0];
+        engine.log('touch start');
         switch(touch.identifier) {
             case 0: {
                 //first touch is for panning
+                engine.log('touch start 1 ('+touch.clientX+','+touch.clientY+')');
                 engine.zoomFlag = false;
                 engine.tax = touch.clientX;
                 engine.tay = touch.clientY;
                 engine.initX = engine.xorig;
                 engine.initY = engine.yorig;
-                engine.log('touch start 1 ('+engine.tax+','+engine.tay+')');
                 break;
             }
             case 1: {
                 //second touch is for zoom/pan
+                engine.log('touch start 2 ('+touch.clientX+','+touch.clientY+')');
                 var tbx = touch.clientX;
                 var tby = touch.clientY;
                 engine.oldZoom = engine.zoom;
                 //How far apart the two fingers are sets the initial zoom for comparison
                 engine.oldMag = Math.sqrt(Math.pow(tbx-engine.tax,2)+Math.pow(tby-engine.tay,2));
-                engine.log('touch start 2 ('+engine.tbx+','+engine.tby+')');
                 break;
             }
         }
