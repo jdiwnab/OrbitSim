@@ -172,6 +172,7 @@ engine.setupControlEvents = function() {
                 }
             }
         } catch(err) {
+            alert(err);
             console.log(err);
         }
     }, false);
