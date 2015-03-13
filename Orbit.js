@@ -118,6 +118,7 @@ engine.setupControlEvents = function() {
                 engine.tay = touch.clientY;
                 engine.initX = engine.xorig;
                 engine.initY = engine.yorig;
+                engine.log('touch start 1 ('+engine.tax+','+engine.tay+')');
                 break;
             }
             case 1: {
@@ -127,6 +128,7 @@ engine.setupControlEvents = function() {
                 engine.oldZoom = engine.zoom;
                 //How far apart the two fingers are sets the initial zoom for comparison
                 engine.oldMag = Math.sqrt(Math.pow(tbx-engine.tax,2)+Math.pow(tby-engine.tay,2));
+                engine.log('touch start 2 ('+engine.tbx+','+engine.tby+')');
                 break;
             }
         }
@@ -170,7 +172,7 @@ engine.setupControlEvents = function() {
                     engine.xorig = engine.initX + (dax - engine.tax);
                     engine.yorig = engine.initY + (day - engine.tay);
                     engine.mouseMotion();
-                    engine.log('moving by ('+(dax - engine.tax)+','+(day - engine.tay)+')');
+                    engine.log('moving ('+dax+','+day+'), ('engine.tax+','+engine.tay+')');
                 }
             }
         } catch(err) {
