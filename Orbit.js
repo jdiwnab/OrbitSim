@@ -111,52 +111,66 @@ engine.setupControlEvents = function() {
         var touches = e.changedTouches;
         var touch = touches[0];
         engine.log('touch start '+touch.identifier);
-        switch(touch.identifier) {
-            case 0: {
-                //first touch is for panning
-                engine.log('touch start 1 ('+touch.clientX+','+touch.clientY+')');
-                engine.zoomFlag = false;
-                engine.tax = touch.clientX;
-                engine.tay = touch.clientY;
-                engine.initX = engine.xorig;
-                engine.initY = engine.yorig;
-                break;
-            }
-            case 1: {
-                //second touch is for zoom/pan
-                engine.log('touch start 2 ('+touch.clientX+','+touch.clientY+')');
-                var tbx = touch.clientX;
-                var tby = touch.clientY;
-                engine.oldZoom = engine.zoom;
-                //How far apart the two fingers are sets the initial zoom for comparison
-                engine.oldMag = Math.sqrt(Math.pow(tbx-engine.tax,2)+Math.pow(tby-engine.tay,2));
-                break;
-            }
+        if(engine.taid === undefined) {
+            //first touch is for panning
+            engine.log('touch start 1 ('+touch.clientX+','+touch.clientY+')');
+            engine.zoomFlag = false;
+            engine.tax = touch.clientX;
+            engine.tay = touch.clientY;
+            engine.taid= touch.identifier;
+            engine.initX = engine.xorig;
+            engine.initY = engine.yorig;
+               
+        } else if(engine.tbid === undefined) {
+            //second touch is for zoom/pan
+            engine.log('touch start 2 ('+touch.clientX+','+touch.clientY+')');
+            var tbx = touch.clientX;
+            var tby = touch.clientY;
+            engine.tbid = touch.identifier;
+            engine.oldZoom = engine.zoom;
+            //How far apart the two fingers are sets the initial zoom for comparison
+            engine.oldMag = Math.sqrt(Math.pow(tbx-engine.tax,2)+Math.pow(tby-engine.tay,2));
+            
         }
     }, false);
     //All of these are ways to end touch events
     engine.canvas.addEventListener("touchend", function(e) {
         e.preventDefault();
-        engine.tax = undefined;
-        engine.tay = undefined;
-        engine.tbx = undefined;
-        engine.tby = undefined;
+        var touch = e.changedTouches[0].identifier;
+        engine.log("touch end "+touch);
+        if(touch === engine.taid) {
+            engine.tax = undefined;
+            engine.tay = undefined;
+            engine.taid =undefined;
+        } else if(touch === engine.tbid) {
+            engine.tbid = undefined;
+        }
         engine.oldZoom = engine.zoom;
     }, false);
     engine.canvas.addEventListener("touchcancel", function(e) {
         e.preventDefault();
-        engine.tax = undefined;
-        engine.tay = undefined;
-        engine.tbx = undefined;
-        engine.tby = undefined;
+        var touch = e.changedTouches[0].identifier;
+        engine.log("touch end "+touch);
+        if(touch === engine.taid) {
+            engine.tax = undefined;
+            engine.tay = undefined;
+            engine.taid =undefined;
+        } else if(touch === engine.tbid) {
+            engine.tbid = undefined;
+        }
         engine.oldZoom = engine.zoom;
     }, false);
     engine.canvas.addEventListener("touchleave", function(e) {
         e.preventDefault();
-        engine.tax = undefined;
-        engine.tay = undefined;
-        engine.tbx = undefined;
-        engine.tby = undefined;
+        var touch = e.changedTouches[0].identifier;
+        engine.log("touch end "+touch);
+        if(touch === engine.taid) {
+            engine.tax = undefined;
+            engine.tay = undefined;
+            engine.taid =undefined;
+        } else if(touch === engine.tbid) {
+            engine.tbid = undefined;
+        }
         engine.oldZoom = engine.zoom;
     }, false);
     //Update pan and zoom
@@ -165,36 +179,6 @@ engine.setupControlEvents = function() {
         try {
             var touches = e.changedTouches;
             var touch = touches[0];
-            
-            //somehow, it skipped touchstart
-            if(engine.tax === undefined) {
-              var touches = e.changedTouches;
-              var touch = touches[0];
-              engine.log('touch start backup');
-              switch(touch.identifier) {
-                case 0: {
-                  //first touch is for panning
-                  engine.log('touch start 1 ('+touch.clientX+','+touch.clientY+')');
-                  engine.zoomFlag = false;
-                  engine.tax = touch.clientX;
-                  engine.tay = touch.clientY;
-                  engine.initX = engine.xorig;
-                  engine.initY = engine.yorig;
-                  break;
-                }
-                case 1: {
-                  //second touch is for zoom/pan
-                  engine.log('touch start 2 ('+touch.clientX+','+touch.clientY+')');
-                  var tbx = touch.clientX;
-                  var tby = touch.clientY;
-                  engine.oldZoom = engine.zoom;
-                  //How far apart the two fingers are sets the initial zoom for comparison
-                  engine.oldMag = Math.sqrt(Math.pow(tbx-engine.tax,2)+Math.pow(tby-engine.tay,2));
-                  break;
-                }
-              
-              }
-            }
             
             var dax = touch.clientX;
             var day = touch.clientY;
