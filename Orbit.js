@@ -170,7 +170,7 @@ engine.setupControlEvents = function() {
                     engine.xorig = engine.initX + (dax - engine.tax);
                     engine.yorig = engine.initY + (day - engine.tay);
                     engine.mouseMotion();
-                    engine.log('moving by ('+(dax - engine.tax)+','+(day - engine.tay)')');
+                    engine.log('moving by ('+(dax - engine.tax)+','+(day - engine.tay)+')');
                 }
             }
         } catch(err) {
