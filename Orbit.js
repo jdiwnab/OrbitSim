@@ -1,5 +1,5 @@
 function addEvent(o,e,f) {
-    if(o.addEventListener) {
+    if(o.addEventListener) {
         o.addEventListener(e,f,false);
         return true;
     } else if(o.attachEvent) {
