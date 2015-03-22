@@ -190,10 +190,14 @@ engine.setupControlEvents = function() {
                 var newMag = Math.sqrt(Math.pow(dbx-dax,2)+Math.pow(dby-day,2));
                 var r = newMag/engine.oldMag;
                 engine.zoom = engine.oldZoom * r;
+                //adjust the origin point, so that the view stays centred
+                engine.xorig = (engine.xorig-engine.xctr)*r + engine.xctr;
+                engine.yorig = (engine.yorig-engine.yctr)*r + engine.yctr;
+                engine.perform(true);
                 engine.mouseMotion();
                 //If zooming, don't pan, or else it will cause weirdness
                 engine.zoomFlag = true;
-                engine.log('zooming')
+                engine.log('zooming ('+engine.zoom+')');
             }
             else {
                 if(!engine.zoomFlag) {
