@@ -416,11 +416,13 @@ engine.updateObjects = function(array, dt) {
         if(engine.rk==="true") {
             engine.rkIterate(array[i],dt,array);
         } else {
-            array[i].accl = new Cart3();
-            for(var j = 0; j<array.length; j++) {
-                engine.updateAccel(array[i], array[j]);
-            }
-            engine.updateOrbit(array[i], dt);
+            //array[i].accl = new Cart3();
+            //for(var j = 0; j<array.length; j++) {
+            //    engine.updateAccel(array[i], array[j]);
+            //}
+            //engine.updateOrbit(array[i], dt);
+
+            engine.verletIntegrate(array[i], dt, array);
         }
     }
     engine.elapsedTime += dt;
@@ -489,6 +491,22 @@ engine.updateAccel = function(pa, pb){
         var radius = pa.pos.sub(pb.pos);
         pa.accl.addTo(radius.mult( (-1 * pb.mass * radius.invSumCube())));
     }
+}
+
+engine.verletIntegrate = function(pa, dt, array) {
+    // x1 = x0 + v0 * dt + 1/2 A(x0) * dt^2
+    // xn1 = 2 * xn - xn-1 + A(xn) * dt^2
+    var Xn = new Cart3(pa.pos);
+    var Xold = new Cart3(pa.history[0]);
+    var accel  = engine.calcAccel(pa, Xn, array).mult(dt^2);
+    var newX;
+    if(Xold === undefined) {
+        var vel = new Cart3(pa.vel).mult(dt);
+        newX = Xn.add(vel).add(accel.mult(.5));
+    } else {
+        newX = Xn.mult(2).sub(Xold).add(accel);
+    }
+    pa.pos = newX;
 }
 
 engine.updateOrbitHistory = function(pa) {
