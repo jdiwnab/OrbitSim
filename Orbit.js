@@ -497,7 +497,7 @@ engine.verletIntegrate = function(pa, dt, array) {
     // x1 = x0 + v0 * dt + 1/2 A(x0) * dt^2
     // xn1 = 2 * xn - xn-1 + A(xn) * dt^2
     var Xn = new Cart3(pa.pos);
-    var Xold = new Cart3(pa.history[pa.history.length-1]);
+    var Xold = new Cart3(pa.history[pa.history.length-2]);
     var accel  = engine.calcAccel(pa, Xn, array).mult(dt^2);
     var newX;
     if(pa.history.length === 2) {
