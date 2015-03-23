@@ -504,9 +504,11 @@ engine.verletIntegrate = function(pa, dt, array) {
         var vel = new Cart3(pa.vel).mult(dt);
         newX = Xn.add(vel).add(accel.mult(.5));
         engine.log('Move: '+Xn+', '+Xold+', '+accel+', '+newX);
+        console.log('Move ('+pa.name+': '+Xn+' + '+pa.vel+'*'+dt+' + 1/2 * '+accel+' = '+newX);
     } else {
         newX = Xn.mult(2).sub(Xold).add(accel);
         engine.log('Move: '+Xn+', '+Xold+', '+accel+', '+newX);
+        console.log('Move ('+pa.name+': 2*'+Xn+' - '+Xold+' + '+accel+' = '+newX);
     }
     pa.pos = newX;
 }
