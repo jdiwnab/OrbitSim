@@ -191,8 +191,8 @@ engine.setupControlEvents = function() {
                 var r = newMag/engine.oldMag;
                 engine.zoom = engine.oldZoom * r;
                 //adjust the origin point, so that the view stays centred
-                engine.xorig = (engine.xorig-engine.xctr)*r + engine.xctr;
-                engine.yorig = (engine.yorig-engine.yctr)*r + engine.yctr;
+                //engine.xorig = (engine.xorig-engine.xctr)*r + engine.xctr;
+                //engine.yorig = (engine.yorig-engine.yctr)*r + engine.yctr;
                 engine.perform(true);
                 engine.mouseMotion();
                 //If zooming, don't pan, or else it will cause weirdness
@@ -503,8 +503,10 @@ engine.verletIntegrate = function(pa, dt, array) {
     if(Xold === undefined) {
         var vel = new Cart3(pa.vel).mult(dt);
         newX = Xn.add(vel).add(accel.mult(.5));
+        engine.log('Move: '+Xn+', '+Xold+', '+accel+', '+newX);
     } else {
         newX = Xn.mult(2).sub(Xold).add(accel);
+        engine.log('Move: '+Xn+', '+Xold+', '+accel+', '+newX);
     }
     pa.pos = newX;
 }
