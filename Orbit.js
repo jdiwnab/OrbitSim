@@ -500,7 +500,7 @@ engine.verletIntegrate = function(pa, dt, array) {
     var Xold = new Cart3(pa.history[0]);
     var accel  = engine.calcAccel(pa, Xn, array).mult(dt^2);
     var newX;
-    if(Xold === undefined) {
+    if(pa.history.length === 1) {
         var vel = new Cart3(pa.vel).mult(dt);
         newX = Xn.add(vel).add(accel.mult(.5));
         engine.log('Move: '+Xn+', '+Xold+', '+accel+', '+newX);
