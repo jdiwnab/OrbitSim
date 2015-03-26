@@ -26,6 +26,7 @@ engine.id = function(s) { return document.getElementById(s); }
 
 //saves the planet array to local storage.
 engine.save = function(){ 
+    localStorage.clear();
     planetList = [];
     for(i in orbit_data.planet_array){ 
         localStorage["planet "+i+" name"] = orbit_data.planet_array[i].name;
