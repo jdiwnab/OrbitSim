@@ -25,9 +25,9 @@ engine.substeps = 4;
 engine.id = function(s) { return document.getElementById(s); }
 
 //saves the planet array to local storage.
-engine.save = function(){ 
-    localStorage.clear();
-    planetList = [];
+engine.save = function(){
+    engine.removePlanetData();
+    var planetList = [];
     for(i in orbit_data.planet_array){ 
         localStorage["planet "+i+" name"] = orbit_data.planet_array[i].name;
         localStorage["planet "+i+" radius"] = orbit_data.planet_array[i].radius;
@@ -38,6 +38,15 @@ engine.save = function(){
         planetList.push("planet "+i);
     }
     localStorage["planetList"] = JSON.stringify(planetList);
+}
+
+//Remove Planet Data from LocalStorage while preserving anything else stored there
+engine.removePlanetData = function(){
+    for(i in localStorage){
+        if(i.indexOf("planet") == 0){
+            localStorage.removeItem(i);
+        }
+    }
 }
 
 //Allows for loading of planet data.
