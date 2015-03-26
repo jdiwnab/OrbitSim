@@ -24,6 +24,51 @@ engine.substeps = 4;
 
 engine.id = function(s) { return document.getElementById(s); }
 
+//saves the planet array to local storage.
+engine.save = function(){ 
+    planetList = [];
+    for(i in orbit_data.planet_array){ 
+        localStorage["planet "+i+" name"] = orbit_data.planet_array[i].name;
+        localStorage["planet "+i+" radius"] = orbit_data.planet_array[i].radius;
+        localStorage["planet "+i+" pos"] = orbit_data.planet_array[i].pos;
+        localStorage["planet "+i+" vel"] = orbit_data.planet_array[i].vel;
+        localStorage["planet "+i+" mass"] = orbit_data.planet_array[i].mass;
+        localStorage["planet "+i+" color"] = orbit_data.planet_array[i].color;
+        planetList.push("planet "+i);
+    }
+    localStorage["planetList"] = JSON.stringify(planetList);
+}
+/*
+Allows for loading of planet data.
+Assumes that data in LoadFrom will be stored in JSON form
+also assumes that the first input will be of the form "planet x"
+(this stipulation which may later change is intended to allow local 
+storage to be used for saving planet data AND other values)
+example input: {planet 0: "{"name":"Asdf","radius":695000000,"mass":132750000…:0,"y":0,"z":0}],"renderPos":{"x":0,"y":0,"z":0}}", length: 1}
+*/
+engine.load = function(inputData){ 
+    var planetList = JSON.parse(inputData["planetList"]);
+    console.log(planetList);
+    for(p in planetList){
+        engine.updateFromLoad(
+            inputData[planetList[p]+" name"],
+            inputData[planetList[p]+" radius"],
+            inputData[planetList[p]+" pos"],
+            inputData[planetList[p]+" vel"],
+            inputData[planetList[p]+" mass"],
+            inputData[planetList[p]+" color"]           
+        );
+    }
+}
+
+engine.updateFromLoad = function(name, radius, pos, vel, mass, color) {
+    engine.animate = false;
+    var body = new OrbitBody(name, parseFloat(radius), new Cart3(parseFloat(pos),0,0), new Cart3(0,0,parseFloat(vel)), parseFloat(mass), color);
+    orbit_data.planet_array.push(body);
+    orbit_data.addToTable(body);
+    engine.reset();
+}
+
 engine.reset = function() {
     engine.animate = false;
     engine.frame_count = 0;
@@ -233,6 +278,14 @@ engine.setupControlEvents = function() {
     },false);
     engine.id("reset").addEventListener('click', function(e) {
         engine.reset();
+        return false;
+    }, false);
+    engine.id("save").addEventListener('click', function(e) {
+        engine.save();
+        return false;
+    }, false);
+    engine.id("load").addEventListener('click', function(e) {
+        engine.load(localStorage);
         return false;
     }, false);
     engine.id("algo1").addEventListener('change', function(e) {
@@ -706,6 +759,7 @@ function OrbitData() {
         this.planet_array[i].reset();
     }
    }
+
   /* this.showOrbits = function() {
     var table = document.getElementById('objects_table');
     for(var i = 0; i<orbit_data.planet_array.length; i++) {
