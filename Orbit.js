@@ -31,7 +31,7 @@ engine.save = function(){
     for(i in orbit_data.planet_array){ 
         localStorage["planet "+i+" name"] = orbit_data.planet_array[i].name;
         localStorage["planet "+i+" radius"] = orbit_data.planet_array[i].radius;
-        localStorage["planet "+i+" pos"] = orbit_data.planet_array[i].pos;
+        localStorage["planet "+i+" pos"] = orbit_data.planet_array[i].startpos;
         localStorage["planet "+i+" vel"] = orbit_data.planet_array[i].vel.z;
         localStorage["planet "+i+" mass"] = orbit_data.planet_array[i].mass;
         localStorage["planet "+i+" color"] = orbit_data.planet_array[i].color;
