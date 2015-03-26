@@ -24,7 +24,7 @@ engine.substeps = 4;
 
 engine.id = function(s) { return document.getElementById(s); }
 
-//saves the planet array to local storage.
+//saves the planet data to local storage.
 engine.save = function(){
     engine.removePlanetData();
     var planetList = [];
