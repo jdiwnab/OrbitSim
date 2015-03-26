@@ -51,8 +51,8 @@ engine.removePlanetData = function(){
 
 //Allows for loading of planet data.
 engine.load = function(inputData){ 
+    engine.id("load").disabled = true;
     var planetList = JSON.parse(inputData["planetList"]);
-    console.log(planetList);
     for(p in planetList){
         engine.updateFromLoad(
             inputData[planetList[p]+" name"],
@@ -64,6 +64,7 @@ engine.load = function(inputData){
         );
     }
 }
+
 //basically a copy of the engine.addBody function with the unnecessary bits removed
 engine.updateFromLoad = function(name, radius, pos, vel, mass, color) {
     engine.animate = false;
