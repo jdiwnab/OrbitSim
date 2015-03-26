@@ -38,14 +38,8 @@ engine.save = function(){
     }
     localStorage["planetList"] = JSON.stringify(planetList);
 }
-/*
-Allows for loading of planet data.
-Assumes that data in LoadFrom will be stored in JSON form
-also assumes that the first input will be of the form "planet x"
-(this stipulation which may later change is intended to allow local 
-storage to be used for saving planet data AND other values)
-example input: {planet 0: "{"name":"Asdf","radius":695000000,"mass":132750000…:0,"y":0,"z":0}],"renderPos":{"x":0,"y":0,"z":0}}", length: 1}
-*/
+
+//Allows for loading of planet data.
 engine.load = function(inputData){ 
     var planetList = JSON.parse(inputData["planetList"]);
     console.log(planetList);
@@ -60,7 +54,7 @@ engine.load = function(inputData){
         );
     }
 }
-
+//basically a copy of the addBodies function with the unnecessary bits removed
 engine.updateFromLoad = function(name, radius, pos, vel, mass, color) {
     engine.animate = false;
     var body = new OrbitBody(name, parseFloat(radius), new Cart3(parseFloat(pos),0,0), new Cart3(0,0,parseFloat(vel)), parseFloat(mass), color);
