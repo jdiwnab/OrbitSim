@@ -31,7 +31,7 @@ engine.save = function(){
         localStorage["planet "+i+" name"] = orbit_data.planet_array[i].name;
         localStorage["planet "+i+" radius"] = orbit_data.planet_array[i].radius;
         localStorage["planet "+i+" pos"] = orbit_data.planet_array[i].pos;
-        localStorage["planet "+i+" vel"] = orbit_data.planet_array[i].vel;
+        localStorage["planet "+i+" vel"] = orbit_data.planet_array[i].vel.z;
         localStorage["planet "+i+" mass"] = orbit_data.planet_array[i].mass;
         localStorage["planet "+i+" color"] = orbit_data.planet_array[i].color;
         planetList.push("planet "+i);
@@ -54,7 +54,7 @@ engine.load = function(inputData){
         );
     }
 }
-//basically a copy of the addBodies function with the unnecessary bits removed
+//basically a copy of the engine.addBody function with the unnecessary bits removed
 engine.updateFromLoad = function(name, radius, pos, vel, mass, color) {
     engine.animate = false;
     var body = new OrbitBody(name, parseFloat(radius), new Cart3(parseFloat(pos),0,0), new Cart3(0,0,parseFloat(vel)), parseFloat(mass), color);
