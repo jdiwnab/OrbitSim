@@ -71,6 +71,7 @@ engine.loadData = function(inputData, loadingState){
                 engine.updateFromLoad(
                     inputData[planetList[p]+" name"],
                     inputData[planetList[p]+" radius"],
+                    inputData[planetList[p]+" mass"],
                     inputData[planetList[p]+" startpos"],
                     inputData[planetList[p]+" posx"],
                     inputData[planetList[p]+" posy"],
@@ -79,13 +80,13 @@ engine.loadData = function(inputData, loadingState){
                     inputData[planetList[p]+" velx"],
                     inputData[planetList[p]+" vely"],
                     inputData[planetList[p]+" velz"],
-                    inputData[planetList[p]+" mass"],
                     inputData[planetList[p]+" color"]
                 );
             } else{
                 engine.updateFromLoad(
                     inputData[planetList[p]+" name"],
                     inputData[planetList[p]+" radius"],
+                    inputData[planetList[p]+" mass"],
                     inputData[planetList[p]+" startpos"],
                     inputData[planetList[p]+" startpos"], //set posx to startpos
                     0,
@@ -94,7 +95,6 @@ engine.loadData = function(inputData, loadingState){
                     0,
                     0,
                     inputData[planetList[p]+" startvel"], //set velz to startVel
-                    inputData[planetList[p]+" mass"],
                     inputData[planetList[p]+" color"]
                 );
             }
@@ -106,7 +106,7 @@ engine.loadData = function(inputData, loadingState){
 
 
 //basically a copy of the engine.addBody function with the unnecessary bits removed and allowing extra arguments
-engine.updateFromLoad = function(name, radius, startpos, posx, posy, posz, startvel, velx, vely, velz, mass, color) {
+engine.updateFromLoad = function(name, radius, mass, startpos, posx, posy, posz, startvel, velx, vely, velz, color) {
     //The following lines are a way of implementing default arguments
     engine.animate = false;
     var body = new OrbitBody(name, parseFloat(radius), new Cart3(parseFloat(posx),parseFloat(posy),parseFloat(posz)), new Cart3(parseFloat(velx),parseFloat(vely),parseFloat(velz)), parseFloat(mass), color);
