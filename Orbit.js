@@ -71,21 +71,29 @@ engine.loadData = function(inputData, loadingState){
                 engine.updateFromLoad(
                     inputData[planetList[p]+" name"],
                     inputData[planetList[p]+" radius"],
+                    inputData[planetList[p]+" startpos"],
                     inputData[planetList[p]+" posx"],
-                    inputData[planetList[p]+" velz"],
-                    inputData[planetList[p]+" mass"],
-                    inputData[planetList[p]+" color"],
                     inputData[planetList[p]+" posy"],
                     inputData[planetList[p]+" posz"], 
+                    inputData[planetList[p]+" startvel"],
                     inputData[planetList[p]+" velx"],
-                    inputData[planetList[p]+" vely"]
+                    inputData[planetList[p]+" vely"],
+                    inputData[planetList[p]+" velz"],
+                    inputData[planetList[p]+" mass"],
+                    inputData[planetList[p]+" color"]
                 );
             } else{
                 engine.updateFromLoad(
                     inputData[planetList[p]+" name"],
                     inputData[planetList[p]+" radius"],
                     inputData[planetList[p]+" startpos"],
+                    inputData[planetList[p]+" startpos"], //set posx to startpos
+                    0,
+                    0, 
                     inputData[planetList[p]+" startvel"],
+                    0,
+                    0,
+                    inputData[planetList[p]+" startvel"], //set velz to startVel
                     inputData[planetList[p]+" mass"],
                     inputData[planetList[p]+" color"]
                 );
@@ -98,12 +106,8 @@ engine.loadData = function(inputData, loadingState){
 
 
 //basically a copy of the engine.addBody function with the unnecessary bits removed and allowing extra arguments
-engine.updateFromLoad = function(name, radius, posx, velz, mass, color, posy, posz, velx, vely) {
+engine.updateFromLoad = function(name, radius, startpos, posx, posy, posz, startvel, velx, vely, velz, mass, color) {
     //The following lines are a way of implementing default arguments
-    if (typeof(posy)==='undefined') posy = 0;
-    if (typeof(posz)==='undefined') posz = 0;
-    if (typeof(velx)==='undefined') velx = 0;
-    if (typeof(vely)==='undefined') vely = 0;
     engine.animate = false;
     var body = new OrbitBody(name, parseFloat(radius), new Cart3(parseFloat(posx),parseFloat(posy),parseFloat(posz)), new Cart3(parseFloat(velx),parseFloat(vely),parseFloat(velz)), parseFloat(mass), color);
     orbit_data.planet_array.push(body);
@@ -112,14 +116,14 @@ engine.updateFromLoad = function(name, radius, posx, velz, mass, color, posy, po
 }
 
 //exports the data to a readable file
-
 engine.exportData = function(){
     var textToWrite = JSON.stringify(engine.saveData({}));
 
     var textFileAsBlob = new Blob([textToWrite], {type:'text/JSON'});
+    var filename = engine.id("filename").value;
 
     var downloadLink = document.createElement("a");
-    downloadLink.download = engine.id("filename").value + ".json";
+    downloadLink.download = ((!filename.trim()) ? ("OrbitData") : (filename) ) +".json";
     downloadLink.innerHTML = "Download File";
     if (window.URL != null)
     {
@@ -150,9 +154,8 @@ engine.importData = function(){
         var text = JSON.parse(reader.result);
         engine.loadData(text, engine.id("stateOption").checked);
     }
-
+    
     reader.readAsText(file);
-
 }
 
 engine.reset = function() {
