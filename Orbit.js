@@ -24,22 +24,6 @@ engine.substeps = 4;
 
 engine.id = function(s) { return document.getElementById(s); }
 
-//saves the planet data to local storage.
-engine.save = function(){
-    engine.removePlanetData();
-    var planetList = [];
-    for(i in orbit_data.planet_array){ 
-        localStorage["planet "+i+" name"] = orbit_data.planet_array[i].name;
-        localStorage["planet "+i+" radius"] = orbit_data.planet_array[i].radius;
-        localStorage["planet "+i+" pos"] = orbit_data.planet_array[i].startpos;
-        localStorage["planet "+i+" vel"] = orbit_data.planet_array[i].vel.z;
-        localStorage["planet "+i+" mass"] = orbit_data.planet_array[i].mass;
-        localStorage["planet "+i+" color"] = orbit_data.planet_array[i].color;
-        planetList.push("planet "+i);
-    }
-    localStorage["planetList"] = JSON.stringify(planetList);
-}
-
 //Remove Planet Data from LocalStorage while preserving anything else stored there
 engine.removePlanetData = function(){
     for(i in localStorage){
@@ -49,26 +33,70 @@ engine.removePlanetData = function(){
     }
 }
 
+//Single save function that handles saving setup and saving state
+engine.saveData = function(){
+    engine.removePlanetData();
+    var planetList = [];
+    for(i in orbit_data.planet_array){ 
+        localStorage["planet "+i+" name"] = orbit_data.planet_array[i].name;
+        localStorage["planet "+i+" radius"] = orbit_data.planet_array[i].radius;
+        localStorage["planet "+i+" mass"] = orbit_data.planet_array[i].mass;
+        localStorage["planet "+i+" color"] = orbit_data.planet_array[i].color;
+        localStorage["planet "+i+" posx"] = orbit_data.planet_array[i].pos.x;
+        localStorage["planet "+i+" posy"] = orbit_data.planet_array[i].pos.y;
+        localStorage["planet "+i+" posz"] = orbit_data.planet_array[i].pos.z;
+        localStorage["planet "+i+" velx"] = orbit_data.planet_array[i].vel.x;
+        localStorage["planet "+i+" vely"] = orbit_data.planet_array[i].vel.y;
+        localStorage["planet "+i+" velz"] = orbit_data.planet_array[i].vel.z;
+        localStorage["planet "+i+" startpos"] = orbit_data.planet_array[i].startpos.x;
+        localStorage["planet "+i+" startvel"] = orbit_data.planet_array[i].startvel.z;
+        planetList.push("planet "+i);
+    }
+    localStorage["planetList"] = JSON.stringify(planetList);
+}
+
+
 //Allows for loading of planet data.
-engine.load = function(inputData){ 
-    engine.id("load").disabled = true;
+engine.loadData = function(inputData, loadingState){ 
+    engine.id("loadSetup").disabled = true;
+    engine.id("loadState").disabled = true;
     var planetList = JSON.parse(inputData["planetList"]);
     for(p in planetList){
-        engine.updateFromLoad(
-            inputData[planetList[p]+" name"],
-            inputData[planetList[p]+" radius"],
-            inputData[planetList[p]+" pos"],
-            inputData[planetList[p]+" vel"],
-            inputData[planetList[p]+" mass"],
-            inputData[planetList[p]+" color"]           
-        );
+        if(loadingState){
+            engine.updateFromLoad(
+                inputData[planetList[p]+" name"],
+                inputData[planetList[p]+" radius"],
+                inputData[planetList[p]+" posx"],
+                inputData[planetList[p]+" velz"],
+                inputData[planetList[p]+" mass"],
+                inputData[planetList[p]+" color"],
+                inputData[planetList[p]+" posy"],
+                inputData[planetList[p]+" posz"], 
+                inputData[planetList[p]+" velx"],
+                inputData[planetList[p]+" vely"]
+            );
+        } else{
+            engine.updateFromLoad(
+                inputData[planetList[p]+" name"],
+                inputData[planetList[p]+" radius"],
+                inputData[planetList[p]+" startpos"],
+                inputData[planetList[p]+" startvel"],
+                inputData[planetList[p]+" mass"],
+                inputData[planetList[p]+" color"]           
+            );
+        }
     }
 }
 
-//basically a copy of the engine.addBody function with the unnecessary bits removed
-engine.updateFromLoad = function(name, radius, pos, vel, mass, color) {
+
+//basically a copy of the engine.addBody function with the unnecessary bits removed and allowing extra params
+engine.updateFromLoad = function(name, radius, posx, velz, mass, color, posy, posz, velx, vely) {
+    if (typeof(posy)==='undefined') posy = 0;
+    if (typeof(posz)==='undefined') posz = 0;
+    if (typeof(velx)==='undefined') velx = 0;
+    if (typeof(vely)==='undefined') vely = 0;
     engine.animate = false;
-    var body = new OrbitBody(name, parseFloat(radius), new Cart3(parseFloat(pos),0,0), new Cart3(0,0,parseFloat(vel)), parseFloat(mass), color);
+    var body = new OrbitBody(name, parseFloat(radius), new Cart3(parseFloat(posx),parseFloat(posy),parseFloat(posz)), new Cart3(parseFloat(velx),parseFloat(vely),parseFloat(velz)), parseFloat(mass), color);
     orbit_data.planet_array.push(body);
     orbit_data.addToTable(body);
     engine.reset();
@@ -286,11 +314,15 @@ engine.setupControlEvents = function() {
         return false;
     }, false);
     engine.id("save").addEventListener('click', function(e) {
-        engine.save();
+        engine.saveData();
         return false;
     }, false);
-    engine.id("load").addEventListener('click', function(e) {
-        engine.load(localStorage);
+    engine.id("loadSetup").addEventListener('click', function(e) {
+        engine.loadData(localStorage, false);
+        return false;
+    }, false);
+    engine.id("loadState").addEventListener('click', function(e) {
+        engine.loadData(localStorage, true);
         return false;
     }, false);
     engine.id("algo1").addEventListener('change', function(e) {
