@@ -498,17 +498,17 @@ engine.verletIntegrate = function(pa, dt, array) {
     // xn1 = 2 * xn - xn-1 + A(xn) * dt^2
     var Xn = new Cart3(pa.pos);
     var Xold = new Cart3(pa.history[pa.history.length-2]);
-    var accel  = engine.calcAccel(pa, Xn, array).mult(dt^2);
+    var accel  = engine.calcAccel(pa, Xn, array);
     var newX;
     if(pa.history.length === 2) {
-        var vel = new Cart3(pa.vel).mult(dt);
-        newX = Xn.add(vel).add(accel.mult(.5));
+        var vel = new Cart3(pa.vel);
+        newX = Xn.add(vel.mult(dt)).add(accel.mult(dt * dt).mult(.5));
         engine.log('Move: '+Xn+', '+Xold+', '+accel+', '+newX);
-        console.log('Move ('+pa.name+': '+Xn+' + '+pa.vel+'*'+dt+' + 1/2 * '+accel+' = '+newX);
+        console.log('Move ('+pa.name+': '+Xn+' + '+vel+'*'+dt+' + 1/2 * '+accel+'*'+dt+'^2 = '+newX);
     } else {
-        newX = Xn.mult(2).sub(Xold).add(accel);
+        newX = Xn.mult(2).sub(Xold).add(accel.mult(dt * dt));
         engine.log('Move: '+Xn+', '+Xold+', '+accel+', '+newX);
-        console.log('Move ('+pa.name+': 2*'+Xn+' - '+Xold+' + '+accel+' = '+newX);
+        console.log('Move ('+pa.name+': 2*'+Xn+' - '+Xold+' + '+accel+'*'+dt+'^2 = '+newX);
     }
     pa.pos = newX;
 }
