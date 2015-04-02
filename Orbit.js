@@ -335,7 +335,9 @@ engine.drawSubset = function(refresh, timeStep, cx, cy, ovalSize, array) {
     }
     for(var i = 0; i < array.length; i++) {
         var p = array[i]
-        engine.updateOrbitHistory(p);
+        //verlet needs history for every step
+        if(engine.rk==="true")
+            engine.updateOrbitHistory(p);
         var pp = engine.scaleOrbitingBody(p);
         var hist = engine.scaleHistory(p.history);
         engine.ctx.strokeStyle = 'gray';
@@ -423,6 +425,7 @@ engine.updateObjects = function(array, dt) {
             //engine.updateOrbit(array[i], dt);
 
             engine.verletIntegrate(array[i], dt, array);
+            engine.updateOrbitHistory(array[i]);
         }
     }
     engine.elapsedTime += dt;
@@ -503,12 +506,12 @@ engine.verletIntegrate = function(pa, dt, array) {
     if(pa.history.length === 2) {
         var vel = new Cart3(pa.vel);
         newX = Xn.add(vel.mult(dt)).add(accel.mult(dt * dt).mult(.5));
-        engine.log('Move: '+Xn+', '+Xold+', '+accel+', '+newX);
-        console.log('Move ('+pa.name+': '+Xn+' + '+vel+'*'+dt+' + 1/2 * '+accel+'*'+dt+'^2 = '+newX);
+        //engine.log('Move: '+Xn+', '+Xold+', '+accel+', '+newX);
+        //console.log('Move ('+pa.name+': '+Xn+' + '+vel+'*'+dt+' + 1/2 * '+accel+'*'+dt+'^2 = '+newX);
     } else {
         newX = Xn.mult(2).sub(Xold).add(accel.mult(dt * dt));
-        engine.log('Move: '+Xn+', '+Xold+', '+accel+', '+newX);
-        console.log('Move ('+pa.name+': 2*'+Xn+' - '+Xold+' + '+accel+'*'+dt+'^2 = '+newX);
+        //engine.log('Move: '+Xn+', '+Xold+', '+accel+', '+newX);
+        //console.log('Move ('+pa.name+': 2*'+Xn+' - '+Xold+' + '+accel+'*'+dt+'^2 = '+newX);
     }
     pa.pos = newX;
 }
