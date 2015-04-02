@@ -336,8 +336,8 @@ engine.drawSubset = function(refresh, timeStep, cx, cy, ovalSize, array) {
     for(var i = 0; i < array.length; i++) {
         var p = array[i]
         //verlet needs history for every step
-        if(engine.rk==="true")
-            engine.updateOrbitHistory(p);
+        //if(engine.rk==="true")
+        engine.updateOrbitHistory(p);
         var pp = engine.scaleOrbitingBody(p);
         var hist = engine.scaleHistory(p.history);
         engine.ctx.strokeStyle = 'gray';
@@ -425,7 +425,6 @@ engine.updateObjects = function(array, dt) {
             //engine.updateOrbit(array[i], dt);
 
             engine.verletIntegrate(array[i], dt, array);
-            engine.updateOrbitHistory(array[i]);
         }
     }
     engine.elapsedTime += dt;
@@ -500,10 +499,10 @@ engine.verletIntegrate = function(pa, dt, array) {
     // x1 = x0 + v0 * dt + 1/2 A(x0) * dt^2
     // xn1 = 2 * xn - xn-1 + A(xn) * dt^2
     var Xn = new Cart3(pa.pos);
-    var Xold = new Cart3(pa.history[pa.history.length-2]);
+    var Xold = new Cart3(pa.oldPos);
     var accel  = engine.calcAccel(pa, Xn, array);
     var newX;
-    if(pa.history.length === 2) {
+    if(Xold === undefined) {
         var vel = new Cart3(pa.vel);
         newX = Xn.add(vel.mult(dt)).add(accel.mult(dt * dt).mult(.5));
         //engine.log('Move: '+Xn+', '+Xold+', '+accel+', '+newX);
@@ -513,7 +512,9 @@ engine.verletIntegrate = function(pa, dt, array) {
         //engine.log('Move: '+Xn+', '+Xold+', '+accel+', '+newX);
         //console.log('Move ('+pa.name+': 2*'+Xn+' - '+Xold+' + '+accel+'*'+dt+'^2 = '+newX);
     }
+    pa.oldPos = Xn;
     pa.pos = newX;
+    
 }
 
 engine.updateOrbitHistory = function(pa) {
@@ -533,6 +534,7 @@ function OrbitBody(name, radius, pos, vel, mass, color) {
     this.radius = radius; //scalar
     this.mass = mass; //scalar
     this.pos = pos; //cart3 vector
+    this.oldPos = undefined; //cart3 vector
     this.vel = vel; //cart3 vector
     this.color = color; //string
     this.startpos = new Cart3(pos);
@@ -542,6 +544,7 @@ function OrbitBody(name, radius, pos, vel, mass, color) {
     this.reset = function() {
         this.pos = new Cart3(this.startpos);
         this.vel = new Cart3(this.startvel);
+        this.oldPos = undefined;
         this.history = [new Cart3(this.startpos)];
         //this.renderPos = new Cart3();
     }
