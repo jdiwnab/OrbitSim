@@ -512,7 +512,7 @@ engine.verletIntegrate = function(pa, dt, array) {
         //engine.log('Move: '+Xn+', '+Xold+', '+accel+', '+newX);
         //console.log('Move ('+pa.name+': 2*'+Xn+' - '+Xold+' + '+accel+'*'+dt+'^2 = '+newX);
     }
-    pa.oldPos = Xn;
+    pa.oldPos = new Cart3(pa.pos);
     pa.pos = newX;
     
 }
