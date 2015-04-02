@@ -337,7 +337,7 @@ engine.drawSubset = function(refresh, timeStep, cx, cy, ovalSize, array) {
         var p = array[i]
         //verlet needs history for every step
         //if(engine.rk==="true")
-        engine.updateOrbitHistory(p);
+        //engine.updateOrbitHistory(p);
         var pp = engine.scaleOrbitingBody(p);
         var hist = engine.scaleHistory(p.history);
         engine.ctx.strokeStyle = 'gray';
@@ -414,10 +414,11 @@ engine.drawOrbit = function(history, cx, cy) {
 }
 
 engine.updateObjects = function(array, dt) {
-    for(var i = 0; i<array.length; i++) {
-        if(engine.rk==="true") {
-            engine.rkIterate(array[i],dt,array);
-        } else {
+    for(var i = 0; i<array.length; i++) {
+        if(engine.rk==="true") {
+            engine.rkIterate(array[i],dt,array);
+
+        } else {
             //array[i].accl = new Cart3();
             //for(var j = 0; j<array.length; j++) {
             //    engine.updateAccel(array[i], array[j]);
@@ -425,7 +426,8 @@ engine.updateObjects = function(array, dt) {
             //engine.updateOrbit(array[i], dt);
 
             engine.verletIntegrate(array[i], dt, array);
-        }
+        }
+        engine.updateOrbitHistory(array[i]);
     }
     engine.elapsedTime += dt;
 }
@@ -480,8 +482,8 @@ engine.rkIntegrate= function(pa, dt, array) {
 
 engine.rkIterate = function(pa, dt, array) {
 
-    engine.rkIntegrate(pa, dt, array);
-    
+    engine.rkIntegrate(pa, dt, array);
+    engine.updateOrbitHistory(pa);
 }
 
 engine.updateAccel = function(pa, pb){
