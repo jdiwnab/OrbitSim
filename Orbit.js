@@ -502,7 +502,7 @@ engine.verletIntegrate = function(pa, dt, array) {
     var Xold = new Cart3(pa.oldPos);
     var accel  = engine.calcAccel(pa, Xn, array);
     var newX;
-    if(Xold === undefined) {
+    if(pa.oldPos === undefined) {
         var vel = new Cart3(pa.vel);
         newX = Xn.add(vel.mult(dt)).add(accel.mult(dt * dt).mult(.5));
         engine.log("First movement bootstrapping");
