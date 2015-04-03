@@ -509,12 +509,12 @@ engine.verletIntegrate = function(pa, dt, array) {
         newX = Xn.add(vel.mult(dt)).add(accel.mult(dt * dt).mult(.5));
         engine.log("First movement bootstrapping");
         //engine.log('Move: '+Xn+', '+Xold+', '+accel+', '+newX);
-        console.log('Move ('+pa.name+': '+Xn+' + '+vel+'*'+dt+' + 1/2 * '+accel+'*'+dt+'^2 = '+newX);
+        //console.log('Move ('+pa.name+': '+Xn+' + '+vel+'*'+dt+' + 1/2 * '+accel+'*'+dt+'^2 = '+newX);
     } else {
         newX = Xn.mult(2).sub(Xold).add(accel.mult(dt * dt));
         engine.log("Real Verlet");
         //engine.log('Move: '+Xn+', '+Xold+', '+accel+', '+newX);
-        console.log('Move ('+pa.name+': 2*'+Xn+' - '+Xold+' + '+accel+'*'+dt+'^2 = '+newX);
+        //console.log('Move ('+pa.name+': 2*'+Xn+' - '+Xold+' + '+accel+'*'+dt+'^2 = '+newX);
     }
     pa.oldPos = new Cart3(pa.pos);
     pa.pos = newX;
