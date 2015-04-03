@@ -335,8 +335,6 @@ engine.drawSubset = function(refresh, timeStep, cx, cy, ovalSize, array) {
     }
     for(var i = 0; i < array.length; i++) {
         var p = array[i]
-        //verlet needs history for every step
-        //if(engine.rk==="true")
         engine.updateOrbitHistory(p);
         var pp = engine.scaleOrbitingBody(p);
         var hist = engine.scaleHistory(p.history);
@@ -481,9 +479,7 @@ engine.rkIntegrate= function(pa, dt, array) {
 }
 
 engine.rkIterate = function(pa, dt, array) {
-
     engine.rkIntegrate(pa, dt, array);
-    engine.updateOrbitHistory(pa);
 }
 
 engine.updateAccel = function(pa, pb){
