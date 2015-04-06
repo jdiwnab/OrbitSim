@@ -6,6 +6,7 @@
     <body>
         <canvas id="orbit_disp" style="float:left" width="1000" height="500"></canvas>
         <div id="input_panel" style="float:left">
+            
             Time Step: 
             <input id="timestep" type="range" name="timestep" min="1" max="100" value="10"/> <span id="stepvalue">10</span><br/>
             Steps per frame: 
@@ -14,7 +15,25 @@
             <input type="radio" id="algo1" name="algorithm" value="false">Verlet</input>
             <input type="radio" id="algo2" name="algorithm" value="true" checked>Runge-Kutta</input><br/>
             <button id="stop" name="start" value="start">Start</button>
-            <button id="reset" name="reset" value="reset">Reset</button> <br/>
+            <button id="reset" name="reset" value="reset">Reset</button><br/>
+
+            <!--local Storage -->
+            <button id="saveLocal" name="saveLocal" value="saveLocal">Save To Browser</button><br/><br/>
+
+
+            <label for="filename">Filename for file</label>
+            <input type="text" id="filename" name="filename" />
+            <button id="export" name="export" value="export">Export To File</button><br/><br/>            
+
+            <button id="loadSetup" name="loadSetup" value="loadSetup">Load Setup</button>
+            <button id="loadState" name="loadState" value="loadState">Load State</button><br/><br/>
+
+            <label for="import">Upload file: </label>
+            <input type="file" id="import" /><br/>
+            <form action="">
+                <input type="radio" name="LoadOption" id="stateOption" value="state" checked>State<br/>
+                <input type="radio" name="LoadOption" id="setupOption" value="setup">Setup<br/>
+            </form>
 
         </div>
         <div id="body_panel" style="float:left">
@@ -40,4 +59,4 @@
         </div>
         <div id="console"></div>
     </body>
-</html>﻿
+</html>
