@@ -244,10 +244,10 @@ engine.setupControlEvents = function() {
         //but each has it's own identifier so we can tell the difference
         var touches = e.changedTouches;
         var touch = touches[0];
-        engine.log('touch start '+touch.identifier);
+        //engine.log('touch start '+touch.identifier);
         if(engine.taid === undefined) {
             //first touch is for panning
-            engine.log('touch start 1 ('+touch.clientX+','+touch.clientY+')');
+            //engine.log('touch start 1 ('+touch.clientX+','+touch.clientY+')');
             engine.zoomFlag = false;
             engine.tax = touch.clientX;
             engine.tay = touch.clientY;
@@ -257,7 +257,7 @@ engine.setupControlEvents = function() {
                
         } else if(engine.tbid === undefined) {
             //second touch is for zoom/pan
-            engine.log('touch start 2 ('+touch.clientX+','+touch.clientY+')');
+            //engine.log('touch start 2 ('+touch.clientX+','+touch.clientY+')');
             var tbx = touch.clientX;
             var tby = touch.clientY;
             engine.tbid = touch.identifier;
@@ -271,7 +271,7 @@ engine.setupControlEvents = function() {
     engine.canvas.addEventListener("touchend", function(e) {
         e.preventDefault();
         var touch = e.changedTouches[0].identifier;
-        engine.log("touch end "+touch);
+        //engine.log("touch end "+touch);
         if(touch === engine.taid) {
             engine.tax = undefined;
             engine.tay = undefined;
@@ -284,7 +284,7 @@ engine.setupControlEvents = function() {
     engine.canvas.addEventListener("touchcancel", function(e) {
         e.preventDefault();
         var touch = e.changedTouches[0].identifier;
-        engine.log("touch end "+touch);
+        //engine.log("touch end "+touch);
         if(touch === engine.taid) {
             engine.tax = undefined;
             engine.tay = undefined;
@@ -297,7 +297,7 @@ engine.setupControlEvents = function() {
     engine.canvas.addEventListener("touchleave", function(e) {
         e.preventDefault();
         var touch = e.changedTouches[0].identifier;
-        engine.log("touch end "+touch);
+        //engine.log("touch end "+touch);
         if(touch === engine.taid) {
             engine.tax = undefined;
             engine.tay = undefined;
@@ -331,14 +331,14 @@ engine.setupControlEvents = function() {
                 engine.mouseMotion();
                 //If zooming, don't pan, or else it will cause weirdness
                 engine.zoomFlag = true;
-                engine.log('zooming ('+engine.zoom+')');
+                //engine.log('zooming ('+engine.zoom+')');
             }
             else {
                 if(!engine.zoomFlag) {
                     engine.xorig = engine.initX + (dax - engine.tax);
                     engine.yorig = engine.initY + (day - engine.tay);
                     engine.mouseMotion();
-                    engine.log('moving ('+dax+','+day+'), ('+engine.tax+','+engine.tay+')');
+                    //engine.log('moving ('+dax+','+day+'), ('+engine.tax+','+engine.tay+')');
                 }
             }
         } catch(err) {
@@ -655,12 +655,12 @@ engine.verletIntegrate = function(pa, dt, array) {
     if(pa.oldPos === undefined) {
         var vel = new Cart3(pa.vel);
         newX = Xn.add(vel.mult(dt)).add(accel.mult(dt * dt).mult(.5));
-        engine.log("First movement bootstrapping");
+        //engine.log("First movement bootstrapping");
         //engine.log('Move: '+Xn+', '+Xold+', '+accel+', '+newX);
         //console.log('Move ('+pa.name+': '+Xn+' + '+vel+'*'+dt+' + 1/2 * '+accel+'*'+dt+'^2 = '+newX);
     } else {
         newX = Xn.mult(2).sub(Xold).add(accel.mult(dt * dt));
-        engine.log("Real Verlet");
+        //engine.log("Real Verlet");
         //engine.log('Move: '+Xn+', '+Xold+', '+accel+', '+newX);
         //console.log('Move ('+pa.name+': 2*'+Xn+' - '+Xold+' + '+accel+'*'+dt+'^2 = '+newX);
     }
