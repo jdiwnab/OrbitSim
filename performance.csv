@@ -1,0 +1,20 @@
+algo,   time,   setup,  steps,  timestep,   fps
+verlet, 200y,   semjp,  500x,   10x,        24.14
+rk,     200y,   semjp,  500x,   10x,        30.82
+euler,  200y,   semjp,  500x,   10x,        28.48
+
+verlet, 2500y,  semjp,  500x,   100x,       24.78
+rk,     2500y,  semjp,  500x,   100x,       28.16
+euler,  2500y,  semjp,  500x,   100x,       28.64
+
+verlet, 2y,     semjp,  1x,     10x,        157.33
+rk,     2y,     semjp,  1x,     10x,        163.65
+euler,  2y,     semjp,  1x,     10x,        152.88
+
+verlet, 200y,   se,     500x,   10x,        88.33
+rk,     200y,   se,     500x,   10x,        122.22
+euler,  200y,   se,     500x,   10x,        129.50
+
+verlet, 200y,   sej,    500x,   10x,        50.55
+rk,     200y,   sej,    500x,   10x,        68.50
+euler,  200y,   sej,    500x,   10x,        68.40

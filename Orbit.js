@@ -19,6 +19,7 @@ engine.toRad = Math.PI /180.0 //convert degree to radians
 engine.frame_delay_ms = 4; // delay between frames. Not to be confused with frame rate
 engine.drawingScale = 1e-9;
 engine.substeps = 4;
+engine.fps = 0; //for performance monitoring
 // Mass: Kg
 // Distance: Meters
 // time: Seconds
@@ -176,6 +177,7 @@ engine.reset = function() {
     engine.timeStep = 3600;
     engine.stepsPerFrame = 1;
     engine.elapsedTime = 0;
+    engine.fps = 0;
     engine.rk = "true";
     
     engine.legend = true;
@@ -185,7 +187,7 @@ engine.reset = function() {
     if(engine.id("stop").value==="stop") {
         engine.id("stop").click();
     }
-    engine.id("algo2").checked = true;
+    engine.id("algo3").checked = true;
     
     engine.orbit_data = orbit_data;
     engine.orbit_data.resetPlanets();
@@ -390,11 +392,15 @@ engine.setupControlEvents = function() {
         return false;
     }, false);
     engine.id("algo1").addEventListener('change', function(e) {
-        engine.rk = e.target.value;
+        engine.algorithm = e.target.value;
         return false;
     }, false);
     engine.id("algo2").addEventListener('change', function(e) {
-        engine.rk =  e.target.value;
+        engine.algorithm =  e.target.value;
+        return false;
+    }, false);
+    engine.id("algo3").addEventListener('change', function(e) {
+        engine.algorithm =  e.target.value;
         return false;
     }, false);
 }
@@ -459,8 +465,18 @@ engine.mouseMotion = function(e) {
 
 engine.perform = function(refresh) {
     if(engine.animate || refresh) {
+        var t0 = performance.now();
         engine.render(refresh);
+        var t1 = performance.now();
+        var fps = 1/((t1-t0)/1000);
         engine.frame_count += 1
+        if(engine.fps == 0) {
+            engine.fps = fps;
+        } else {
+            engine.fps = engine.fps + (fps - engine.fps)/engine.frame_count;
+        }
+        //engine.fps = 1/((t1-t0)/1000);
+        //engine.fps = 1/(t1-t0);
     }
     if(!refresh) {
         engine.orbitTimer = setTimeout(engine.perform,engine.frame_delay_ms, false);
@@ -536,6 +552,7 @@ engine.drawLabels = function() {
         }
         engine.ctx.fillText('Time ' + engine.formatNum(time,2,8) + timeUnit,8, engine.ysize-24);
         engine.ctx.fillText('Zoom ' + engine.formatNum(engine.zoom,2,8) + 'x',8, engine.ysize-8);
+        engine.ctx.fillText('fps  ' + engine.formatNum(engine.fps, 2, 8),8, engine.ysize-40);
 
         
     }
@@ -567,16 +584,12 @@ engine.drawOrbit = function(history, cx, cy) {
 
 engine.updateObjects = function(array, dt) {
     for(var i = 0; i<array.length; i++) {
-        if(engine.rk==="true") {
+        if(engine.algorithm === "rk") {
             engine.rkIterate(array[i],dt,array);
-        } else {
-            //array[i].accl = new Cart3();
-            //for(var j = 0; j<array.length; j++) {
-            //    engine.updateAccel(array[i], array[j]);
-            //}
-            //engine.updateOrbit(array[i], dt);
-
+        } else if(engine.algorithm === "verlet") {
             engine.verletIntegrate(array[i], dt, array);
+        } else {
+            engine.eulerIntegrate(array[i], dt, array);
         }
     }
     engine.elapsedTime += dt;
@@ -669,6 +682,13 @@ engine.verletIntegrate = function(pa, dt, array) {
     
 }
 
+engine.eulerIntegrate = function(pa, dt, array) {
+    var Xn = new Cart3(pa.pos);
+    var accel = engine.calcAccel(pa, Xn, array);
+    pa.vel.addTo(accel.mult(dt));
+    pa.pos.addTo(pa.vel.mult(dt));
+}
+
 engine.updateOrbitHistory = function(pa) {
     if(pa.history.length >= 1000) {
         pa.history.shift();
@@ -699,7 +719,6 @@ function OrbitBody(name, radius, pos, vel, mass, color) {
         this.vel = new Cart3(this.startvel);
         this.history = [new Cart3(this.startpos)];
         this.oldPos = undefined;
-        //this.renderPos = new Cart3();
     }
 }
 
