@@ -3,6 +3,10 @@ engine.perform = function(refresh) {
         var t0 = performance.now();
         engine.render(refresh);
         var t1 = performance.now();
+        if(t1-t0 == 0) {
+            //low percision numbers
+            t1 += .1;
+        }
         var fps = 1/((t1-t0)/1000);
         engine.frame_count += 1
         if(engine.fps == 0) {
