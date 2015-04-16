@@ -1,0 +1,116 @@
+engine.perform = function(refresh) {
+    if(engine.animate || refresh) {
+        var t0 = performance.now();
+        engine.render(refresh);
+        var t1 = performance.now();
+        var fps = 1/((t1-t0)/1000);
+        engine.frame_count += 1
+        if(engine.fps == 0) {
+            engine.fps = fps;
+        } else {
+            engine.fps = engine.fps + (fps - engine.fps)/engine.frame_count;
+        }
+    }
+    if(!refresh) {
+        engine.orbitTimer = setTimeout(engine.perform,engine.frame_delay_ms, false);
+    }
+
+}
+
+engine.render = function(refresh) {
+    engine.ctx.globalCompositeOperation = "source-over";
+    engine.ctx.fillStyle = "black";
+    engine.ctx.fillRect(0,0,engine.xsize, engine.ysize);
+    engine.ctx.globalCompositeOperation = "lighter";
+    engine.ctx.font = "10pt monospace";
+    
+    var ovalSize = engine.xsize / 280;
+    ovalSize = (ovalSize < 2) ? 2 : ovalSize
+    engine.drawSubset(refresh,engine.timeStep, engine.xorig, engine.yorig, ovalSize,engine.orbit_data.planet_array);
+    engine.drawLabels();
+}
+
+engine.drawSubset = function(refresh, timeStep, cx, cy, ovalSize, array) {
+    if(!refresh) {
+        for(var n = 0; n < engine.stepsPerFrame; n++) {
+            engine.updateObjects(array,engine.timeStep);
+        }
+    }
+    for(var i = 0; i < array.length; i++) {
+        var p = array[i]
+        engine.updateOrbitHistory(p);
+        var pp = engine.scaleOrbitingBody(p);
+        var hist = engine.scaleHistory(p.history);
+        engine.ctx.strokeStyle = 'gray';
+        engine.drawOrbit(hist, cx, cy);
+        engine.ctx.fillStyle = p.color;
+        engine.drawOval(pp.x, pp.z, cx, cy, ovalSize);
+    }
+}
+
+engine.scaleOrbitingBody = function (ob) {
+    // make a copy, don't modify the original values
+    var p = ob.pos.mult(engine.drawingScale * engine.zoom * engine.xsize /2);
+    ob.renderPos = new Cart3(p);
+    return p;
+}
+
+engine.scaleHistory = function(history) {
+    var new_hist = [];
+    for(var i=0; i<history.length; i++) {
+        new_hist.push(history[i].mult(engine.drawingScale*engine.zoom*engine.xsize/2));
+    }
+    return new_hist;
+}
+
+engine.formatNum = function(x, dp, sz) {
+    var s = "              " + x.toFixed(dp);
+    return s.substr(s.length-sz);
+}
+
+engine.drawLabels = function() {
+    if(engine.legend) {
+        engine.ctx.fillStyle = '#c0c0c0';
+        var time = 0;
+        var timeUnit = "";
+        if(engine.elapsedTime < 24*60*60) {
+            time = engine.elapsedTime/60/60;
+            timeUnit = "h";
+        } else if(engine.elapsedTime < 365.25*24*60*60) {
+            time = engine.elapsedTime/60/60/24;
+            timeUnit = "d";
+        } else {
+            time = engine.elapsedTime/60/60/24/365.25;
+            timeUnit = "y";
+        }
+        engine.ctx.fillText('Time ' + engine.formatNum(time,2,8) + timeUnit,8, engine.ysize-24);
+        engine.ctx.fillText('Zoom ' + engine.formatNum(engine.zoom,2,8) + 'x',8, engine.ysize-8);
+        engine.ctx.fillText('fps  ' + engine.formatNum(engine.fps, 2, 8),8, engine.ysize-40);
+
+        
+    }
+}
+
+engine.drawOval = function(x, y, cx, cy, ovalSize) {
+    try {
+        var os = ovalSize;
+        engine.ctx.beginPath();
+        engine.ctx.arc(x + cx, y + cy, os, 0, 2 * Math.PI, false);
+        engine.ctx.fill();
+    } catch(e) {
+            console.log(e);
+    }
+}
+
+engine.drawOrbit = function(history, cx, cy) {
+    try {
+        engine.ctx.moveTo(history[1].x + cx, history[1].y + cy);
+        engine.ctx.beginPath();
+        for(var i = 2; i<history.length; i++) {
+            engine.ctx.lineTo(history[i].x + cx, history[i].z + cy);
+        }
+        engine.ctx.stroke();
+    } catch (e) {
+        console.log(e);
+    }
+}
