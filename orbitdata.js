@@ -2,7 +2,7 @@ function OrbitData() {
   this.planetColors = ["white", "yellow", "orange", "cyan", "red", "green", "magenta", "blue"];
 
   //Round numbers to test how things scale
-  this.planetMasses = [ {"name": "1x (pluto)", "mass": 1e+4 },
+  /*this.planetMasses = [ {"name": "1x (pluto)", "mass": 1e+4 },
                         {"name": "5x", "mass": 5e+4 },
                         {"name": "10x", "mass": 1e+5 },
                         {"name": "50x (earth)", "mass": 5e+5 },
@@ -83,7 +83,7 @@ function OrbitData() {
                         {"name": "-1000000x", "vel": -1e+6 },
                         {"name": "-5000000x", "vel": -5e+6 },
                         {"name": "-10000000x", "vel": -1e+7 },
-                        {"name": "-50000000x", "vel": -5e+7 }];
+                        {"name": "-50000000x", "vel": -5e+7 }];*/
   /*this.planetRadius = [ {"name": "1x", "rad": 1e+1 },
                         {"name": "5x", "rad": 5e+1 },
                         {"name": "10x", "rad": 1e+2 },
@@ -101,7 +101,7 @@ function OrbitData() {
                         {"name": "10000000x", "rad": 1e+8 },
                         {"name": "50000000x (sun)", "rad": 5e+8 }];*/
   //Reduced list, scaled and normalized
-  /*
+  
   //Masses adjusted for normalized G, (/11 orders, * 6.6742)
   //scaled lengths by 3 orders
   //scaled mass by 9 orders
@@ -139,7 +139,7 @@ function OrbitData() {
                         {"name": "Moon", "rad": 1738140 },
                         {"name": "Jupiter", "rad": 71492000 },
                         {"name": "Pluto", "rad": 1137000 }];
-  */                        
+                      
   this.planet_array = [];
   
   // Full list of planets at full scale, for reference
