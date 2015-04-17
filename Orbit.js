@@ -21,6 +21,7 @@ engine.drawingScale = 1e-9;
 engine.substeps = 4;
 engine.fps = 0; //for performance monitoring
 engine.algorithm = "rk";
+
 // Mass: Kg
 // Distance: Meters
 // time: Seconds
@@ -48,6 +49,7 @@ engine.reset = function() {
     engine.elapsedTime = 0;
     engine.fps = 0;
     //engine.algorithm = "rk";
+
     
     engine.legend = true;
     
@@ -57,7 +59,7 @@ engine.reset = function() {
         engine.id("stop").click();
     }
     //engine.id("algo3").checked = true;
-    
+
     engine.orbit_data = orbit_data;
     engine.orbit_data.resetPlanets();
     engine.perform(true);
@@ -361,7 +363,6 @@ engine.calcAccel = function(pa, pos, array) {
     }
     return accel;
 }
-
 
 engine.updateOrbitHistory = function(pa) {
     if(pa.history.length >= 1000) {
