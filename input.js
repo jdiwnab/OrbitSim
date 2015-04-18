@@ -212,7 +212,7 @@ engine.touchMove = function(e) {
             touch2 = touches[1];
             var dbx = touch2.clientX;
             var dby = touch2.clientY;
-            touchZoom(dax, day, dbx, dby);
+            engine.touchZoom(dax, day, dbx, dby);
         }
         else {
             engine.touchDrag(dax, day);
