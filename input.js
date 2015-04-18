@@ -57,6 +57,7 @@ engine.setupControlEvents = function() {
     }, false);
     engine.id("framestep").addEventListener('input', function(e) {
         engine.stepsPerFrame = e.srcElement.value
+        engine.id("stepcount").textContent= e.srcElement.value;
         return false;
     }, false);
     engine.id("stop").addEventListener('click', function(e) {
