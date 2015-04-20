@@ -95,13 +95,22 @@ engine.addBody = function(e) {
     var color = engine.id('new_color').value;
     var body = new OrbitBody(name, parseFloat(radius), new Cart3(parseFloat(pos),0,0), new Cart3(0,0,parseFloat(vel)), parseFloat(mass), color);
     orbit_data.planet_array.push(body);
-    orbit_data.addToTable(body);
+    //orbit_data.addToTable(body);
     engine.id('new_name').value = '';
     engine.id('new_pos').value = '';
     //engine.id('new_radius').value = '';
     engine.id('new_mass').value = '';
     engine.id('new_vel').value = '';
     engine.id('new_color').value = '';
+    engine.reset();
+}
+
+engine.addObject = function(name, pos, mass, vel, color) {
+    engine.animate = false;
+    var radius = 10;
+    var body = new OrbitBody(name, parseFloat(radius), new Cart3(parseFloat(pos),0,0), new Cart3(0,0,parseFloat(vel)), parseFloat(mass), color);
+    orbit_data.planet_array.push(body);
+    //orbit_data.addToTable(body);
     engine.reset();
 }
 
@@ -163,42 +172,6 @@ function OrbitBody(name, radius, pos, vel, mass, color) {
     }
 }
 
-function createForm() {
-    var masses = document.getElementById('new_mass');
-    for(var i = 0; i<orbit_data.planetMasses.length; i++) {
-        var option = document.createElement('option');
-        option.text=orbit_data.planetMasses[i].name;
-        option.value=orbit_data.planetMasses[i].mass;
-        masses.add(option);
-    }
-    var orbits = document.getElementById('new_pos');
-    for(var i = 0; i<orbit_data.planetOrbits.length; i++) {
-        var option = document.createElement('option');
-        option.text=orbit_data.planetOrbits[i].name;
-        option.value=orbit_data.planetOrbits[i].pos;
-        orbits.add(option);
-    }
-    var vels = document.getElementById('new_vel');
-    for(var i = 0; i<orbit_data.planetVelocity.length; i++) {
-        var option = document.createElement('option');
-        option.text=orbit_data.planetVelocity[i].name;
-        option.value=orbit_data.planetVelocity[i].vel;
-        vels.add(option);
-    }
-    /*var radiuses = document.getElementById('new_radius');
-    for(var i = 0; i<orbit_data.planetRadius.length; i++) {
-        var option = document.createElement('option');
-        option.text=orbit_data.planetRadius[i].name;
-        option.value=orbit_data.planetRadius[i].rad;
-        radiuses.add(option);
-    }*/
-    var colors = document.getElementById('new_color');
-    for(var i = 0; i<orbit_data.planetColors.length; i++) {
-        var option = document.createElement('option');
-        option.text=orbit_data.planetColors[i];
-        option.value=orbit_data.planetColors[i];
-        colors.add(option);
-    }
-}
+
 
 

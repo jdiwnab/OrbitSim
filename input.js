@@ -64,10 +64,10 @@ engine.setupControlEvents = function() {
         engine.pause(e);
         return false;
     }, false);
-    engine.id("add").addEventListener('click', function(e) {
-        engine.addBody(e);
-        return false;
-    },false);
+    //engine.id("add").addEventListener('click', function(e) {
+    //    engine.addBody(e);
+    //    return false;
+    //},false);
     engine.id("reset").addEventListener('click', function(e) {
         engine.reset();
         return false;
@@ -115,11 +115,17 @@ engine.mouseDown = function(e) {
     engine.initX = engine.xorig;
     engine.initY = engine.yorig;
     engine.isMouseDown=true;
+    engine.isHolding = false;
+    engine.holdStart = setTimeout(function() {
+        engine.holdStart = null;
+        engine.isHolding = true;
+    },500)
 }
 
 engine.mouseDrag = function(e) {
     e.preventDefault();
     if(engine.isMouseDown) {
+        engine.isHolding = true;
         engine.xorig = engine.initX + (e.clientX - engine.mouseX);
         engine.yorig = engine.initY + (e.clientY - engine.mouseY);
         engine.mouseMotion(e);
@@ -143,8 +149,15 @@ engine.mouseZoom = function(e) {
 
 engine.mouseClick = function(e) {
     engine.isMouseDown = false;
+    //only handle click when not dragging
+    if(engine.isHolding) {
+        engine.holdStart = null;
+        engine.isHolding = false;
+        return;
+    }
+    var foundObject = false;
     //determine if the user clicked on an object;
-    for(var i = 0; i<engine.orbit_data.planet_array.length; i++) {
+    for(var i = 0; i<engine.orbit_data.planet_array.length && !foundObject; i++) {
         var pa = engine.orbit_data.planet_array[i];
         var pos = new Cart3(pa.renderPos);
         pos.x += engine.xorig;
@@ -152,8 +165,13 @@ engine.mouseClick = function(e) {
         
         if( engine.mouseX < pos.x + 10 && engine.mouseX > pos.x - 10 &&
             engine.mouseY < pos.z + 10 && engine.mouseY > pos.z - 10) {
+            foundObject = true;
             console.log("Clicked on "+pa.name);
+            engine.editPlanetDialog(pa);
         }
+    }
+    if(!foundObject) {
+        engine.newPlanetDialog();
     }
 }
 
@@ -248,4 +266,107 @@ engine.touchZoom = function(dax, day, dbx, dby) {
 
 engine.mouseMotion = function(e) {
     engine.perform(true);
+}
+
+engine.newPlanetDialog = function() {
+    var dialog = {state0: {
+        title: "New Planet",
+        html: '<label for="name">Name:</label> <input id="new_name" type="text" name="name" placeholder="Name"/><br/>'+
+              '<label for="pos">Position:</label> <select id="new_pos" name="pos" placeholder="Position"></select><br/>'+
+              '<label for="mass">Mass:</label> <select id="new_mass" name="mass" placeholder="Mass"></select><br/>'+
+              '<label for="vel">Velocity:</label> <select id="new_vel" name="vel" placeholder="Velocity"></select><br/>'+
+              '<label for="color">Color:</label> <select id="new_color" name="color" placeholder="Color"></select>',
+        buttons: { Add: 1, Cancel: -1 },
+        submit: function(e, v, m, f) {
+            e.preventDefault();
+            if(v==-1) $.prompt.close();
+            if(v==1) {
+                engine.addObject(f.name, f.pos, f.mass, f.vel, f.color);
+                $.prompt.close();
+            }
+        },
+        
+    }};
+    var dialogOptions = {
+        loaded: function(e) {
+            engine.createForm();
+            setTimeout(function() {
+                document.getElementById('new_name').focus();
+            }, 300);
+        },
+        persistent: false
+    };
+    $.prompt(dialog, dialogOptions);
+}
+
+engine.editPlanetDialog = function(p) {
+    var dialog = {state0: {
+        title: "Edit Planet",
+        html: '<label for="name">Name:</label> <input id="new_name" type="text" name="name" placeholder="Name"/><br/>'+
+              '<label for="pos">Position:</label> <select id="new_pos" name="pos" placeholder="Position"></select><br/>'+
+              '<label for="mass">Mass:</label> <select id="new_mass" name="mass" placeholder="Mass"></select><br/>'+
+              '<label for="vel">Velocity:</label> <select id="new_vel" name="vel" placeholder="Velocity"></select><br/>'+
+              '<label for="color">Color:</label> <select id="new_color" name="color" placeholder="Color"></select>',
+        buttons: { Save: 1, Cancel: -1 },
+        submit: function(e, v, m, f) {
+            e.preventDefault();
+            if(v==-1) $.prompt.close();
+            if(v==1) {
+                p.name = f.name;
+                p.startpos.x = parseFloat(f.pos);
+                p.mass = parseFloat(f.mass);
+                p.startvel.z = parseFloat(f.vel);
+                p.color = f.color;
+                $.prompt.close();
+                engine.reset();
+            }
+        },
+        
+    }};
+    var dialogOptions = {
+        loaded: function(e) {
+            engine.createForm();
+            document.getElementById('new_name').value=p.name
+            document.getElementById('new_pos').value=p.startpos.x
+            document.getElementById('new_mass').value=p.mass
+            document.getElementById('new_vel').value=p.startvel.z
+            document.getElementById('new_color').value=p.color
+            setTimeout(function() {
+                document.getElementById('new_name').focus();
+            }, 300);
+        },
+        persistent: false
+    };
+    $.prompt(dialog, dialogOptions);
+}
+
+engine.createForm = function() {
+    var masses = document.getElementById('new_mass');
+    for(var i = 0; i<orbit_data.planetMasses.length; i++) {
+        var option = document.createElement('option');
+        option.text=orbit_data.planetMasses[i].name;
+        option.value=orbit_data.planetMasses[i].mass;
+        masses.add(option);
+    }
+    var orbits = document.getElementById('new_pos');
+    for(var i = 0; i<orbit_data.planetOrbits.length; i++) {
+        var option = document.createElement('option');
+        option.text=orbit_data.planetOrbits[i].name;
+        option.value=orbit_data.planetOrbits[i].pos;
+        orbits.add(option);
+    }
+    var vels = document.getElementById('new_vel');
+    for(var i = 0; i<orbit_data.planetVelocity.length; i++) {
+        var option = document.createElement('option');
+        option.text=orbit_data.planetVelocity[i].name;
+        option.value=orbit_data.planetVelocity[i].vel;
+        vels.add(option);
+    }
+    var colors = document.getElementById('new_color');
+    for(var i = 0; i<orbit_data.planetColors.length; i++) {
+        var option = document.createElement('option');
+        option.text=orbit_data.planetColors[i];
+        option.value=orbit_data.planetColors[i];
+        colors.add(option);
+    }
 }
