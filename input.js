@@ -176,7 +176,7 @@ engine.mouseClick = function(e) {
 }
 
 engine.touchStart = function(e) {
-    e.preventDefault();
+    //e.preventDefault();
     //Each touch shows up as it's own event
     //but each has it's own identifier so we can tell the difference
     var touches = e.changedTouches;
@@ -205,7 +205,7 @@ engine.touchStart = function(e) {
 }
 
 engine.touchEnd = function(e) {
-    e.preventDefault();
+    //e.preventDefault();
     var touch = e.changedTouches[0].identifier;
     //engine.log("touch end "+touch);
     if(touch === engine.taid) {
