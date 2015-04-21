@@ -157,15 +157,15 @@ engine.mouseClick = function(e) {
     }
     var foundObject = false;
     //determine if the user clicked on an object;
-    engine.log('click at ('+e.clientX+','+e.clientY+')');
+    engine.log('click at ('+engine.mouseX+','+engine.mouseY+')');
     for(var i = 0; i<engine.orbit_data.planet_array.length && !foundObject; i++) {
         var pa = engine.orbit_data.planet_array[i];
         var pos = new Cart3(pa.renderPos);
         pos.x += engine.xorig;
         pos.z += engine.yorig
         
-        if( e.clientX < pos.x + 10 && e.clientX > pos.x - 10 &&
-            e.clientY < pos.z + 10 && e.clientY > pos.z - 10) {
+        if( engine.mouseX < pos.x + 10 && engine.mouseX > pos.x - 10 &&
+            engine.mouseY < pos.z + 10 && engine.mouseY > pos.z - 10) {
             foundObject = true;
             engine.log("Clicked on "+pa.name);
             engine.editPlanetDialog(pa);
@@ -182,7 +182,8 @@ engine.touchStart = function(e) {
         engine.holdStart = null;
         engine.isHolding = true;
     },500);
-    //e.preventDefault();
+    e.preventDefault();
+    
     //Each touch shows up as it's own event
     //but each has it's own identifier so we can tell the difference
     var touches = e.changedTouches;
@@ -197,6 +198,8 @@ engine.touchStart = function(e) {
         engine.taid= touch.identifier;
         engine.initX = engine.xorig;
         engine.initY = engine.yorig;
+        engine.mouseX = touch.clientX;
+        engine.mouseY = touch.clientY;
            
     } else if(engine.tbid === undefined) {
         //second touch is for zoom/pan
