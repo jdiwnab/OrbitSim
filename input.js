@@ -110,8 +110,8 @@ engine.setupControlEvents = function() {
 
 engine.mouseDown = function(e) {
     e.preventDefault();
-    engine.mouseX = e.clientX;
-    engine.mouseY = e.clientY;
+    engine.mouseX = e.pageX - engine.canvas.offsetLeft;
+    engine.mouseY = e.pageY - engine.canvas.offsetTop;
     engine.initX = engine.xorig;
     engine.initY = engine.yorig;
     engine.isMouseDown=true;
@@ -125,9 +125,11 @@ engine.mouseDown = function(e) {
 engine.mouseDrag = function(e) {
     e.preventDefault();
     if(engine.isMouseDown) {
-        engine.isHolding = true;
-        engine.xorig = engine.initX + (e.clientX - engine.mouseX);
-        engine.yorig = engine.initY + (e.clientY - engine.mouseY);
+        var x = e.pageX - engine.canvas.offsetLeft;
+        var y = e.pageY - engine.canvas.offsetTop;
+        //engine.isHolding = true;
+        engine.xorig = engine.initX + (x - engine.mouseX);
+        engine.yorig = engine.initY + (y - engine.mouseY);
         engine.mouseMotion(e);
     }
 }
@@ -193,19 +195,19 @@ engine.touchStart = function(e) {
         //first touch is for panning
         //engine.log('touch start 1 ('+touch.clientX+','+touch.clientY+')');
         engine.zoomFlag = false;
-        engine.tax = touch.clientX;
-        engine.tay = touch.clientY;
+        engine.tax = touch.pageX - engine.canvas.offsetLeft;
+        engine.tay = touch.pageY - engine.canvas.offsetTop;
         engine.taid= touch.identifier;
         engine.initX = engine.xorig;
         engine.initY = engine.yorig;
-        engine.mouseX = touch.clientX;
-        engine.mouseY = touch.clientY;
+        engine.mouseX = touch.pageX - engine.canvas.offsetLeft;
+        engine.mouseY = touch.pageY - engine.canvas.offsetTop;
            
     } else if(engine.tbid === undefined) {
         //second touch is for zoom/pan
         //engine.log('touch start 2 ('+touch.clientX+','+touch.clientY+')');
-        var tbx = touch.clientX;
-        var tby = touch.clientY;
+        var tbx = touch.pageX - engine.canvas.offsetLeft;
+        var tby = touch.pageY - engine.canvas.offsetTop;
         engine.tbid = touch.identifier;
         engine.oldZoom = engine.zoom;
         //How far apart the two fingers are sets the initial zoom for comparison
@@ -234,13 +236,13 @@ engine.touchMove = function(e) {
         var touches = e.changedTouches;
         var touch = touches[0];
         
-        var dax = touch.clientX;
-        var day = touch.clientY;
+        var dax = touch.pageX - engine.canvas.offsetLeft;
+        var day = touch.pageY - engine.canvas.offsetTop;
         // if two touches, compute new scale
         if(touches.length >1 && engine.oldZoom != undefined) {
             touch2 = touches[1];
-            var dbx = touch2.clientX;
-            var dby = touch2.clientY;
+            var dbx = touch2.pageX - engine.canvas.offsetLeft;
+            var dby = touch2.pageY - engine.canvas.offsetTop;
             engine.touchZoom(dax, day, dbx, dby);
         }
         else {
