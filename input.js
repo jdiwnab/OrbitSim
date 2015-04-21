@@ -163,10 +163,10 @@ engine.mouseClick = function(e) {
         pos.x += engine.xorig;
         pos.z += engine.yorig
         
-        if( engine.mouseX < pos.x + 10 && engine.mouseX > pos.x - 10 &&
-            engine.mouseY < pos.z + 10 && engine.mouseY > pos.z - 10) {
+        if( e.clientX < pos.x + 10 && e.clientX > pos.x - 10 &&
+            e.clientY < pos.z + 10 && e.clientY > pos.z - 10) {
             foundObject = true;
-            console.log("Clicked on "+pa.name);
+            engine.log("Clicked on "+pa.name);
             engine.editPlanetDialog(pa);
         }
     }
@@ -177,6 +177,11 @@ engine.mouseClick = function(e) {
 
 engine.touchStart = function(e) {
     e.preventDefault();
+    engine.isHolding = false;
+    engine.holdStart = setTimeout(function() {
+        engine.holdStart = null;
+        engine.isHolding = true;
+    },500);
     //Each touch shows up as it's own event
     //but each has it's own identifier so we can tell the difference
     var touches = e.changedTouches;
@@ -206,6 +211,7 @@ engine.touchStart = function(e) {
 
 engine.touchEnd = function(e) {
     e.preventDefault();
+    
     var touch = e.changedTouches[0].identifier;
     //engine.log("touch end "+touch);
     if(touch === engine.taid) {
@@ -220,6 +226,7 @@ engine.touchEnd = function(e) {
 
 engine.touchMove = function(e) {
     e.preventDefault();
+    engine.isHolding = true;
     try {
         var touches = e.changedTouches;
         var touch = touches[0];
