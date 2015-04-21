@@ -64,10 +64,10 @@ engine.setupControlEvents = function() {
         engine.pause(e);
         return false;
     }, false);
-    //engine.id("add").addEventListener('click', function(e) {
-    //    engine.addBody(e);
-    //    return false;
-    //},false);
+    /*engine.id("add").addEventListener('click', function(e) {
+        engine.addBody(e);
+        return false;
+    },false);*/
     engine.id("reset").addEventListener('click', function(e) {
         engine.reset();
         return false;
@@ -179,12 +179,12 @@ engine.mouseClick = function(e) {
 }
 
 engine.touchStart = function(e) {
-    engine.isHolding = false;
+    /*engine.isHolding = false;
     engine.holdStart = setTimeout(function() {
         engine.holdStart = null;
         engine.isHolding = true;
     },500);
-    e.preventDefault();
+    e.preventDefault();*/
     
     //Each touch shows up as it's own event
     //but each has it's own identifier so we can tell the difference
@@ -202,6 +202,7 @@ engine.touchStart = function(e) {
         engine.initY = engine.yorig;
         engine.mouseX = touch.pageX - engine.canvas.offsetLeft;
         engine.mouseY = touch.pageY - engine.canvas.offsetTop;
+        
            
     } else if(engine.tbid === undefined) {
         //second touch is for zoom/pan
