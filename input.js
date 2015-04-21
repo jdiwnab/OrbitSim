@@ -157,6 +157,7 @@ engine.mouseClick = function(e) {
     }
     var foundObject = false;
     //determine if the user clicked on an object;
+    engine.log('click at ('+e.clientX+','+e.clientY+')');
     for(var i = 0; i<engine.orbit_data.planet_array.length && !foundObject; i++) {
         var pa = engine.orbit_data.planet_array[i];
         var pos = new Cart3(pa.renderPos);
