@@ -189,45 +189,61 @@ engine.touchStart = function(e) {
     //Each touch shows up as it's own event
     //but each has it's own identifier so we can tell the difference
     var touches = e.changedTouches;
-    var touch = touches[0];
-    //engine.log('touch start '+touch.identifier);
-    if(engine.taid === undefined) {
-        //first touch is for panning
-        //engine.log('touch start 1 ('+touch.clientX+','+touch.clientY+')');
-        engine.zoomFlag = false;
-        engine.tax = touch.pageX - engine.canvas.offsetLeft;
-        engine.tay = touch.pageY - engine.canvas.offsetTop;
-        engine.taid= touch.identifier;
-        engine.initX = engine.xorig;
-        engine.initY = engine.yorig;
-        engine.mouseX = touch.pageX - engine.canvas.offsetLeft;
-        engine.mouseY = touch.pageY - engine.canvas.offsetTop;
-        
-           
-    } else if(engine.tbid === undefined) {
-        //second touch is for zoom/pan
-        //engine.log('touch start 2 ('+touch.clientX+','+touch.clientY+')');
-        var tbx = touch.pageX - engine.canvas.offsetLeft;
-        var tby = touch.pageY - engine.canvas.offsetTop;
-        engine.tbid = touch.identifier;
-        engine.oldZoom = engine.zoom;
-        //How far apart the two fingers are sets the initial zoom for comparison
-        engine.oldMag = Math.sqrt(Math.pow(tbx-engine.tax,2)+Math.pow(tby-engine.tay,2));
+    for(i=0; i<touches.length; i++) {
+        var touch = touches[i];
+        //engine.log('touch start '+touch.identifier);
+        if(engine.taid === undefined) {
+            //first touch is for panning
+            //engine.log('touch start 1 ('+touch.clientX+','+touch.clientY+')');
+            engine.zoomFlag = false;
+            engine.tax = touch.pageX - engine.canvas.offsetLeft;
+            engine.tay = touch.pageY - engine.canvas.offsetTop;
+            engine.taid= touch.identifier;
+            engine.initX = engine.xorig;
+            engine.initY = engine.yorig;
+            engine.mouseX = touch.pageX - engine.canvas.offsetLeft;
+            engine.mouseY = touch.pageY - engine.canvas.offsetTop;
+            
+               
+        } else if(engine.tbid === undefined) {
+            //second touch is for zoom/pan
+            //engine.log('touch start 2 ('+touch.clientX+','+touch.clientY+')');
+            engine.tbx = touch.pageX - engine.canvas.offsetLeft;
+            engine.tby = touch.pageY - engine.canvas.offsetTop;
+            engine.tbid = touch.identifier;
+            engine.oldZoom = engine.zoom;
+            //How far apart the two fingers are sets the initial zoom for comparison
+            engine.oldMag = Math.sqrt(Math.pow(engine.tbx-engine.tax,2)+Math.pow(engine.tby-engine.tay,2));
+        }
     }
 }
 
 engine.touchEnd = function(e) {
     //e.preventDefault();
-    var touch = e.changedTouches[0].identifier;
-    //engine.log("touch end "+touch);
-    if(touch === engine.taid) {
-        engine.tax = undefined;
-        engine.tay = undefined;
-        engine.taid =undefined;
-    } else if(touch === engine.tbid) {
-        engine.tbid = undefined;
+    var touches = e.changedTouches;
+    for(var i=0; i<touches.length; i++) {
+        var touch = touchs[i].identifier;
+        //engine.log("touch end "+touch);
+        if(touch === engine.taid) {
+            engine.tax = undefined;
+            engine.tay = undefined;
+            engine.taid =undefined;
+        } else if(touch === engine.tbid) {
+            engine.tbid = undefined;
+            engine.tbx = undefined;
+            engine.tby = undefined;
+        }
+        engine.oldZoom = engine.zoom;
     }
-    engine.oldZoom = engine.zoom;
+    if(engine.taid === undefined && engine.tbid !== undefined) {
+        //shift the second touch to be the first touch if the first one stopped
+        engine.tax = engine.tbx;
+        engine.tay = engine.tby;
+        engine.taid = engine.tbid;
+        engine.tbid = undefined;
+        engine.tbx = undefined;
+        engine.tby = undefined;
+    }
 }
 
 engine.touchMove = function(e) {
@@ -235,16 +251,26 @@ engine.touchMove = function(e) {
     engine.isHolding = true;
     try {
         var touches = e.changedTouches;
-        var touch = touches[0];
+        for(var i=0; i<touches.length; i++) {
+            var touch = touches[i];
+            if(touch.identifier === engine.taid) {
+                engine.tax = touch.pageX - engine.canvas.offsetLeft;
+                engine.tay = touch.pageY - engine.canvas.offsetTop;
+            } else if(touch.identifier === engine.tbid) {
+                engine.tbx = touch.pageX - engine.canvas.offsetLeft;
+                engine.tby = touch.pageY - engine.canvas.offsetTop;
+            }
+        }
+        //var touch = touches[0];
         
-        var dax = touch.pageX - engine.canvas.offsetLeft;
-        var day = touch.pageY - engine.canvas.offsetTop;
+        //var dax = touch.pageX - engine.canvas.offsetLeft;
+        //var day = touch.pageY - engine.canvas.offsetTop;
+
         // if two touches, compute new scale
-        if(touches.length >1 && engine.oldZoom != undefined) {
-            touch2 = touches[1];
-            var dbx = touch2.pageX - engine.canvas.offsetLeft;
-            var dby = touch2.pageY - engine.canvas.offsetTop;
-            engine.touchZoom(dax, day, dbx, dby);
+        //if(touches.length >1 && engine.oldZoom != undefined) {
+        //if there are two active touches, compute new scale
+        if(engine.tbid !== undefined && engine.oldZoom != undefined) {
+            engine.touchZoom(engine.tax, engine.tay, engine.tbx, engine.tby);
         }
         else {
             engine.touchDrag(dax, day);
@@ -273,6 +299,7 @@ engine.touchZoom = function(dax, day, dbx, dby) {
     //engine.yorig = (engine.yorig-engine.yctr)*r + engine.yctr;
     //If zooming, don't pan, or else it will cause weirdness
     engine.zoomFlag = true;
+    engine.log('('+dax+','+day+') ('+dbx+','+dby+') zoom: '+r+'x to '+engine.zoom+'x');
     //engine.log('zooming ('+engine.zoom+')');
     engine.mouseMotion();
 }
