@@ -273,7 +273,7 @@ engine.touchMove = function(e) {
             engine.touchZoom(engine.tax, engine.tay, engine.tbx, engine.tby);
         }
         else {
-            engine.touchDrag(dax, day);
+            engine.touchDrag(engine.tax, engine.tay);
         }
     } catch(err) {
         engine.log(err);
