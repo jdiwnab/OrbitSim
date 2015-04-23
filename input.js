@@ -220,6 +220,7 @@ engine.touchStart = function(e) {
 
 engine.touchEnd = function(e) {
     //e.preventDefault();
+    engine.log("touches ending: "+e.changedTouches[0].identifier+" "+e.changedTouches.length);
     var touches = e.changedTouches;
     for(var i=0; i<touches.length; i++) {
         var touch = touchs[i].identifier;
