@@ -1,5 +1,5 @@
-
 engine.setupControlEvents = function() {
+    /* Mouse Events */
     //Zoom with mouse wheel
     engine.canvas.addEventListener('mousewheel', function(e) {
         engine.mouseZoom(e);
@@ -25,7 +25,7 @@ engine.setupControlEvents = function() {
         return false;
     }, false);
     
-    //touch events
+    /* Touch Events */
     engine.canvas.addEventListener("touchstart", function(e) {
         engine.touchStart(e);
         return false;
@@ -49,7 +49,7 @@ engine.setupControlEvents = function() {
         return false;
     }, false);
 
-    //form inputs
+    /* Form Events */
     engine.id("timestep").addEventListener('input', function(e) {
         engine.timeStep = 360 * e.srcElement.value;
         engine.id("stepvalue").textContent = e.srcElement.value;
@@ -64,10 +64,6 @@ engine.setupControlEvents = function() {
         engine.pause(e);
         return false;
     }, false);
-    /*engine.id("add").addEventListener('click', function(e) {
-        engine.addBody(e);
-        return false;
-    },false);*/
     engine.id("reset").addEventListener('click', function(e) {
         engine.reset();
         return false;
@@ -105,8 +101,6 @@ engine.setupControlEvents = function() {
         return false;
     }, false);*/
 }
-
-
 
 engine.mouseDown = function(e) {
     e.preventDefault();
