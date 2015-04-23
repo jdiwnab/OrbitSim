@@ -194,7 +194,7 @@ engine.touchStart = function(e) {
         //engine.log('touch start '+touch.identifier);
         if(engine.taid === undefined) {
             //first touch is for panning
-            engine.log('touch start 1 ('+touch.clientX+','+touch.clientY+')');
+            engine.log('touch start A "+touch.identifier+" ('+touch.clientX+','+touch.clientY+')');
             engine.zoomFlag = false;
             engine.tax = touch.pageX - engine.canvas.offsetLeft;
             engine.tay = touch.pageY - engine.canvas.offsetTop;
@@ -207,7 +207,7 @@ engine.touchStart = function(e) {
                
         } else if(engine.tbid === undefined) {
             //second touch is for zoom/pan
-            engine.log('touch start 2 ('+touch.clientX+','+touch.clientY+')');
+            engine.log('touch start B "+touch.identifier+" ('+touch.clientX+','+touch.clientY+')');
             engine.tbx = touch.pageX - engine.canvas.offsetLeft;
             engine.tby = touch.pageY - engine.canvas.offsetTop;
             engine.tbid = touch.identifier;
