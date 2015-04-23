@@ -179,12 +179,13 @@ engine.mouseClick = function(e) {
 }
 
 engine.touchStart = function(e) {
-    /*engine.isHolding = false;
+    engine.isHolding = false;
     engine.holdStart = setTimeout(function() {
         engine.holdStart = null;
         engine.isHolding = true;
+        engine.log("Start holding");
     },500);
-    e.preventDefault();*/
+    //e.preventDefault();
     
     //Each touch shows up as it's own event
     //but each has it's own identifier so we can tell the difference
@@ -262,13 +263,7 @@ engine.touchMove = function(e) {
                 engine.tby = touch.pageY - engine.canvas.offsetTop;
             }
         }
-        //var touch = touches[0];
-        
-        //var dax = touch.pageX - engine.canvas.offsetLeft;
-        //var day = touch.pageY - engine.canvas.offsetTop;
 
-        // if two touches, compute new scale
-        //if(touches.length >1 && engine.oldZoom != undefined) {
         //if there are two active touches, compute new scale
         if(engine.tbid !== undefined && engine.oldZoom != undefined) {
             engine.touchZoom(engine.tax, engine.tay, engine.tbx, engine.tby);
@@ -296,12 +291,11 @@ engine.touchZoom = function(dax, day, dbx, dby) {
     var r = newMag/engine.oldMag;
     engine.zoom = engine.oldZoom * r;
     //adjust the origin point, so that the view stays centred
-    //engine.xorig = (engine.xorig-engine.xctr)*r + engine.xctr;
-    //engine.yorig = (engine.yorig-engine.yctr)*r + engine.yctr;
+    engine.xorig = (engine.initX-engine.xctr)*r + engine.xctr;
+    engine.yorig = (engine.initY-engine.yctr)*r + engine.yctr;
     //If zooming, don't pan, or else it will cause weirdness
     engine.zoomFlag = true;
     engine.log('('+dax+','+day+') ('+dbx+','+dby+') zoom: '+r+'x to '+engine.zoom+'x');
-    //engine.log('zooming ('+engine.zoom+')');
     engine.mouseMotion();
 }
 
