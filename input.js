@@ -194,7 +194,7 @@ engine.touchStart = function(e) {
         //engine.log('touch start '+touch.identifier);
         if(engine.taid === undefined) {
             //first touch is for panning
-            //engine.log('touch start 1 ('+touch.clientX+','+touch.clientY+')');
+            engine.log('touch start 1 ('+touch.clientX+','+touch.clientY+')');
             engine.zoomFlag = false;
             engine.tax = touch.pageX - engine.canvas.offsetLeft;
             engine.tay = touch.pageY - engine.canvas.offsetTop;
@@ -207,7 +207,7 @@ engine.touchStart = function(e) {
                
         } else if(engine.tbid === undefined) {
             //second touch is for zoom/pan
-            //engine.log('touch start 2 ('+touch.clientX+','+touch.clientY+')');
+            engine.log('touch start 2 ('+touch.clientX+','+touch.clientY+')');
             engine.tbx = touch.pageX - engine.canvas.offsetLeft;
             engine.tby = touch.pageY - engine.canvas.offsetTop;
             engine.tbid = touch.identifier;
@@ -223,7 +223,7 @@ engine.touchEnd = function(e) {
     var touches = e.changedTouches;
     for(var i=0; i<touches.length; i++) {
         var touch = touchs[i].identifier;
-        //engine.log("touch end "+touch);
+        engine.log("touch end "+touch);
         if(touch === engine.taid) {
             engine.tax = undefined;
             engine.tay = undefined;
@@ -286,7 +286,7 @@ engine.touchDrag = function(dax, day) {
         engine.xorig = engine.initX + (dax - engine.tax);
         engine.yorig = engine.initY + (day - engine.tay);
         engine.mouseMotion();
-        //engine.log('moving ('+dax+','+day+'), ('+engine.tax+','+engine.tay+')');
+        engine.log('moving ('+dax+','+day+'), ('+engine.tax+','+engine.tay+')');
     }
 }
 
