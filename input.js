@@ -223,7 +223,7 @@ engine.touchEnd = function(e) {
     engine.log("touches ending: "+e.changedTouches[0].identifier+" "+e.changedTouches.length);
     var touches = e.changedTouches;
     for(var i=0; i<touches.length; i++) {
-        var touch = touchs[i].identifier;
+        var touch = touches[i].identifier;
         engine.log("touch end "+touch);
         if(touch === engine.taid) {
             engine.tax = undefined;
