@@ -284,10 +284,10 @@ engine.touchMove = function(e) {
 
 engine.touchDrag = function(dax, day) {
     if(!engine.zoomFlag) {
-        engine.xorig = engine.initX + (dax - engine.tax);
-        engine.yorig = engine.initY + (day - engine.tay);
+        engine.xorig = engine.initX + (dax - engine.mouseX);
+        engine.yorig = engine.initY + (day - engine.mouseY);
         engine.mouseMotion();
-        engine.log('moving ('+dax+','+day+'), ('+engine.tax+','+engine.tay+')');
+        engine.log('moving ('+dax+','+day+'), ('+engine.mouseX+','+engine.mouseY+')');
     }
 }
 
