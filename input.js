@@ -100,6 +100,8 @@ engine.setupControlEvents = function() {
         engine.algorithm =  e.target.value;
         return false;
     }, false);*/
+    
+    engine.orbit_data.createDataSets();
 }
 
 engine.mouseDown = function(e) {
@@ -300,16 +302,23 @@ engine.mouseMotion = function(e) {
 engine.newPlanetDialog = function() {
     var dialog = {state0: {
         title: "New Planet",
-        html: '<label for="name">Name:</label> <input id="new_name" type="text" name="name" placeholder="Name"/><br/>'+
+        /*html: '<label for="name">Name:</label> <input id="new_name" type="text" name="name" placeholder="Name"/><br/>'+
               '<label for="pos">Position:</label> <select id="new_pos" name="pos" placeholder="Position"></select><br/>'+
               '<label for="mass">Mass:</label> <select id="new_mass" name="mass" placeholder="Mass"></select><br/>'+
               '<label for="vel">Velocity:</label> <select id="new_vel" name="vel" placeholder="Velocity"></select><br/>'+
-              '<label for="color">Color:</label> <select id="new_color" name="color" placeholder="Color"></select>',
+              '<label for="color">Color:</label> <select id="new_color" name="color" placeholder="Color"></select>',*/
+        html: '<label style="min-width:50px;" for="name">Name:</label> <input style="width:150px;" id="new_name" type="text" name="name" placeholder="Name"/><br/>'+
+              //'<label style="min-width:50px;" for="pos">Disatance:</label> <input style="width:150px;" id="new_pos" type="range" name="pos" min="-6000000000" value="0", max="6000000000" step="1000000" list="posList"><br/>'+
+              '<label style="min-width:50px;" for="pos">Disatance:</label> <input style="width:150px;" id="new_pos" type="text" name="pos" placeholder="Distance"><br/>'+
+              '<label style="min-width:50px;" for="pos">Mass:</label> <input style="width:150px;" id="new_mass" type="range" name="mass" min="0" value="1.3275E+011", max="1.4E+011" step="1E+4" list="massList"><br/>'+
+              '<label style="min-width:50px;" for="pos">Velocity:</label> <input style="width:150px;" id="new_vel" type="range" name="vel" min="-50" value="0", max="50" step="2" list="velList"><br/>'+
+              '<label style="min-width:50px;" for="color">Color:</label> <select style="width:150px;" id="new_color" name="color" placeholder="Color"></select>',
         buttons: { Add: 1, Cancel: -1 },
         submit: function(e, v, m, f) {
             e.preventDefault();
             if(v==-1) $.prompt.close();
             if(v==1) {
+                //var new_pos = engine.unscaleCoordinates(engine.mouseX, engine.mouseY);
                 engine.addObject(f.name, f.pos, f.mass, f.vel, f.color);
                 $.prompt.close();
             }
@@ -319,6 +328,19 @@ engine.newPlanetDialog = function() {
     var dialogOptions = {
         loaded: function(e) {
             engine.createForm();
+            var new_pos, new_vel;
+            //Assume first one is sun
+            if(engine.orbit_data.planet_array[0] === undefined) {
+                new_pos = new Cart3(0,0,0);
+                new_vel = new Cart3(0,0,0);
+            } else {
+                //assume other ones orbit a centered sun at index 0, and assume a circular orbit
+                new_pos = engine.unscaleCoordinate(engine.mouseX, engine.mouseY);
+                // v = sqrt((G*M_sun)/R)  
+                new_vel = new Cart3(0,0,Math.sqrt(engine.orbit_data.planet_array[0].mass/new_pos.abs()));
+            }
+            document.getElementById('new_pos').value = new_pos.abs();
+            document.getElementById('new_vel').value = new_vel.abs();
             setTimeout(function() {
                 document.getElementById('new_name').focus();
             }, 300);
@@ -331,11 +353,11 @@ engine.newPlanetDialog = function() {
 engine.editPlanetDialog = function(p) {
     var dialog = {state0: {
         title: "Edit Planet",
-        html: '<label for="name">Name:</label> <input id="new_name" type="text" name="name" placeholder="Name"/><br/>'+
-              '<label for="pos">Position:</label> <select id="new_pos" name="pos" placeholder="Position"></select><br/>'+
-              '<label for="mass">Mass:</label> <select id="new_mass" name="mass" placeholder="Mass"></select><br/>'+
-              '<label for="vel">Velocity:</label> <select id="new_vel" name="vel" placeholder="Velocity"></select><br/>'+
-              '<label for="color">Color:</label> <select id="new_color" name="color" placeholder="Color"></select>',
+        html: '<label style="min-width:50px;" for="name">Name:</label> <input style="width:150px;" id="new_name" type="text" name="name" placeholder="Name"/><br/>'+
+              '<label style="min-width:50px;" for="pos">Disatance:</label> <input style="width:150px;" id="new_pos" type="text" name="pos" placeholder="Distance"><br/>'+
+              '<label style="min-width:50px;" for="pos">Mass:</label> <input style="width:150px;" id="new_mass" type="range" name="mass" min="0" value="1.3275E+011", max="1.4E+011" step="1E+4" list="massList"><br/>'+
+              '<label style="min-width:50px;" for="pos">Velocity:</label> <input style="width:150px;" id="new_vel" type="range" name="vel" min="-50" value="0", max="50" step="2" list="velList"><br/>'+
+              '<label style="min-width:50px;" for="color">Color:</label> <select style="width:150px;" id="new_color" name="color" placeholder="Color"></select>',
         buttons: { Save: 1, Cancel: -1 },
         submit: function(e, v, m, f) {
             e.preventDefault();
@@ -370,7 +392,7 @@ engine.editPlanetDialog = function(p) {
 }
 
 engine.createForm = function() {
-    var masses = document.getElementById('new_mass');
+    /*var masses = document.getElementById('new_mass');
     for(var i = 0; i<orbit_data.planetMasses.length; i++) {
         var option = document.createElement('option');
         option.text=orbit_data.planetMasses[i].name;
@@ -390,7 +412,7 @@ engine.createForm = function() {
         option.text=orbit_data.planetVelocity[i].name;
         option.value=orbit_data.planetVelocity[i].vel;
         vels.add(option);
-    }
+    }*/
     var colors = document.getElementById('new_color');
     for(var i = 0; i<orbit_data.planetColors.length; i++) {
         var option = document.createElement('option');

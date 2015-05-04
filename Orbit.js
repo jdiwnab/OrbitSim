@@ -84,6 +84,7 @@ engine.pause = function(e) {
     }
 }
 
+//For the submit button of a form, old
 engine.addBody = function(e) {
     engine.animate = false;
     var name = engine.id('new_name').value;
@@ -105,12 +106,21 @@ engine.addBody = function(e) {
     engine.reset();
 }
 
+//For the modal dialog, sends basic info
 engine.addObject = function(name, pos, mass, vel, color) {
     engine.animate = false;
     var radius = 10;
     var body = new OrbitBody(name, parseFloat(radius), new Cart3(parseFloat(pos),0,0), new Cart3(0,0,parseFloat(vel)), parseFloat(mass), color);
     orbit_data.planet_array.push(body);
-    //orbit_data.addToTable(body);
+    engine.reset();
+}
+
+//Takes cart3 for position and velocity
+engine.addPlanet = function(name, pos, mass, vel, color) {
+    engine.animate = false;
+    var radius = 10;
+    var body = new OrbitBody(name, radius, pos, vel, mass, color);
+    orbit_data.planet_array.push(body);
     engine.reset();
 }
 

@@ -105,40 +105,40 @@ function OrbitData() {
   //Masses adjusted for normalized G, (/11 orders, * 6.6742)
   //scaled lengths by 3 orders
   //scaled mass by 9 orders
-  this.planetMasses = [ {"name": "Sun", "mass": 1.3275E+011 },
-                        {"name": "Mercury", "mass": 2.2225E+04 },
-                        {"name": "Earth", "mass": 3.9885E+05 },
-                        {"name": "Moon", "mass": 4.904E+03 },
-                        {"name": "Jupiter", "mass": 1.268E+08 },
-                        {"name": "Pluto", "mass": 8.4762E+03 }];
-  this.planetOrbits = [ {"name": "Sun", "pos": 0 },
-                        {"name": "Mercury", "pos": 57900000 },
-                        {"name": "Earth", "pos": 150000000 },
-                        {"name": "Moon", "pos":  150385000 },
-                        {"name": "Jupiter", "pos": 778330000 },
-                        {"name": "Pluto", "pos": 5913520000 },
-                        {"name": "-Sun", "pos": 0 },
-                        {"name": "-Mercury", "pos": -57900000 },
-                        {"name": "-Earth", "pos": -150000000 },
-                        {"name": "-Jupiter", "pos": -778330000 },
-                        {"name": "-Pluto", "pos": -5913520000 }];
-  this.planetVelocity=[ {"name": "Sun", "vel": 0 },
-                        {"name": "Mercury", "vel": 47.9 },
-                        {"name": "Earth", "vel": 29.8 },
-                        {"name": "Moon", "vel": 30.822},
-                        {"name": "Jupiter", "vel": 13.1 },
-                        {"name": "Pluto", "vel": 4.74 },
-                        {"name": "-Sun", "vel": 0 },
-                        {"name": "-Mercury", "vel": -47.9 },
-                        {"name": "-Earth", "vel": -29.8 },
-                        {"name": "-Jupiter", "vel": -13.1 },
-                        {"name": "-Pluto", "vel": -4.74 }];
-  this.planetRadius = [ {"name": "Sun", "rad": 695000000 },
-                        {"name": "Mercury", "rad": 2440000 },
-                        {"name": "Earth", "rad": 6378140 },
-                        {"name": "Moon", "rad": 1738140 },
-                        {"name": "Jupiter", "rad": 71492000 },
-                        {"name": "Pluto", "rad": 1137000 }];
+  this.planetMasses = [ {"name": "Sun", "val": 1.3275E+011 },
+                        {"name": "Mercury", "val": 2.2225E+04 },
+                        {"name": "Earth", "val": 3.9885E+05 },
+                        {"name": "Moon", "val": 4.904E+03 },
+                        {"name": "Jupiter", "val": 1.268E+08 },
+                        {"name": "Pluto", "val": 8.4762E+03 }];
+  this.planetOrbits = [ {"name": "Sun", "val": 0 },
+                        {"name": "Mercury", "val": 57900000 },
+                        {"name": "Earth", "val": 150000000 },
+                        {"name": "Moon", "val":  150385000 },
+                        {"name": "Jupiter", "val": 778330000 },
+                        {"name": "Pluto", "val": 5913520000 },
+                        {"name": "-Sun", "val": 0 },
+                        {"name": "-Mercury", "val": -57900000 },
+                        {"name": "-Earth", "val": -150000000 },
+                        {"name": "-Jupiter", "val": -778330000 },
+                        {"name": "-Pluto", "val": -5913520000 }];
+  this.planetVelocity=[ {"name": "Sun", "val": 0 },
+                        {"name": "Mercury", "val": 47.9 },
+                        {"name": "Earth", "val": 29.8 },
+                        {"name": "Moon", "val": 30.822},
+                        {"name": "Jupiter", "val": 13.1 },
+                        {"name": "Pluto", "val": 4.74 },
+                        {"name": "-Sun", "val": 0 },
+                        {"name": "-Mercury", "val": -47.9 },
+                        {"name": "-Earth", "val": -29.8 },
+                        {"name": "-Jupiter", "val": -13.1 },
+                        {"name": "-Pluto", "val": -4.74 }];
+  this.planetRadius = [ {"name": "Sun", "val": 695000000 },
+                        {"name": "Mercury", "val": 2440000 },
+                        {"name": "Earth", "val": 6378140 },
+                        {"name": "Moon", "val": 1738140 },
+                        {"name": "Jupiter", "val": 71492000 },
+                        {"name": "Pluto", "val": 1137000 }];
                       
   this.planet_array = [];
   
@@ -207,7 +207,24 @@ function OrbitData() {
         this.planet_array[i].reset();
     }
    }
+   
+  this.createDataSets = function() {
+    document.body.appendChild(this.createDataSet('posList', this.planetOrbits));
+    document.body.appendChild(this.createDataSet('massList', this.planetMasses));
+    document.body.appendChild(this.createDataSet('velList', this.planetVelocity));
+    document.body.appendChild(this.createDataSet('radList', this.planetRadius));    
+  }
 
+  this.createDataSet = function(name, list) {
+    var dataList = document.createElement('datalist');
+    dataList.id=name;
+    for(i=0; i<list.length; i++) {
+        var option = document.createElement('option');
+        option.value=list[i].val;
+        dataList.appendChild(option);
+    }
+    return dataList;
+  }
 
 
    this.addToTable = function(body) {

@@ -59,6 +59,15 @@ engine.scaleOrbitingBody = function (ob) {
     return p;
 }
 
+engine.unscaleCoordinate = function(x, y) {
+    var new_x, new_y;
+    new_x = x - engine.xorig;
+    new_y = y - engine.yorig;
+    new_x = new_x/(engine.drawingScale * engine.zoom * engine.xsize/2);
+    new_y = new_y/(engine.drawingScale * engine.zoom * engine.xsize/2);
+    return new Cart3(new_x, new_y, 0);
+}
+
 engine.scaleHistory = function(history) {
     var new_hist = [];
     for(var i=0; i<history.length; i++) {
