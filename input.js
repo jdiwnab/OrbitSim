@@ -50,16 +50,23 @@ engine.setupControlEvents = function() {
     }, false);
 
     /* Form Events */
-    engine.id("timestep").addEventListener('input', function(e) {
-        engine.timeStep = 360 * e.srcElement.value;
-        engine.id("stepvalue").textContent = e.srcElement.value;
-        return false;
-    }, false);
-    engine.id("framestep").addEventListener('input', function(e) {
-        engine.stepsPerFrame = e.srcElement.value
-        engine.id("stepcount").textContent= e.srcElement.value;
-        return false;
-    }, false);
+    engine.setupFancyControls();
+    $("#timestep").on({
+        slide: function(e) {
+            return engine.updateTimestep(e, this);
+        },
+        set: function(e) {
+            return engine.updateTimestep(e, this);
+        }   
+    });
+    $("#framestep").on({
+        slide: function(e) {
+            return engine.updateFramerate(e, this);
+        },
+        set: function(e) {
+            return engine.updateFramerate(e, this);
+        } 
+    });
     engine.id("stop").addEventListener('click', function(e) {
         engine.pause(e);
         return false;
@@ -102,6 +109,37 @@ engine.setupControlEvents = function() {
     }, false);*/
     
     engine.orbit_data.createDataSets();
+    
+}
+
+engine.updateTimestep = function(e, control) {
+    engine.timeStep = 360 * control.vGet();
+    engine.id("stepvalue").textContent = control.vGet();
+    return false;
+}
+engine.updateFramerate = function(e, control) {
+    engine.stepsPerFrame = control.vGet();
+    engine.id("stepcount").textContent = control.vGet();
+    return false;
+}
+
+engine.setupFancyControls = function() {
+    $('#timestep').noUiSlider({
+        start: 10,
+        range: {
+            'min': [ 1 ],
+            'max': [100]
+        },
+        //step: 1
+    });
+    $('#framestep').noUiSlider({
+        start: 1,
+        range: {
+            'min': [ 1 ],
+            'max': [500]
+        },
+        step: 1
+    });
 }
 
 engine.mouseDown = function(e) {
@@ -302,16 +340,12 @@ engine.mouseMotion = function(e) {
 engine.newPlanetDialog = function() {
     var dialog = {state0: {
         title: "New Planet",
-        /*html: '<label for="name">Name:</label> <input id="new_name" type="text" name="name" placeholder="Name"/><br/>'+
-              '<label for="pos">Position:</label> <select id="new_pos" name="pos" placeholder="Position"></select><br/>'+
-              '<label for="mass">Mass:</label> <select id="new_mass" name="mass" placeholder="Mass"></select><br/>'+
-              '<label for="vel">Velocity:</label> <select id="new_vel" name="vel" placeholder="Velocity"></select><br/>'+
-              '<label for="color">Color:</label> <select id="new_color" name="color" placeholder="Color"></select>',*/
         html: '<label style="min-width:50px;" for="name">Name:</label> <input style="width:150px;" id="new_name" type="text" name="name" placeholder="Name"/><br/>'+
-              //'<label style="min-width:50px;" for="pos">Disatance:</label> <input style="width:150px;" id="new_pos" type="range" name="pos" min="-6000000000" value="0", max="6000000000" step="1000000" list="posList"><br/>'+
               '<label style="min-width:50px;" for="pos">Disatance:</label> <input style="width:150px;" id="new_pos" type="text" name="pos" placeholder="Distance"><br/>'+
-              '<label style="min-width:50px;" for="pos">Mass:</label> <input style="width:150px;" id="new_mass" type="range" name="mass" min="0" value="1.3275E+011", max="1.4E+011" step="1E+4" list="massList"><br/>'+
-              '<label style="min-width:50px;" for="pos">Velocity:</label> <input style="width:150px;" id="new_vel" type="range" name="vel" min="-50" value="0", max="50" step="2" list="velList"><br/>'+
+              //'<label style="min-width:50px;" for="pos">Mass:</label> <input style="width:150px;" id="new_mass" type="range" name="mass" min="0" value="1.3275E+011", max="1.4E+011" step="1E+4" list="massList"><br/>'+
+              '<label style="min-width:50px;" for="pos">Mass:</label> <div class="noUi-extended" id="new_mass"></div><input type="hidden" name="mass" id="hidden_mass"/>'+
+              '<label style="min-width:50px;" for="pos">Velocity:</label> <div class="noUi-extended" id="new_vel"></div><input type="hidden" name="mass" id="hidden_vel"/>'+
+              //'<label style="min-width:50px;" for="pos">Velocity:</label> <input style="width:150px;" id="new_vel" type="range" name="vel" min="-50" value="0", max="50" step="2" list="velList"><br/>'+
               '<label style="min-width:50px;" for="color">Color:</label> <select style="width:150px;" id="new_color" name="color" placeholder="Color"></select>',
         buttons: { Add: 1, Cancel: -1 },
         submit: function(e, v, m, f) {
@@ -392,6 +426,34 @@ engine.editPlanetDialog = function(p) {
 }
 
 engine.createForm = function() {
+    $('#new_mass').noUiSlider({
+        start: 1.3275E+011,
+        range: {
+            'min': [ 0 ],
+            '25%': [1e+3],
+            '50%': [1e+6],
+            '75%': [1e+9],
+            'max': [1.4E+011]
+        },
+    });
+    $('#new_mass').noUiSlider_pips({
+        mode: 'range',
+        density: 3
+    });
+    $('#new_mass').Link('lower').to($('#hidden_mass'));
+    $('#new_vel').noUiSlider({
+        start: 0,
+        range: {
+            'min': [ -50 ],
+            '50%': [0],
+            'max': [50]
+        },
+    });
+    $('#new_vel').noUiSlider_pips({
+        mode: 'range',
+        density: 3
+    });
+    $('#new_vel').Link('lower').to($('#hidden_vel'));
     /*var masses = document.getElementById('new_mass');
     for(var i = 0; i<orbit_data.planetMasses.length; i++) {
         var option = document.createElement('option');

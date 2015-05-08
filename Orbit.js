@@ -53,8 +53,8 @@ engine.reset = function() {
     
     engine.legend = true;
     
-    engine.id("timestep").value=10;
-    engine.id("framestep").value=1;
+    $("#timestep").val(10);
+    $("#framestep").val(1);
     if(engine.id("stop").value==="stop") {
         engine.id("stop").click();
     }

@@ -143,16 +143,16 @@ function OrbitData() {
   this.planet_array = [];
   
   // Full list of planets at full scale, for reference
-  /*this.planetMasses = [ {"name": "Sun", "mass": 1.989E+030 },
-                        {"name": "Mercury", "mass": 3.33E+023 },
-                        {"name": "Venus", "mass": 4.869E+024 },
-                        {"name": "Earth", "mass": 5.976E+024 },
-                        {"name": "Moon", "mass": 7.3477E+22 },
-                        {"name": "Jupiter", "mass": 1.9E+027 },
-                        {"name": "Saturn", "mass": 5.688E+026 },
-                        {"name": "Uranus", "mass": 8.686E+025 },
-                        {"name": "Neptune", "mass": 1.024E+026 },
-                        {"name": "Pluto", "mass": 1.27E+022 }];
+  /*this.planetMasses = [ {"name": "Sun", "mass": 1.989E+030 },   //1.327E+11
+                        {"name": "Mercury", "mass": 3.33E+023 },  //2.222E+4
+                        {"name": "Venus", "mass": 4.869E+024 },   //3.249E+5
+                        {"name": "Earth", "mass": 5.976E+024 },   //3.988E+5
+                        {"name": "Moon", "mass": 7.3477E+22 },    //4.904E+3
+                        {"name": "Jupiter", "mass": 1.9E+027 },   //1.268E+8
+                        {"name": "Saturn", "mass": 5.688E+026 },  //3.796E+7
+                        {"name": "Uranus", "mass": 8.686E+025 },  //5.797E+6
+                        {"name": "Neptune", "mass": 1.024E+026 }, //6.954E+6
+                        {"name": "Pluto", "mass": 1.27E+022 }];   //8.476E+3
   this.planetOrbits = [ {"name": "Sun", "pos": 0 },
                         {"name": "Mercury", "pos": 57900000000 },
                         {"name": "Venus", "pos": 108000000000 },
