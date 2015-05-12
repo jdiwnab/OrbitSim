@@ -343,8 +343,8 @@ engine.newPlanetDialog = function() {
         html: '<label style="min-width:50px;" for="name">Name:</label> <input style="width:150px;" id="new_name" type="text" name="name" placeholder="Name"/><br/>'+
               '<label style="min-width:50px;" for="pos">Disatance:</label> <input style="width:150px;" id="new_pos" type="text" name="pos" placeholder="Distance"><br/>'+
               //'<label style="min-width:50px;" for="pos">Mass:</label> <input style="width:150px;" id="new_mass" type="range" name="mass" min="0" value="1.3275E+011", max="1.4E+011" step="1E+4" list="massList"><br/>'+
-              '<label style="min-width:50px;" for="pos">Mass:</label> <div class="noUi-extended" id="new_mass"></div><input type="hidden" name="mass" id="hidden_mass"/>'+
-              '<label style="min-width:50px;" for="pos">Velocity:</label> <div class="noUi-extended" id="new_vel"></div><input type="hidden" name="mass" id="hidden_vel"/>'+
+              '<label style="min-width:50px;" for="pos">Mass:</label> <div class="noUi-extended" style="margin-bottom: 40px" id="new_mass"></div><input type="hidden" name="mass" id="hidden_mass"/>'+
+              '<label style="min-width:50px;" for="pos">Velocity:</label> <div class="noUi-extended" style="margin-bottom: 40px" id="new_vel"></div><input type="hidden" name="vel" id="hidden_vel"/>'+
               //'<label style="min-width:50px;" for="pos">Velocity:</label> <input style="width:150px;" id="new_vel" type="range" name="vel" min="-50" value="0", max="50" step="2" list="velList"><br/>'+
               '<label style="min-width:50px;" for="color">Color:</label> <select style="width:150px;" id="new_color" name="color" placeholder="Color"></select>',
         buttons: { Add: 1, Cancel: -1 },
@@ -374,7 +374,7 @@ engine.newPlanetDialog = function() {
                 new_vel = new Cart3(0,0,Math.sqrt(engine.orbit_data.planet_array[0].mass/new_pos.abs()));
             }
             document.getElementById('new_pos').value = new_pos.abs();
-            document.getElementById('new_vel').value = new_vel.abs();
+            $('#new_vel').val(new_vel.abs());
             setTimeout(function() {
                 document.getElementById('new_name').focus();
             }, 300);
@@ -389,8 +389,10 @@ engine.editPlanetDialog = function(p) {
         title: "Edit Planet",
         html: '<label style="min-width:50px;" for="name">Name:</label> <input style="width:150px;" id="new_name" type="text" name="name" placeholder="Name"/><br/>'+
               '<label style="min-width:50px;" for="pos">Disatance:</label> <input style="width:150px;" id="new_pos" type="text" name="pos" placeholder="Distance"><br/>'+
-              '<label style="min-width:50px;" for="pos">Mass:</label> <input style="width:150px;" id="new_mass" type="range" name="mass" min="0" value="1.3275E+011", max="1.4E+011" step="1E+4" list="massList"><br/>'+
-              '<label style="min-width:50px;" for="pos">Velocity:</label> <input style="width:150px;" id="new_vel" type="range" name="vel" min="-50" value="0", max="50" step="2" list="velList"><br/>'+
+              //'<label style="min-width:50px;" for="pos">Mass:</label> <input style="width:150px;" id="new_mass" type="range" name="mass" min="0" value="1.3275E+011", max="1.4E+011" step="1E+4" list="massList"><br/>'+
+              '<label style="min-width:50px;" for="pos">Mass:</label> <div class="noUi-extended" style="margin-bottom: 40px" id="new_mass"></div><input type="hidden" name="mass" id="hidden_mass"/>'+
+              '<label style="min-width:50px;" for="pos">Velocity:</label> <div class="noUi-extended" style="margin-bottom: 40px" id="new_vel"></div><input type="hidden" name="vel" id="hidden_vel"/>'+
+              //'<label style="min-width:50px;" for="pos">Velocity:</label> <input style="width:150px;" id="new_vel" type="range" name="vel" min="-50" value="0", max="50" step="2" list="velList"><br/>'+
               '<label style="min-width:50px;" for="color">Color:</label> <select style="width:150px;" id="new_color" name="color" placeholder="Color"></select>',
         buttons: { Save: 1, Cancel: -1 },
         submit: function(e, v, m, f) {
@@ -411,11 +413,11 @@ engine.editPlanetDialog = function(p) {
     var dialogOptions = {
         loaded: function(e) {
             engine.createForm();
-            document.getElementById('new_name').value=p.name
-            document.getElementById('new_pos').value=p.startpos.x
-            document.getElementById('new_mass').value=p.mass
-            document.getElementById('new_vel').value=p.startvel.z
-            document.getElementById('new_color').value=p.color
+            document.getElementById('new_name').value=p.name;
+            document.getElementById('new_pos').value=p.startpos.x;
+            $('#new_mass').val(p.mass);
+            $('#new_vel').val(p.startvel.z);
+            document.getElementById('new_color').value=p.color;
             setTimeout(function() {
                 document.getElementById('new_name').focus();
             }, 300);
@@ -438,7 +440,15 @@ engine.createForm = function() {
     });
     $('#new_mass').noUiSlider_pips({
         mode: 'range',
-        density: 3
+        density: 3,
+        format: {
+            to: function(value) {
+                return value.toExponential();
+            },
+            from: function(value) {
+                return value.toExponential();
+            }
+        }
     });
     $('#new_mass').Link('lower').to($('#hidden_mass'));
     $('#new_vel').noUiSlider({
