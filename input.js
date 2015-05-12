@@ -344,7 +344,7 @@ engine.newPlanetDialog = function() {
               '<label style="min-width:50px;" for="pos">Disatance:</label> <input style="width:150px;" id="new_pos" type="text" name="pos" placeholder="Distance"><br/>'+
               //'<label style="min-width:50px;" for="pos">Mass:</label> <input style="width:150px;" id="new_mass" type="range" name="mass" min="0" value="1.3275E+011", max="1.4E+011" step="1E+4" list="massList"><br/>'+
               '<label style="min-width:50px;" for="pos">Mass:</label> <div class="noUi-extended" id="new_mass"></div><input type="hidden" name="mass" id="hidden_mass"/>'+
-              '<label style="min-width:50px;" for="pos">Velocity:</label> <div class="noUi-extended" id="new_vel"></div><input type="hidden" name="mass" id="hidden_vel"/>'+
+              '<label style="min-width:50px;" for="pos">Velocity:</label> <div class="noUi-extended" id="new_vel"></div><input type="hidden" name="vel" id="hidden_vel"/>'+
               //'<label style="min-width:50px;" for="pos">Velocity:</label> <input style="width:150px;" id="new_vel" type="range" name="vel" min="-50" value="0", max="50" step="2" list="velList"><br/>'+
               '<label style="min-width:50px;" for="color">Color:</label> <select style="width:150px;" id="new_color" name="color" placeholder="Color"></select>',
         buttons: { Add: 1, Cancel: -1 },
