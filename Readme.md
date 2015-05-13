@@ -12,3 +12,5 @@ This simulator uses a Runge-Kutta algorithm to simulate gravity. This has shown 
 The code supports a 3D simulation, but display an input are limited to 2 dimentions at this time.
 
 By default, new objects are created at the distance from the center that was clicked, and given a speed to make a circular orbit, assuming a single star at the center point as the first object. Values can be modified to suite, but this seemed like a good estimate to start.
+
+It is capable of storing the current state into your browser's Local Storage, or exporting to a JSON file. You can then choose to load the state or setup from either the last local store, or a selected JSON file. State loads all the history and places the object at the last location. Setup loads the objects and places them in their initial locations without history. Note that no data is sent for either local storage or file storage to a remote server. All remains local to your browser.
