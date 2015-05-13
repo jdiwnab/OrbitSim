@@ -76,23 +76,24 @@ engine.setupControlEvents = function() {
         return false;
     }, false);
     engine.id("saveLocal").addEventListener('click', function(e) {
-        engine.saveData(localStorage);
+        engine.removePlanetData();
+        localStorage.planetList = engine.getSaveData();
         return false;
     }, false);
     engine.id("export").addEventListener('click', function(e) {
         engine.exportData();
         return false;
     }, false);
-    engine.id("import").addEventListener('change', function(e) {
+    engine.id("loadImport").addEventListener('click', function(e) {
         engine.importData();
         return false;
     }, false);
     engine.id("loadSetup").addEventListener('click', function(e) {
-        engine.loadData(localStorage, false);
+        engine.loadData(localStorage.planetList, false);
         return false;
     }, false);
     engine.id("loadState").addEventListener('click', function(e) {
-        engine.loadData(localStorage, true);
+        engine.loadData(localStorage.planetList, true);
         return false;
     }, false);
     /*engine.id("algo1").addEventListener('change', function(e) {

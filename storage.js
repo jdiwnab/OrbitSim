@@ -8,24 +8,17 @@ engine.removePlanetData = function(){
 }
 
 //Single save function that handles saving setup and saving state
-engine.saveData = function(storage){
-    engine.removePlanetData();
-    var jsonString = JSON.stringify(engine.orbit_data.planet_array);
-    console.log("Storing: "+jsonString);
-    storage["planetList"] = jsonString;
-    return storage;
+engine.getSaveData = function(){
+    return JSON.stringify(engine.orbit_data.planet_array);
 }
 
 
 //Allows for loading of planet data.
 //loadingState should be true if loading state and false if loading setup
 engine.loadData = function(inputData, loadingState){ 
-    //engine.id("loadSetup").disabled = true;
-    //engine.id("loadState").disabled = true;
-    //engine.id("import").disabled = true;
-    if(inputData["planetList"] != undefined){
-        console.log("Loading: "+inputData["planetList"]);
-        var planetList = JSON.parse(inputData["planetList"]);
+    if(inputData != undefined){
+        var planetList = JSON.parse(inputData);
+        engine.orbit_data.planet_array = [];
         for(i in planetList){
             var p = planetList[i];
             var pos = new Cart3(p.pos.x, p.pos.y, p.pos.z);
@@ -55,10 +48,9 @@ engine.loadData = function(inputData, loadingState){
 
 //exports the data to a readable file
 engine.exportData = function(){
-    var textToWrite = JSON.stringify(engine.saveData({}));
+    var textToWrite = engine.getSaveData();
 
     var textFileAsBlob = new Blob([textToWrite], {type:'text/JSON'});
-    var filename = engine.id("filename").value;
 
     var downloadLink = document.createElement("a");
     downloadLink.download = "OrbitData.json";
@@ -89,7 +81,7 @@ engine.importData = function(){
 
     //necessary due to asynchronous race condition stuff
     reader.onload = function(e) {
-        var text = JSON.parse(reader.result);
+        var text = reader.result;
         engine.loadData(text, engine.id("stateOption").checked);
     }
     
