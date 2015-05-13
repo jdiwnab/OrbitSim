@@ -70,14 +70,14 @@ engine.log = function(err) {
 }
 
 engine.pause = function(e) {
-    if(e.srcElement.value == "stop") {
+    if(e.target.value == "stop") {
         engine.animate = false;
-        e.srcElement.value = "start";
-        e.srcElement.textContent = "Start";
+        e.target.value = "start";
+        e.target.textContent = "Start";
     } else {
         engine.animate = true;
-        e.srcElement.value = "stop";
-        e.srcElement.textContent = "Stop";
+        e.target.value = "stop";
+        e.target.textContent = "Stop";
         if(engine.orbitTimer == null) {
             engine.perform(false);
         }
