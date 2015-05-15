@@ -111,6 +111,8 @@ engine.setupControlEvents = function() {
     
     engine.orbit_data.createDataSets();
     
+
+    
 }
 
 engine.updateTimestep = function(e, control) {
@@ -342,17 +344,22 @@ engine.newPlanetDialog = function() {
     var dialog = {state0: {
         title: "New Planet",
         html: '<label style="min-width:50px;" for="name">Name:</label> <input style="width:150px;" id="new_name" type="text" name="name" placeholder="Name"/><br/>'+
-              '<label style="min-width:50px;" for="pos">Disatance:</label> <input style="width:150px;" id="new_pos" type="text" name="pos" placeholder="Distance"><br/>'+
+              '<label style="min-width:50px;" for="new_pos_x">Position:</label> <input style="width:150px;" id="new_pos_x" type="number" name="pos_x" placeholder="X"> <input style="width:150px;" id="new_pos_y" type="number" name="pos_y" placeholder="Y"><br/>'+
               '<label style="min-width:50px;" for="pos">Mass:</label> <div class="noUi-extended" style="margin-bottom: 40px" id="new_mass"></div><input type="hidden" name="mass" id="hidden_mass"/>'+
               '<label style="min-width:50px;" for="pos">Velocity:</label> <div class="noUi-extended" style="margin-bottom: 40px" id="new_vel"></div><input type="hidden" name="vel" id="hidden_vel"/>'+
+              '<label style="min-width:50px;" for="ang">Angle</label><input type="number" id="angle" name="angle" value="0"/>'+
+              '<div id="direction" style="position: relative; height: 50px; width: 50px; background: lightgray; border-radius:50%; display: inline-block;"><div id="arrow" style="height: 0px; width: 20px; transform: rotate(0 deg); border: 2px solid black; transform-origin: 0% 50%; position: absolute; top: 50%; left: 50%;"/></div>'+
               '<label style="min-width:50px;" for="color">Color:</label> <select style="width:150px;" id="new_color" name="color" placeholder="Color"></select>',
         buttons: { Add: 1, Cancel: -1 },
         submit: function(e, v, m, f) {
             e.preventDefault();
             if(v==-1) $.prompt.close();
             if(v==1) {
-                //var new_pos = engine.unscaleCoordinates(engine.mouseX, engine.mouseY);
-                engine.addObject(f.name, f.pos, f.mass, f.vel, f.color);
+                var vel = parseFloat(f.vel);
+                var angle = parseFloat(f.angle) * Math.PI / 180;
+                var vel_x = vel * Math.cos(angle);
+                var vel_y = vel * Math.sin(angle);
+                engine.addPlanet(f.name, new Cart3(parseFloat(f.pos_x), 0, parseFloat(f.pos_y)), f.mass, new Cart3(parseFloat(vel_x), 0, parseFloat(vel_y)), f.color)
                 $.prompt.close();
             }
         },
@@ -372,13 +379,12 @@ engine.newPlanetDialog = function() {
                 // v = sqrt((G*M_sun)/R)  
                 new_vel = new Cart3(0,0,Math.sqrt(engine.orbit_data.planet_array[0].mass/new_pos.abs()));
             }
-            if(new_pos.x >= 0) {
-                document.getElementById('new_pos').value = new_pos.abs();
-                $('#new_vel').val(new_vel.abs());
-            } else {
-                document.getElementById('new_pos').value = -1 * new_pos.abs();
-                $('#new_vel').val(-1 * new_vel.abs());
-            }
+            document.getElementById('new_pos_x').value = new_pos.x;
+            document.getElementById('new_pos_y').value = new_pos.y;
+            var velocity = new_vel.abs();
+            $('#new_vel').val(velocity);
+            engine.id('angle').value = Math.atan2(new_pos.x, -1 * new_pos.y) * 180 / Math.PI;
+            engine.fireEvent(engine.id('angle'), 'change');
             setTimeout(function() {
                 document.getElementById('new_name').focus();
             }, 300);
@@ -392,9 +398,11 @@ engine.editPlanetDialog = function(p) {
     var dialog = {state0: {
         title: "Edit Planet",
         html: '<label style="min-width:50px;" for="name">Name:</label> <input style="width:150px;" id="new_name" type="text" name="name" placeholder="Name"/><br/>'+
-              '<label style="min-width:50px;" for="pos">Disatance:</label> <input style="width:150px;" id="new_pos" type="text" name="pos" placeholder="Distance"><br/>'+
+              '<label style="min-width:50px;" for="new_pos_x">Position:</label> <input style="width:150px;" id="new_pos_x" type="number" name="pos_x" placeholder="X"> <input style="width:150px;" id="new_pos_y" type="number" name="pos_y" placeholder="Y"><br/>'+
               '<label style="min-width:50px;" for="pos">Mass:</label> <div class="noUi-extended" style="margin-bottom: 40px" id="new_mass"></div><input type="hidden" name="mass" id="hidden_mass"/>'+
               '<label style="min-width:50px;" for="pos">Velocity:</label> <div class="noUi-extended" style="margin-bottom: 40px" id="new_vel"></div><input type="hidden" name="vel" id="hidden_vel"/>'+
+              '<label style="min-width:50px;" for="ang">Angle</label><input type="number" id="angle" name="angle" value="0"/>'+
+              '<div id="direction" style="position: relative; height: 50px; width: 50px; background: lightgray; border-radius:50%; display: inline-block;"><div id="arrow" style="height: 0px; width: 20px; transform: rotate(0 deg); border: 2px solid black; transform-origin: 0% 50%; position: absolute; top: 50%; left: 50%;"/></div>'+
               '<label style="min-width:50px;" for="color">Color:</label> <select style="width:150px;" id="new_color" name="color" placeholder="Color"></select>',
         buttons: { Save: 1, Cancel: -1 },
         submit: function(e, v, m, f) {
@@ -402,9 +410,13 @@ engine.editPlanetDialog = function(p) {
             if(v==-1) $.prompt.close();
             if(v==1) {
                 p.name = f.name;
-                p.startpos.x = parseFloat(f.pos);
+                p.startpos.x = parseFloat(f.pos_x);
+                p.startpos.z = parseFloat(f.pos_y);
                 p.mass = parseFloat(f.mass);
-                p.startvel.z = parseFloat(f.vel);
+                var angle = parseFloat(f.angle) * Math.PI / 180;
+                var vel = parseFloat(f.vel);
+                p.startvel.x = vel * Math.cos(angle);
+                p.startvel.z = vel * Math.sin(angle);
                 p.color = f.color;
                 $.prompt.close();
                 engine.reset();
@@ -415,11 +427,18 @@ engine.editPlanetDialog = function(p) {
     var dialogOptions = {
         loaded: function(e) {
             engine.createForm();
-            document.getElementById('new_name').value=p.name;
-            document.getElementById('new_pos').value=p.startpos.x;
+            engine.id('new_name').value=p.name;
+            engine.id('new_pos_x').value=p.startpos.x;
+            engine.id('new_pos_y').value=p.startpos.z;
             $('#new_mass').val(p.mass);
-            $('#new_vel').val(p.startvel.z);
-            document.getElementById('new_color').value=p.color;
+            
+            var vel = p.startvel.abs();
+            var angle = Math.atan2(p.startvel.z, p.startvel.x) * 180 / Math.PI;
+            $('#new_vel').val(vel);
+            engine.id('angle').value = angle;
+            engine.fireEvent(engine.id('angle'), 'change');
+            
+            engine.id('new_color').value=p.color;
             setTimeout(function() {
                 document.getElementById('new_name').focus();
             }, 300);
@@ -466,32 +485,25 @@ engine.createForm = function() {
         density: 3
     });
     $('#new_vel').Link('lower').to($('#hidden_vel'));
-    /*var masses = document.getElementById('new_mass');
-    for(var i = 0; i<orbit_data.planetMasses.length; i++) {
-        var option = document.createElement('option');
-        option.text=orbit_data.planetMasses[i].name;
-        option.value=orbit_data.planetMasses[i].mass;
-        masses.add(option);
-    }
-    var orbits = document.getElementById('new_pos');
-    for(var i = 0; i<orbit_data.planetOrbits.length; i++) {
-        var option = document.createElement('option');
-        option.text=orbit_data.planetOrbits[i].name;
-        option.value=orbit_data.planetOrbits[i].pos;
-        orbits.add(option);
-    }
-    var vels = document.getElementById('new_vel');
-    for(var i = 0; i<orbit_data.planetVelocity.length; i++) {
-        var option = document.createElement('option');
-        option.text=orbit_data.planetVelocity[i].name;
-        option.value=orbit_data.planetVelocity[i].vel;
-        vels.add(option);
-    }*/
+    engine.id("angle").addEventListener('change', function(e) {
+        $('#arrow').css('transform', 'rotate('+e.target.value+'deg)')
+    }, false);
     var colors = document.getElementById('new_color');
     for(var i = 0; i<orbit_data.planetColors.length; i++) {
         var option = document.createElement('option');
         option.text=orbit_data.planetColors[i];
         option.value=orbit_data.planetColors[i];
         colors.add(option);
+    }
+}
+
+engine.fireEvent = function(element, event) {
+    if ("createEvent" in document) {
+        var evt = document.createEvent("HTMLEvents");
+        evt.initEvent(event, false, true);
+        element.dispatchEvent(evt);
+    }
+    else {
+        element.fireEvent(event);
     }
 }
