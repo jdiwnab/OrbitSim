@@ -18,27 +18,32 @@ engine.getSaveData = function(){
 engine.loadData = function(inputData, loadingState){ 
     if(inputData != undefined){
         var planetList = JSON.parse(inputData);
-        engine.orbit_data.planet_array = [];
-        for(i in planetList){
-            var p = planetList[i];
-            var pos = new Cart3(p.pos.x, p.pos.y, p.pos.z);
-            var vel = new Cart3(p.vel.x, p.vel.y, p.vel.z);
-            var startpos = new Cart3(p.startpos.x, p.startpos.y, p.startpos.z);
-            var startvel = new Cart3(p.startvel.x, p.startvel.y, p.startvel.z);
-            var history = [];
-            for(j in p.history) {
-                var entry = p.history[j];
-                history.push(new Cart3(entry.x, entry.y, entry.z));
-            }
-            var planet = new OrbitBody(p.name, p.radius, pos, vel, p.mass, p.color);
-            planet.startpos = startpos;
-            planet.startvel = startvel;
-            planet.history = history;
-            engine.orbit_data.planet_array.push(planet);
-        }
+        engine.loadObject(planetList, loadingState);
     } else {
-        engine.log("You have no saved data!")
+        engine.log('you have no save data');
     }
+}
+
+engine.loadObject = function(planetList, loadingState) {
+    engine.orbit_data.planet_array = [];
+    for(i in planetList){
+        var p = planetList[i];
+        var pos = new Cart3(p.pos.x, p.pos.y, p.pos.z);
+        var vel = new Cart3(p.vel.x, p.vel.y, p.vel.z);
+        var startpos = new Cart3(p.startpos.x, p.startpos.y, p.startpos.z);
+        var startvel = new Cart3(p.startvel.x, p.startvel.y, p.startvel.z);
+        var history = [];
+        for(j in p.history) {
+            var entry = p.history[j];
+            history.push(new Cart3(entry.x, entry.y, entry.z));
+        }
+        var planet = new OrbitBody(p.name, p.radius, pos, vel, p.mass, p.color);
+        planet.startpos = startpos;
+        planet.startvel = startvel;
+        planet.history = history;
+        engine.orbit_data.planet_array.push(planet);
+    }
+
     if(loadingState) {
         engine.perform(true);
     } else {

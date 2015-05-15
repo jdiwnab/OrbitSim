@@ -96,6 +96,10 @@ engine.setupControlEvents = function() {
         engine.loadData(localStorage.planetList, true);
         return false;
     }, false);
+    engine.id("loadPreset").addEventListener('click', function(e) {
+        engine.loadPreset(e);
+        return false;
+    }, false);
     /*engine.id("algo1").addEventListener('change', function(e) {
         engine.algorithm = e.target.value;
         return false;
@@ -109,7 +113,7 @@ engine.setupControlEvents = function() {
         return false;
     }, false);*/
     
-    engine.orbit_data.createDataSets();
+    //engine.orbit_data.createDataSets();
     
 
     
@@ -338,6 +342,10 @@ engine.touchZoom = function(dax, day, dbx, dby) {
 
 engine.mouseMotion = function(e) {
     engine.perform(true);
+}
+
+engine.loadPreset = function(e) {
+    engine.loadObject(engine.orbit_data.presets[parseInt(engine.id('presetSelect').value)].planetArray, false);
 }
 
 engine.newPlanetDialog = function() {
