@@ -3,11 +3,11 @@ function OrbitData() {
   this.planet_array = [];
   
   // Full list of planets at full scale, for reference
-  //For scale:
+  /*//For scale:
   //Masses adjusted for normalized G, (/11 orders, * 6.6742)
   //scaled lengths by 3 orders
   //scaled mass by 9 orders
-  /*this.planetMasses = [ {"name": "Sun", "mass": 1.989E+030 },   //1.327E+11
+  this.planetMasses = [ {"name": "Sun", "mass": 1.989E+030 },   //1.327E+11
                         {"name": "Mercury", "mass": 3.33E+023 },  //2.222E+4
                         {"name": "Venus", "mass": 4.869E+024 },   //3.249E+5
                         {"name": "Earth", "mass": 5.976E+024 },   //3.988E+5
@@ -60,6 +60,7 @@ function OrbitData() {
    }
    
    this.presets = [];
+   //Solar System
    this.presets.push({ planetArray:
        [
             {
@@ -193,6 +194,46 @@ function OrbitData() {
                 "startvel":{"x":0,"y":0,"z": 4.74},
                 "history":[],
                 "renderPos":{"x":5913520000,"y":0,"z":0}
+            }
+        ]}
+    );
+    this.presets.push({ planetArray:
+        [
+            {
+                "name":"Sun",
+                "radius":10,
+                "mass":"132750000192.00",
+                "pos":{"x":57900000,"y":0,"z":23.94},
+                "vel":{"x":0,"y":0,"z":0},
+                "color":"yellow",
+                "startpos":{"x":57900000,"y":0,"z":0},
+                "startvel":{"x":0,"y":0,"z":23.94},
+                "history":[],
+                "renderPos":{"x":57900000,"y":0,"z":0}
+            },
+            {
+                "name":"Sun 2",
+                "radius":10,
+                "mass":"132750000192.00",
+                "pos":{"x":-57900000,"y":0,"z":-23.94},
+                "vel":{"x":0,"y":0,"z":0},
+                "color":"orange",
+                "startpos":{"x":-57900000,"y":0,"z":0},
+                "startvel":{"x":0,"y":0,"z":-23.94},
+                "history":[],
+                "renderPos":{"x":-57900000,"y":0,"z":0}
+            },
+            {
+                "name":"Earth",
+                "radius":10,
+                "mass":926902.44,
+                "pos":{"x":535999999.99999994,"y":0,"z":-13999999.999999998},
+                "vel":{"x":0.5778253187427369,"y":0,"z":22.122455060436213},
+                "color":"cyan",
+                "startpos":{"x":535999999.99999994,"y":0,"z":-13999999.999999998},
+                "startvel":{"x":0.5778253187427369,"y":0,"z":22.122455060436213},
+                "history":[],
+                "renderPos":{"x":268,"y":0,"z":-7}
             }
         ]}
     );
