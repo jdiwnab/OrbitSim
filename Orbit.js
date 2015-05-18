@@ -147,6 +147,7 @@ engine.updateOrbitHistory = function(pa) {
 
 engine.calcAccel = function(pa, pos, array) {
     var accel = new Cart3();
+    var radius = new Cart3();
     for(var i = 0; i<array.length; i++) {
         var pb = array[i];
         //don't compute self-gravitation
@@ -154,8 +155,9 @@ engine.calcAccel = function(pa, pos, array) {
             //1. vel += dt * radius * -G * mass * radius.abs()^(-3/2)
             //2. pos += dt * vel
             //G is normalized to 1, so removed here
-            var radius = pos.sub(pb.pos);
-            accel.addTo(radius.mult( (-1 * pb.mass * radius.invSumCube())));
+            radius.x=0;radius.y=0;radius.z=0;
+            radius.addTo(pos).subFrom(pb.pos);
+            accel.addTo(radius.multBy( (-1 * pb.mass * radius.invSumCube())));
         }
     }
     return accel;
@@ -181,6 +183,9 @@ function OrbitBody(name, radius, pos, vel, mass, color) {
         this.history = [new Cart3(this.startpos)];
         this.scaledHistory = undefined; 
         this.oldPos = undefined;
+    }
+    this.resetScaledHistory = function() {
+        this.scaledHistory = undefined;
     }
 }
 

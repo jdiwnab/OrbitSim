@@ -55,7 +55,6 @@ engine.drawSubset = function(refresh, timeStep, cx, cy, ovalSize, array) {
 engine.scaleOrbitingBody = function (ob) {
     // make a copy, don't modify the original values
     var p = new Cart3(ob.pos).multBy(engine.drawingScale * engine.zoom * engine.xsize /2);
-    //var p = ob.pos.mult(engine.drawingScale * engine.zoom * engine.xsize /2);
     ob.renderPos = p;
     return p;
 }
@@ -83,6 +82,12 @@ engine.scaleHistory = function(p) {
         p.scaledHistory.push(h);
     }
     return p.scaledHistory;
+}
+
+engine.resetScaledHistory = function() {
+    for(var i = 0; i < engine.orbit_data.planet_array.length; i++) {
+        engine.orbit_data.planet_array[i].resetScaledHistory();
+    }
 }
 
 engine.formatNum = function(x, dp, sz) {

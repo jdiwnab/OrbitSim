@@ -187,6 +187,7 @@ engine.mouseZoom = function(e) {
     //adjust the origin point, so that the view stays centred
     engine.xorig = (engine.xorig-engine.xctr)*m + engine.xctr;
     engine.yorig = (engine.yorig-engine.yctr)*m + engine.yctr;
+    engine.resetScaledHistory();
     engine.perform(true);
 }
 
@@ -337,6 +338,7 @@ engine.touchZoom = function(dax, day, dbx, dby) {
     //If zooming, don't pan, or else it will cause weirdness
     engine.zoomFlag = true;
     engine.log('('+dax+','+day+') ('+dbx+','+dby+') zoom: '+r+'x to '+engine.zoom+'x');
+    engine.resetScaledHistory();
     engine.mouseMotion();
 }
 
