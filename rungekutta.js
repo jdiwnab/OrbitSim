@@ -1,4 +1,4 @@
-engine.rkEval = function(pa, dt, d, array) {
+/*engine.rkEval = function(pa, dt, d, array) {
     var initPos = new Cart3(pa.pos);
     var initVel = new Cart3(pa.vel);
     var newPos = new Cart3(initPos.addTo(d.dx.mult(dt)));
@@ -6,7 +6,7 @@ engine.rkEval = function(pa, dt, d, array) {
     var newAccl= engine.calcAccel(pa, newPos, array);
     var output = new Derivitive(newVel, newAccl);
     return output;
-}
+}*/
 
 engine.rkIntegrate= function(pa, dt, array) {
 
