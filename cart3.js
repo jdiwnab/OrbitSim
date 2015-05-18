@@ -14,12 +14,28 @@ function Cart3(x,y,z) {
         }
     }
     
+    /* self modification */
+    this.subFrom = function(a) {
+        this.x -= a.x;
+        this.y -= a.y;
+        this.z -= a.z;
+        return this;
+    }
+
+    /* non modifying */
     this.sub = function(a) {
         return new Cart3(this.x - a.x, this.y-a.y, this.z - a.z);
     }
     
     this.mult=function(m) {
         return new Cart3(this.x * m, this.y*m, this.z*m);
+    }
+
+    this.multBy = function(m) {
+        this.x *= m;
+        this.y *= m;
+        this.z *= m;
+        return this;
     }
     this.add = function(a) {
         return new Cart3(this.x + a.x, this.y+a.y, this.z+a.z);
