@@ -59,10 +59,10 @@ function OrbitData() {
     }
    }
    
-   this.presets = [];
-   //Solar System
-   this.presets.push({ planetArray:
-       [
+    this.presets = [];
+    //Solar System
+    this.presets.push({ planetArray:
+        [
             {
                 "name":"Sun",
                 "radius":10,
@@ -197,6 +197,7 @@ function OrbitData() {
             }
         ]}
     );
+    //binary system
     this.presets.push({ planetArray:
         [
             {

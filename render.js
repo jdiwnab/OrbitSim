@@ -44,7 +44,7 @@ engine.drawSubset = function(refresh, timeStep, cx, cy, ovalSize, array) {
         var p = array[i]
         engine.updateOrbitHistory(p);
         var pp = engine.scaleOrbitingBody(p);
-        var hist = engine.scaleHistory(p.history);
+        var hist = engine.scaleHistory(p);
         engine.ctx.strokeStyle = 'gray';
         engine.drawOrbit(hist, cx, cy);
         engine.ctx.fillStyle = p.color;
@@ -69,12 +69,20 @@ engine.unscaleCoordinate = function(x, y) {
     return new Cart3(new_x, new_y, 0);
 }
 
-engine.scaleHistory = function(history) {
-    var new_hist = [];
-    for(var i=0; i<history.length; i++) {
-        new_hist.push(history[i].mult(engine.drawingScale*engine.zoom*engine.xsize/2));
+engine.scaleHistory = function(p) {
+    var history = p.history;
+    if(p.scaledHistory === undefined) {
+        var new_hist = [];
+        for(var i=0; i<history.length; i++) {
+            var h = new Cart3(history[i]).multBy(engine.drawingScale*engine.zoom*engine.xsize/2);
+            new_hist.push(h);
+        }
+        p.scaledHistory = new_hist;
+    } else {
+        var h = new Cart3(history[history.length-1]).multBy(engine.drawingScale*engine.zoom*engine.xsize/2);
+        p.scaledHistory.push(h);
     }
-    return new_hist;
+    return p.scaledHistory;
 }
 
 engine.formatNum = function(x, dp, sz) {

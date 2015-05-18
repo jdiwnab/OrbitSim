@@ -173,11 +173,13 @@ function OrbitBody(name, radius, pos, vel, mass, color) {
     this.startpos = new Cart3(pos);
     this.startvel = new Cart3(vel);
     this.history = [new Cart3(pos)];
+    this.scaledHistory; //cart3 array;
     this.renderPos = new Cart3();
     this.reset = function() {
         this.pos = new Cart3(this.startpos);
         this.vel = new Cart3(this.startvel);
         this.history = [new Cart3(this.startpos)];
+        this.scaledHistory = undefined; 
         this.oldPos = undefined;
     }
 }
