@@ -12,7 +12,7 @@ engine.perform = function(refresh) {
         if(engine.fps == 0) {
             engine.fps = fps;
         } else {
-            engine.fps = engine.fps + (fps - engine.fps)/100;
+            engine.fps = engine.fps + (fps - engine.fps)/10;
         }
     }
     if(!refresh) {
