@@ -54,8 +54,9 @@ engine.drawSubset = function(refresh, timeStep, cx, cy, ovalSize, array) {
 
 engine.scaleOrbitingBody = function (ob) {
     // make a copy, don't modify the original values
-    var p = ob.pos.mult(engine.drawingScale * engine.zoom * engine.xsize /2);
-    ob.renderPos = new Cart3(p);
+    var p = new Cart3(ob.pos).multBy(engine.drawingScale * engine.zoom * engine.xsize /2);
+    //var p = ob.pos.mult(engine.drawingScale * engine.zoom * engine.xsize /2);
+    ob.renderPos = p;
     return p;
 }
 
