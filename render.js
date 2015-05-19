@@ -48,10 +48,9 @@ engine.drawSubset = function(refresh, timeStep, cx, cy, array) {
         engine.ctx.strokeStyle = 'gray';
         engine.drawOrbit(hist, cx, cy);
         engine.ctx.fillStyle = p.color;
-        var radius = pp.radius * engine.drawingScale * engine.zoom;
+        var radius = p.radius * engine.drawingScale * engine.zoom;
         radius = (radius < 2) ? 2 : radius;
-        //engine.log(pp.radius +" "+radius);
-        radius = 2;
+        engine.log(p.radius +" "+radius);
         engine.drawOval(pp.x, pp.z, cx, cy, radius);
     }
 }
