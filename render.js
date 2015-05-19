@@ -79,7 +79,7 @@ engine.scaleHistory = function(p) {
         p.scaledHistory = new_hist;
     } else {
         var h = new Cart3(history[history.length-1]).multBy(engine.drawingScale*engine.zoom*engine.xsize/2);
-        if(p.scalesHistory.length >= 1000) {
+        if(p.scaledHistory.length >= 1000) {
             p.scaledHistory.shift();
         }
         p.scaledHistory.push(h);
