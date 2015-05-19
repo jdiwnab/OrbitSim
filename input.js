@@ -451,12 +451,22 @@ engine.createForm = function() {
         start: 0,
         range: {
             'min': [ 0 ],
-            'max': [6000000000]
+            '33%': [100000000],
+            '66%': [1000000000],
+            'max': [10000000000]
         },
     });
     $('#new_pos').noUiSlider_pips({
         mode: 'range',
-        density: 3
+        density: 3,
+        format: {
+            to: function(value) {
+                return value.toExponential();
+            },
+            from: function(value) {
+                return value.toExponential();
+            }
+        }
     });
     $('#new_pos').Link('lower').to($('#hidden_pos'));
     engine.id("vel_angle").addEventListener('change', function(e) {
