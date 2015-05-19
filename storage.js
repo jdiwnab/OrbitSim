@@ -42,7 +42,6 @@ engine.loadObject = function(planetList, loadingState) {
         planet.startpos = startpos;
         planet.startvel = startvel;
         planet.history = history;
-        engine.log(JSON.stringify(planet));
         engine.orbit_data.planet_array.push(planet);
     }
 
