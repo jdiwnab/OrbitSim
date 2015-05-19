@@ -161,7 +161,7 @@ function OrbitData() {
             },
             {
                 "name":"Uranus",
-                "radius":25559
+                "radius":25559,
                 "mass":"5797000",
                 "pos":{"x":2870990000,"y":0,"z":0},
                 "vel":{"x":0,"y":0,"z": 6.81},
