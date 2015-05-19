@@ -50,7 +50,7 @@ engine.drawSubset = function(refresh, timeStep, cx, cy, array) {
         engine.ctx.fillStyle = p.color;
         var radius = pp.radius * engine.drawingScale * engine.zoom;
         radius = (radius < 2) ? 2 : radius;
-        engine.log(radius);
+        engine.log(pp.radius +" "+radius);
         radius = 2;
         engine.drawOval(pp.x, pp.z, cx, cy, radius);
     }
