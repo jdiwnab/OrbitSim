@@ -38,11 +38,11 @@ engine.loadObject = function(planetList, loadingState) {
             history.push(new Cart3(entry.x, entry.y, entry.z));
         }
         var planet = new OrbitBody(p.name, p.radius, pos, vel, p.mass, p.color);
-        engine.log("adding planet with radius "+p.radius);
         planet.radius = p.radius;
         planet.startpos = startpos;
         planet.startvel = startvel;
         planet.history = history;
+        engine.log(JSON.stringify(planet));
         engine.orbit_data.planet_array.push(planet);
     }
 
