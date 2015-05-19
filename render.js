@@ -28,13 +28,13 @@ engine.render = function(refresh) {
     engine.ctx.globalCompositeOperation = "lighter";
     engine.ctx.font = "10pt monospace";
     
-    var ovalSize = engine.xsize / 280;
-    ovalSize = (ovalSize < 2) ? 2 : ovalSize
-    engine.drawSubset(refresh,engine.timeStep, engine.xorig, engine.yorig, ovalSize,engine.orbit_data.planet_array);
+    //var ovalSize = engine.xsize / 280;
+    //ovalSize = (ovalSize < 2) ? 2 : ovalSize
+    engine.drawSubset(refresh,engine.timeStep, engine.xorig, engine.yorig,engine.orbit_data.planet_array);
     engine.drawLabels();
 }
 
-engine.drawSubset = function(refresh, timeStep, cx, cy, ovalSize, array) {
+engine.drawSubset = function(refresh, timeStep, cx, cy, array) {
     if(!refresh) {
         for(var n = 0; n < engine.stepsPerFrame; n++) {
             engine.updateObjects(array,engine.timeStep);
@@ -48,7 +48,9 @@ engine.drawSubset = function(refresh, timeStep, cx, cy, ovalSize, array) {
         engine.ctx.strokeStyle = 'gray';
         engine.drawOrbit(hist, cx, cy);
         engine.ctx.fillStyle = p.color;
-        engine.drawOval(pp.x, pp.z, cx, cy, ovalSize);
+        var radius = pp.radius * engine.drawingScale * engine.zoom;
+        radius = (radius < 2) ? 2 : radius;
+        engine.drawOval(pp.x, pp.z, cx, cy, radius);
     }
 }
 
