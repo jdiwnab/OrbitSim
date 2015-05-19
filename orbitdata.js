@@ -65,7 +65,7 @@ function OrbitData() {
         [
             {
                 "name":"Sun",
-                "radius":10,
+                "radius":695000,
                 "mass":"132750000192.00",
                 "pos":{"x":0,"y":0,"z":0},
                 "vel":{"x":0,"y":0,"z":0},
@@ -77,7 +77,7 @@ function OrbitData() {
             },
             {
                 "name":"Mercury",
-                "radius":10,
+                "radius":2440,
                 "mass":"22225",
                 "pos":{"x":57900000,"y":0,"z":0},
                 "vel":{"x":0,"y":0,"z":47.9},
@@ -89,7 +89,7 @@ function OrbitData() {
             },
             {
                 "name":"Venus",
-                "radius":10,
+                "radius":6050,
                 "mass":"324900",
                 "pos":{"x":108000000,"y":0,"z":0},
                 "vel":{"x":0,"y":0,"z":35},
@@ -101,7 +101,7 @@ function OrbitData() {
             },
             {
                 "name":"Earth",
-                "radius":10,
+                "radius":6378,
                 "mass":"398850",
                 "pos":{"x":150000000,"y":0,"z":0},
                 "vel":{"x":0,"y":0,"z":29.8},
@@ -113,7 +113,7 @@ function OrbitData() {
             },
             {
                 "name":"Moon",
-                "radius":10,
+                "radius":1738,
                 "mass":"4904",
                 "pos":{"x":150385000,"y":0,"z":0},
                 "vel":{"x":0,"y":0,"z":30.822},
@@ -125,7 +125,7 @@ function OrbitData() {
             },
             {
                 "name":"Mars",
-                "radius":10,
+                "radius":3389,
                 "mass":"42830",
                 "pos":{"x":227900000,"y":0,"z":0},
                 "vel":{"x":0,"y":0,"z":24.077},
@@ -137,7 +137,7 @@ function OrbitData() {
             },
             {
                 "name":"Jupiter",
-                "radius":10,
+                "radius":71492,
                 "mass":"126800000",
                 "pos":{"x":778330000,"y":0,"z":0},
                 "vel":{"x":0,"y":0,"z": 13.1},
@@ -149,7 +149,7 @@ function OrbitData() {
             },
             {
                 "name":"Saturn",
-                "radius":10,
+                "radius":60268,
                 "mass":"37960000",
                 "pos":{"x":1429400000,"y":0,"z":0},
                 "vel":{"x":0,"y":0,"z": 9.64},
@@ -161,7 +161,7 @@ function OrbitData() {
             },
             {
                 "name":"Uranus",
-                "radius":10,
+                "radius":25559
                 "mass":"5797000",
                 "pos":{"x":2870990000,"y":0,"z":0},
                 "vel":{"x":0,"y":0,"z": 6.81},
@@ -173,7 +173,7 @@ function OrbitData() {
             },
             {
                 "name":"Neptune",
-                "radius":10,
+                "radius":24746,
                 "mass":"6954000",
                 "pos":{"x":4504300000,"y":0,"z":0},
                 "vel":{"x":0,"y":0,"z": 5.43},
@@ -185,7 +185,7 @@ function OrbitData() {
             },
             {
                 "name":"Pluto",
-                "radius":10,
+                "radius":1137,
                 "mass":"8476.2",
                 "pos":{"x":5913520000,"y":0,"z":0},
                 "vel":{"x":0,"y":0,"z": 4.74},
