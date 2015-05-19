@@ -68,18 +68,25 @@
             <span style="width:75px;"><label for="name">Name:</label></span>
             <input style="width:150px;" id="new_name" type="text" name="name" placeholder="Name"/><br/>
             <label style="width:75px;" for="new_pos_x">Position:</label>
-            <input style="width:150px;" id="new_pos_x" type="number" name="pos_x" placeholder="X"/>
-            <input style="width:150px;" id="new_pos_y" type="number" name="pos_y" placeholder="Y"/><br/>
+            <div class="noUi-extended" style="margin-bottom: 40px" id="new_pos"></div>
+            <input type="hidden" name="vel" id="hidden_pos"/>
+            <span style="width:75px;"><label for="pos_angle">Angle</label></span>
+            <input type="number" id="pos_angle" name="pos_angle" value="0"/>
+            <div id="direction" style="position: relative; height: 50px; width: 50px; background: lightgray; border-radius:50%; display: inline-block;">
+                <div id="pos_arrow" style="height: 0px; width: 20px; transform: rotate(0 deg); border: 2px solid black; transform-origin: 0% 50%; position: absolute; top: 50%; left: 50%;"></div>
+            </div><br/>
+            <!--<input style="width:150px;" id="new_pos_x" type="number" name="pos_x" placeholder="X"/>
+            <input style="width:150px;" id="new_pos_y" type="number" name="pos_y" placeholder="Y"/><br/>-->
             <span style="width:75px;"><label for="pos">Mass:</label></span>
             <div class="noUi-extended" style="margin-bottom: 40px" id="new_mass"></div>
             <input type="hidden" name="mass" id="hidden_mass"/>
             <span style="width:75px;"><label for="pos">Velocity:</label></span>
             <div class="noUi-extended" style="margin-bottom: 40px" id="new_vel"></div>
             <input type="hidden" name="vel" id="hidden_vel"/>
-            <span style="width:75px;"><label for="ang">Angle</label></span>
-            <input type="number" id="angle" name="angle" value="0"/>
+            <span style="width:75px;"><label for="vel_angle">Angle</label></span>
+            <input type="number" id="vel_angle" name="vel_angle" value="0"/>
             <div id="direction" style="position: relative; height: 50px; width: 50px; background: lightgray; border-radius:50%; display: inline-block;">
-                <div id="arrow" style="height: 0px; width: 20px; transform: rotate(0 deg); border: 2px solid black; transform-origin: 0% 50%; position: absolute; top: 50%; left: 50%;"></div>
+                <div id="vel_arrow" style="height: 0px; width: 20px; transform: rotate(0 deg); border: 2px solid black; transform-origin: 0% 50%; position: absolute; top: 50%; left: 50%;"></div>
             </div><br/>
             <span style="width:75px;"><label for="color">Color:</label></span>
             <select style="width:150px;" id="new_color" name="color" placeholder="Color"></select><br/>
