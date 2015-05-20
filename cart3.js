@@ -1,19 +1,4 @@
-function Cart3(x,y,z) {
-    this.x = 0;
-    this.y = 0;
-    this.z = 0;
-    if(x instanceof Cart3) {
-        this.x = x.x;
-        this.y = x.y;
-        this.z = x.z;
-    } else {
-        if(x != undefined) {
-            this.x = x;
-            this.y = y;
-            this.z = z;
-        }
-    }
-    
+function Cart3Prototype() {
     /* self modification */
     this.subFrom = function(a) {
         this.x -= a.x;
@@ -59,3 +44,22 @@ function Cart3(x,y,z) {
         return this.x + "," + this.y + "," + this.z;
     }
 }
+function Cart3(x,y,z) {
+    this.x = 0;
+    this.y = 0;
+    this.z = 0;
+    this.timestamp = 0;
+    
+    if(x instanceof Cart3) {
+        this.x = x.x;
+        this.y = x.y;
+        this.z = x.z;
+    } else {
+        if(x != undefined) {
+            this.x = x;
+            this.y = y;
+            this.z = z;
+        }
+    }
+}
+Cart3.prototype = new Cart3Prototype();

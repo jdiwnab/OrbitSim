@@ -84,6 +84,10 @@ engine.setupControlEvents = function() {
         engine.exportData();
         return false;
     }, false);
+    engine.id("csvexport").addEventListener('click', function(e) {
+        engine.csvexport();
+        return false;
+    }, false);
     engine.id("loadImport").addEventListener('click', function(e) {
         engine.importData();
         return false;

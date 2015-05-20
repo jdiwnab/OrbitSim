@@ -79,6 +79,39 @@ engine.exportData = function(){
     downloadLink.click();
 }
 
+engine.csvexport = function() {
+    var textToWrite = "Name,Time,X,Y,Z\n";
+    for(var i=0; i<engine.orbit_data.planet_array.length; i++) {
+        var p = engine.orbit_data.planet_array[i];
+        for(var j = 0; j<p.history.length; j++) {
+            var h = p.history[j];
+            textToWrite+=p.name+","+h.timestamp+","+h.x+","+h.y+","+h.z+"\n";
+        }
+    }
+
+    var textFileAsBlob = new Blob([textToWrite], {type:'text/csv'});
+
+    var downloadLink = document.createElement("a");
+    downloadLink.download = "OrbitData.csv";
+    downloadLink.innerHTML = "Download File";
+    if (window.URL != null)
+    {
+        // Chrome allows the link to be clicked
+        // without actually adding it to the DOM.
+        downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+    }
+    else
+    {
+        // Firefox requires the link to be added to the DOM
+        // before it can be clicked.
+        downloadLink.href = window.URL.createObjectURL(textFileAsBlob);
+        downloadLink.onclick = destroyClickedElement;
+        downloadLink.style.display = "none";
+        document.body.appendChild(downloadLink);
+    }
+    downloadLink.click();
+}
+
 //imports data from a file
 engine.importData = function(){
 

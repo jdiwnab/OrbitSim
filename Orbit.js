@@ -156,6 +156,7 @@ engine.updateOrbitHistory = function(pa) {
         pa.history.shift();
     }
     pa.history.push(new Cart3(pa.pos));
+    pa.history[pa.history.length-1].timestamp = engine.elapsedTime;
 }
 
 engine.calcAccel = function(pa, pos, array) {
