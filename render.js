@@ -1,4 +1,4 @@
-engine.perform = function(refresh) {
+engine.perform = function(time, refresh) {
     if(engine.animate || refresh) {
         var t0 = performance.now();
         engine.render(refresh);
@@ -16,7 +16,8 @@ engine.perform = function(refresh) {
         }
     }
     if(!refresh) {
-        engine.orbitTimer = setTimeout(engine.perform,engine.frame_delay_ms, false);
+        //engine.orbitTimer = setTimeout(engine.perform,engine.frame_delay_ms, false);
+        engine.orbitTimer = requestAnimationFrame(engine.perform, false);
     }
 
 }
@@ -50,7 +51,6 @@ engine.drawSubset = function(refresh, timeStep, cx, cy, array) {
         engine.ctx.fillStyle = p.color;
         var radius = p.radius * engine.drawingScale * engine.zoom * 15000;
         radius = (radius < 2) ? 2 : radius;
-        engine.log(p.radius +" "+radius);
         engine.drawOval(pp.x, pp.z, cx, cy, radius);
     }
 }

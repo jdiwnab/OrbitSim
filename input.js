@@ -189,7 +189,7 @@ engine.mouseZoom = function(e) {
     engine.xorig = (engine.xorig-engine.xctr)*m + engine.xctr;
     engine.yorig = (engine.yorig-engine.yctr)*m + engine.yctr;
     engine.resetScaledHistory();
-    engine.perform(true);
+    engine.perform(0, true);
 }
 
 engine.mouseClick = function(e) {
@@ -228,7 +228,6 @@ engine.touchStart = function(e) {
         engine.isHolding = true;
         engine.log("Start holding");
     },500);
-    //e.preventDefault();
     
     //Each touch shows up as it's own event
     //but each has it's own identifier so we can tell the difference
@@ -263,7 +262,6 @@ engine.touchStart = function(e) {
 }
 
 engine.touchEnd = function(e) {
-    //e.preventDefault();
     engine.log("touches ending: "+e.changedTouches[0].identifier+" "+e.changedTouches.length);
     var touches = e.changedTouches;
     for(var i=0; i<touches.length; i++) {
@@ -344,7 +342,7 @@ engine.touchZoom = function(dax, day, dbx, dby) {
 }
 
 engine.mouseMotion = function(e) {
-    engine.perform(true);
+    engine.perform(0, true);
 }
 
 engine.loadPreset = function(e) {
@@ -364,16 +362,16 @@ engine.newPlanetDialog = function() {
     }
     $('#new_pos').val(new_pos.abs());
     engine.id('pos_angle').value = Math.atan2(new_pos.y, new_pos.x) * 180 / Math.PI;
-    //document.getElementById('new_pos_x').value = new_pos.x;
-    //document.getElementById('new_pos_y').value = new_pos.y;
     var velocity = new_vel.abs();
     $('#new_vel').val(velocity);
     engine.id('vel_angle').value = Math.atan2(new_pos.x, -1 * new_pos.y) * 180 / Math.PI;
     engine.fireEvent(engine.id('pos_angle'), 'change');
     engine.fireEvent(engine.id('vel_angle'), 'change');
-    setTimeout(function() {
-        document.getElementById('new_name').focus();
-    }, 300);
+    engine.id('new_rad').value=6000;
+    engine.id('new_name').value='';
+    /*setTimeout(function() {
+    //    document.getElementById('new_name').focus();
+    }, 300);*/
     
     var modal = $.remodal.lookup[$('[data-remodal-id=editmodal]').data('remodal')];
     modal.open();
@@ -391,8 +389,6 @@ engine.editPlanetDialog = function(i) {
     engine.id('pos_angle').value = pos_angle;
     engine.fireEvent(engine.id('pos_angle'), 'change');
     
-    //engine.id('new_pos_x').value=p.startpos.x;
-    //engine.id('new_pos_y').value=p.startpos.z;
     $('#new_mass').val(p.mass);
     
     var vel = p.startvel.abs();
@@ -401,10 +397,11 @@ engine.editPlanetDialog = function(i) {
     engine.id('vel_angle').value = vel_angle;
     engine.fireEvent(engine.id('vel_angle'), 'change');
     
+    engine.id('new_rad').value = p.radius;
     engine.id('new_color').value=p.color;
-    setTimeout(function() {
+    /*setTimeout(function() {
         document.getElementById('new_name').focus();
-    }, 300);
+    }, 300);*/
 
     var modal = $.remodal.lookup[$('[data-remodal-id=editmodal]').data('remodal')];
     modal.open();
@@ -501,7 +498,7 @@ engine.submitNewForm = function() {
     var pos_angle = parseFloat(engine.id('pos_angle').value) * Math.PI / 180;
     var pos_x = pos * Math.cos(pos_angle);
     var pos_y = pos * Math.sin(pos_angle);
-    engine.addPlanet(engine.id('new_name').value, new Cart3(pos_x, 0, pos_y), parseFloat(engine.id('hidden_mass').value), new Cart3(parseFloat(vel_x), 0, parseFloat(vel_y)), engine.id('new_color').value)
+    engine.addPlanet(engine.id('new_name').value, new Cart3(pos_x, 0, pos_y), parseFloat(engine.id('hidden_mass').value), new Cart3(parseFloat(vel_x), 0, parseFloat(vel_y)), engine.id('new_color').value, parseFloat(engine.id('new_rad').value));
 }
 
 engine.submitEditForm = function() {
@@ -517,6 +514,7 @@ engine.submitEditForm = function() {
     p.startvel.x = vel * Math.cos(angle);
     p.startvel.z = vel * Math.sin(angle);
     p.color = engine.id('new_color').value;
+    p.radius = parseFloat(engine.id('new_rad').value);
     engine.reset();
 }
 

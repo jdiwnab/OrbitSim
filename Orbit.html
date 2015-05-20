@@ -21,76 +21,121 @@
             addEvent(window,'load',engine.setupControlEvents);
         </script>
         <title>Orbits</title>
+        <style>
+            .inputpanel {
+                display: inline-block;
+                vertical-align: top;
+                width: 300px;
+            }
+            .modallabel {
+                width: 75px;
+            }
+            .modalinput {
+                width: 150px;
+            }
+            .arrowcircle {
+                position: relative;
+                height: 50px;
+                width: 50px;
+                background: lightgray;
+                border-radius:50%;
+                display: inline-block;
+            }
+            .arrowpointer {
+                height: 0px;
+                width: 20px;
+                transform: rotate(0 deg);
+                border: 2px solid black;
+                transform-origin: 0% 50%;
+                -webkit-transform-origin: 0% 50%;
+                position: absolute;
+                top: 50%; left: 50%;
+            }
+            .slider_with_pips {
+                margin-bottom: 40px;
+            }
+            #input_panel {
+                display: inline-block;
+            }
+            .remodal-confirm, .remodal-cancel {
+                margin-top: 10px;
+            }
+        </style>
     </head>
-    <body>
+    <body onresize="engine.resize()">
         <div class="remodal-bg">
-            <canvas id="orbit_disp" style="float:left" width="1000" height="500"></canvas>
-            <div id="input_panel" style="float:left">
-                
-                Time Step: 
-                <div id="timestep" class="noUi-extended"></div>
-                <span id="stepvalue">10</span><br/>
-                Steps per frame: 
-                <div id="framestep" class="noUi-extended"></div>
-                <span id="stepcount">1</span><br/>
-                <!--Engine:-->
-                <!--<input type="radio" id="algo1" name="algorithm" value="euler">Euler</input><br/>
-                <input type="radio" id="algo2" name="algorithm" value="verlet">Verlet</input>
-                <input type="radio" id="algo3" name="algorithm" value="rk" checked>Runge-Kutta</input><br/>-->
-                <button id="stop" name="start" value="start">Start</button>
-                <button id="reset" name="reset" value="reset">Reset</button><br/>
-
+            <canvas id="orbit_disp"></canvas>
+            <div id="input_panel">
+                <div class="inputpanel" id="main-controls">
+                    <label>Time Step:</label>
+                    <div id="timestep" class="noUi-extended"></div>
+                    <span id="stepvalue">10</span><br/>
+                    <label>Steps per frame:</label>
+                    <div id="framestep" class="noUi-extended"></div>
+                    <span id="stepcount">1</span><br/>
+                    <!--Engine:-->
+                    <!--<input type="radio" id="algo1" name="algorithm" value="euler">Euler</input><br/>
+                    <input type="radio" id="algo2" name="algorithm" value="verlet">Verlet</input>
+                    <input type="radio" id="algo3" name="algorithm" value="rk" checked>Runge-Kutta</input><br/>-->
+                    <button id="stop" name="start" value="start">Start</button>
+                    <button id="reset" name="reset" value="reset">Reset</button><br/>
+                </div>
+                <div id="storage-controls" class="inputpanel">
                 <!--local Storage -->
-                Local Storage:<br/>
-                <button id="saveLocal" name="saveLocal" value="saveLocal">Save To Browser</button><br/><br/>
-                <button id="loadSetup" name="loadSetup" value="loadSetup">Load Setup</button>
-                <button id="loadState" name="loadState" value="loadState">Load State</button><br/><br/>
+                    <h2>Local Storage:</h2>
+                    <button id="saveLocal" name="saveLocal" value="saveLocal">Save To Browser</button><br/><br/>
+                    <button id="loadSetup" name="loadSetup" value="loadSetup">Load Setup</button>
+                    <button id="loadState" name="loadState" value="loadState">Load State</button><br/><br/>
 
-                File Storage:<br/>
-                <button id="export" name="export" value="export">Export To File</button><br/><br/>
-                <label for="import">Upload file: </label>
-                <input type="file" id="import" /><button id="loadImport">Load</button><br/>
-                <form action="">
-                    <input type="radio" name="LoadOption" id="stateOption" value="state" checked>State<br/>
-                    <input type="radio" name="LoadOption" id="setupOption" value="setup">Setup<br/>
-                </form>
-                
-                Presets:<br/>
-                <select id="presetSelect">
-                    <option value=0>Solar System</option>
-                    <option value=1>Double Star</option>
-                </select>
-                <button name="loadPreset" id="loadPreset" value="loadPreset">Load</button><br/>
+                    <h2>File Storage:</h2>
+                    <button id="export" name="export" value="export">Export To File</button><br/><br/>
+                    <label for="import">Upload file: </label>
+                    <input type="file" id="import" /><button id="loadImport">Load</button><br/>
+                    <form action="">
+                        <input type="radio" name="LoadOption" id="stateOption" value="state" checked>State<br/>
+                        <input type="radio" name="LoadOption" id="setupOption" value="setup">Setup<br/>
+                    </form>
+                </div>
+                <div id="preset-controls"  class="inputpanel" >
+                    <h2>Presets:</h2>
+                    <select id="presetSelect">
+                        <option value=0>Solar System</option>
+                        <option value=1>Double Star</option>
+                    </select>
+                    <button name="loadPreset" id="loadPreset" value="loadPreset">Load</button><br/>
+                </div>
             </div>
             <div id="console"></div>
         </div>
         <div class="remodal" data-remodal-id="editmodal" data-remodal-options="hashTracking: false">
-            <span style="width:75px;"><label for="name">Name:</label></span>
-            <input style="width:150px;" id="new_name" type="text" name="name" placeholder="Name"/><br/>
-            <label style="width:75px;" for="new_pos_x">Position:</label>
-            <div class="noUi-extended" style="margin-bottom: 40px" id="new_pos"></div>
+            <span class="modallabel"><label for="name">Name:</label></span>
+            <input class="modalinput" id="new_name" type="text" name="name" placeholder="Name"/><br/>
+            <label class="modallabel" for="new_pos_x">Position:</label>
+            <div class="noUi-extended slider_with_pips" id="new_pos"></div>
             <input type="hidden" name="vel" id="hidden_pos"/>
-            <span style="width:75px;"><label for="pos_angle">Angle</label></span>
+            <span class="modallabel"><label for="pos_angle">Angle</label></span>
             <input type="number" id="pos_angle" name="pos_angle" value="0"/>
-            <div id="direction" style="position: relative; height: 50px; width: 50px; background: lightgray; border-radius:50%; display: inline-block;">
-                <div id="pos_arrow" style="height: 0px; width: 20px; transform: rotate(0 deg); border: 2px solid black; transform-origin: 0% 50%; -webkit-transform-origin: 0% 50%; position: absolute; top: 50%; left: 50%;"></div>
+            <div id="direction" class="arrowcircle">
+                <div id="pos_arrow" class="arrowpointer"></div>
             </div><br/>
             <!--<input style="width:150px;" id="new_pos_x" type="number" name="pos_x" placeholder="X"/>
             <input style="width:150px;" id="new_pos_y" type="number" name="pos_y" placeholder="Y"/><br/>-->
-            <span style="width:75px;"><label for="pos">Mass:</label></span>
-            <div class="noUi-extended" style="margin-bottom: 40px" id="new_mass"></div>
+            <span class="modallabel"><label for="pos">Mass:</label></span>
+            <div class="noUi-extended slider_with_pips" id="new_mass"></div>
             <input type="hidden" name="mass" id="hidden_mass"/>
-            <span style="width:75px;"><label for="pos">Velocity:</label></span>
-            <div class="noUi-extended" style="margin-bottom: 40px" id="new_vel"></div>
+            <span class="modallabel"><label for="pos">Velocity:</label></span>
+            <div class="noUi-extended slider_with_pips" id="new_vel"></div>
             <input type="hidden" name="vel" id="hidden_vel"/>
-            <span style="width:75px;"><label for="vel_angle">Angle</label></span>
+            <span class="modallabel"><label for="vel_angle">Angle</label></span>
             <input type="number" id="vel_angle" name="vel_angle" value="0"/>
-            <div id="direction" style="position: relative; height: 50px; width: 50px; background: lightgray; border-radius:50%; display: inline-block;">
-                <div id="vel_arrow" style="height: 0px; width: 20px; transform: rotate(0 deg); border: 2px solid black; transform-origin: 0% 50%; -webkit-transform-origin: 0% 50%; position: absolute; top: 50%; left: 50%;"></div>
+            <div id="direction" class="arrowcircle">
+                <div id="vel_arrow" class="arrowpointer"></div>
             </div><br/>
-            <span style="width:75px;"><label for="color">Color:</label></span>
-            <select style="width:150px;" id="new_color" name="color" placeholder="Color"></select><br/>
-            <input type="hidden" name="is_edit" id="is_edit" value="false"/><input type="hidden" name="edit_index" id="edit_index" value="-1"/>
+            <span class="modallabel"><label for="color">Color:</label></span>
+            <select class="modalinput" id="new_color" name="color" placeholder="Color"></select><br/>
+            <span class="modallabel"><label for="new_rad">Radius:</label></span>
+            <input type="number" id="new_rad" name="new_rad" value="6000"/>
+            <input type="hidden" name="is_edit" id="is_edit" value="false"/><input type="hidden" name="edit_index" id="edit_index" value="-1"/><br/>
             <a class="remodal-confirm" href="#">OK</a>
             <a class="remodal-cancel" href="#">Cancel</a>
         </div>

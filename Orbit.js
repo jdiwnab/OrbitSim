@@ -35,6 +35,8 @@ engine.reset = function() {
     
     engine.canvas = engine.id("orbit_disp");
     engine.ctx = engine.canvas.getContext("2d");
+    engine.ctx.canvas.width = window.innerWidth;
+    engine.ctx.canvas.height= window.innerHeight/2;
     engine.xsize = engine.ctx.canvas.width;
     engine.ysize = engine.ctx.canvas.height;
     engine.yorig = Math.floor(engine.ysize /2 );
@@ -62,7 +64,19 @@ engine.reset = function() {
 
     engine.orbit_data = orbit_data;
     engine.orbit_data.resetPlanets();
-    engine.perform(true);
+    engine.perform(0, true);
+}
+
+engine.resize = function() {
+    engine.ctx.canvas.width = window.innerWidth;
+    engine.ctx.canvas.height= window.innerHeight/2;
+    engine.xsize = engine.ctx.canvas.width;
+    engine.ysize = engine.ctx.canvas.height;
+    engine.yorig = Math.floor(engine.ysize /2 );
+    engine.xorig = Math.floor(engine.xsize /2 );
+    engine.xctr  = engine.xorig;
+    engine.yctr  = engine.yorig;
+    engine.perform(0, true);
 }
 
 engine.log = function(err) {
@@ -79,7 +93,7 @@ engine.pause = function(e) {
         e.target.value = "stop";
         e.target.textContent = "Stop";
         if(engine.orbitTimer == null) {
-            engine.perform(false);
+            engine.perform(0, false);
         }
     }
 }
@@ -116,9 +130,8 @@ engine.addObject = function(name, pos, mass, vel, color) {
 }
 
 //Takes cart3 for position and velocity
-engine.addPlanet = function(name, pos, mass, vel, color) {
+engine.addPlanet = function(name, pos, mass, vel, color, radius) {
     engine.animate = false;
-    var radius = 10;
     var body = new OrbitBody(name, radius, pos, vel, mass, color);
     orbit_data.planet_array.push(body);
     engine.reset();
