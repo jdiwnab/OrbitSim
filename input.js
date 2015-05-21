@@ -75,6 +75,11 @@ engine.setupControlEvents = function() {
         engine.reset();
         return false;
     }, false);
+    engine.id("clear").addEventListener('click', function(e) {
+        engine.orbit_data.planet_array = [];
+        engine.reset();
+        return false;
+    }, false);
     engine.id("saveLocal").addEventListener('click', function(e) {
         engine.removePlanetData();
         localStorage.planetList = engine.getSaveData();
@@ -359,6 +364,7 @@ engine.loadPreset = function(e) {
 
 engine.newPlanetDialog = function() {
     engine.id('is_edit').value = false;
+    engine.id('modal_head').textContent="New Object";
     if(engine.orbit_data.planet_array[0] === undefined) {
         new_pos = new Cart3(0,0,0);
         new_vel = new Cart3(0,0,0);
@@ -389,6 +395,7 @@ engine.newPlanetDialog = function() {
 engine.editPlanetDialog = function(i) {
     engine.id('is_edit').value = true;
     engine.id('edit_index').value = i;
+    engine.id('modal_head').textContent="Edit Object";
     
     var p = engine.orbit_data.planet_array[i];
     engine.id('new_name').value=p.name;

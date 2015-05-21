@@ -28,7 +28,11 @@
                 width: 300px;
             }
             .modallabel {
-                width: 75px;
+                width: 50px;
+                display:inline-block;
+                font-weight: bold;
+                margin-top: 5px;
+                margin-bottom: 5px;
             }
             .modalinput {
                 width: 150px;
@@ -78,7 +82,17 @@
                     <input type="radio" id="algo2" name="algorithm" value="verlet">Verlet</input>
                     <input type="radio" id="algo3" name="algorithm" value="rk" checked>Runge-Kutta</input><br/>-->
                     <button id="stop" name="start" value="start">Start</button>
-                    <button id="reset" name="reset" value="reset">Reset</button><br/>
+                    <button id="reset" name="reset" value="reset">Reset</button>
+                    <button id="clear" name="clear" value="clear">Clear</button><br/>
+                </div>
+                <div id="preset-controls"  class="inputpanel" >
+                    <h2>Presets:</h2>
+                    <select id="presetSelect">
+                        <option value=0>Solar System</option>
+                        <option value=1>Double Star</option>
+                        <option value=2>Figure 8</option>
+                    </select>
+                    <button name="loadPreset" id="loadPreset" value="loadPreset">Load</button><br/>
                 </div>
                 <div id="storage-controls" class="inputpanel">
                 <!--local Storage -->
@@ -99,48 +113,47 @@
                     <h2>File Export</h2>
                     <button id="csvexport" name="csvexport" value="csvexport">Export to CSV</button><br/><br/>
                 </div>
-                <div id="preset-controls"  class="inputpanel" >
-                    <h2>Presets:</h2>
-                    <select id="presetSelect">
-                        <option value=0>Solar System</option>
-                        <option value=1>Double Star</option>
-                        <option value=2>Figure 8</option>
-                    </select>
-                    <button name="loadPreset" id="loadPreset" value="loadPreset">Load</button><br/>
-                </div>
+
             </div>
             <div id="console"></div>
         </div>
         <div class="remodal" data-remodal-id="editmodal" data-remodal-options="hashTracking: false">
-            <span class="modallabel"><label for="name">Name:</label></span>
+            <h2><span id="modal_head">New Object</span></h2>
+            
+            <div class="modallabel"><label for="name">Name:</label></div>
             <input class="modalinput" id="new_name" type="text" name="name" placeholder="Name"/><br/>
-            <label class="modallabel" for="new_pos_x">Position:</label>
+            
+            <label class="modallabel" for="new_pos">Position:</label>
             <div class="noUi-extended slider_with_pips" id="new_pos"></div>
-            <input type="hidden" name="vel" id="hidden_pos"/>
-            <span class="modallabel"><label for="pos_angle">Angle</label></span>
-            <input type="number" id="pos_angle" name="pos_angle" value="0"/>
+            <input class="modalinput" type="number" name="vel" id="hidden_pos"/>
+            <div class="modallabel"><label for="pos_angle">Angle:</label></div>
+            <input class="modalinput" type="number" id="pos_angle" name="pos_angle" value="0"/>
             <div id="direction" class="arrowcircle">
                 <div id="pos_arrow" class="arrowpointer"></div>
             </div><br/>
-            <!--<input style="width:150px;" id="new_pos_x" type="number" name="pos_x" placeholder="X"/>
-            <input style="width:150px;" id="new_pos_y" type="number" name="pos_y" placeholder="Y"/><br/>-->
-            <span class="modallabel"><label for="pos">Mass:</label></span>
+            
+            <div class="modallabel"><label for="pos">Mass:</label></div>
             <div class="noUi-extended slider_with_pips" id="new_mass"></div>
-            <input type="hidden" name="mass" id="hidden_mass"/>
-            <span class="modallabel"><label for="pos">Velocity:</label></span>
+            <input class="modalinput" type="number" name="mass" id="hidden_mass"/><br/>
+            
+            <div class="modallabel"><label for="pos">Velocity:</label></div>
             <div class="noUi-extended slider_with_pips" id="new_vel"></div>
-            <input type="hidden" name="vel" id="hidden_vel"/>
-            <span class="modallabel"><label for="vel_angle">Angle</label></span>
-            <input type="number" id="vel_angle" name="vel_angle" value="0"/>
+            <input class="modalinput" type="number" name="vel" id="hidden_vel"/>
+            <div class="modallabel"><label for="vel_angle">Angle:</label></div>
+            <input class="modalinput" type="number" id="vel_angle" name="vel_angle" value="0"/>
             <div id="direction" class="arrowcircle">
                 <div id="vel_arrow" class="arrowpointer"></div>
             </div><br/>
-            <span class="modallabel"><label for="color">Color:</label></span>
+            
+            <div class="modallabel"><label for="color">Color:</label></div>
             <select class="modalinput" id="new_color" name="color" placeholder="Color"></select><br/>
-            <span class="modallabel"><label for="new_rad">Radius:</label></span>
-            <input type="number" id="new_rad" name="new_rad" value="6000"/><br/>
-            <span class="modallabel"><label for="new_fixed">Fixed: </label></span>
+            
+            <div class="modallabel"><label for="new_rad">Radius:</label></div>
+            <input class="modalinput"type="number" id="new_rad" name="new_rad" value="6000"/><br/>
+            
+            <div class="modallabel"><label for="new_fixed">Fixed: </label></div>
             <input type="checkbox" id="new_fixed" name="new_fixed" value="false" checked="false"/><br/>
+            
             <input type="hidden" name="is_edit" id="is_edit" value="false"/><input type="hidden" name="edit_index" id="edit_index" value="-1"/>
             <a class="remodal-confirm" href="#">OK</a>
             <a class="remodal-cancel" href="#">Cancel</a>
