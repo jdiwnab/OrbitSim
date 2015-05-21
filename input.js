@@ -154,6 +154,14 @@ engine.setupFancyControls = function() {
     engine.createForm();
 }
 
+engine.cancelClick = function() {
+    if(engine.isMouseDown) {
+        engine.holdStart = null;
+        engine.isHolding = true;
+        engine.log("Start holding");
+    }
+}
+
 engine.mouseDown = function(e) {
     e.preventDefault();
     engine.mouseX = e.pageX - engine.canvas.offsetLeft;
@@ -162,15 +170,14 @@ engine.mouseDown = function(e) {
     engine.initY = engine.yorig;
     engine.isMouseDown=true;
     engine.isHolding = false;
-    engine.holdStart = setTimeout(function() {
-        engine.holdStart = null;
-        engine.isHolding = true;
-    },500)
+    engine.holdStart = setTimeout(engine.cancelClick,500);
+
 }
 
 engine.mouseDrag = function(e) {
     e.preventDefault();
     if(engine.isMouseDown) {
+        engine.cancelClick();
         var x = e.pageX - engine.canvas.offsetLeft;
         var y = e.pageY - engine.canvas.offsetTop;
         //engine.isHolding = true;
@@ -211,10 +218,11 @@ engine.mouseClick = function(e) {
         var pa = engine.orbit_data.planet_array[i];
         var pos = new Cart3(pa.renderPos);
         pos.x += engine.xorig;
-        pos.z += engine.yorig
-        
-        if( engine.mouseX < pos.x + 10 && engine.mouseX > pos.x - 10 &&
-            engine.mouseY < pos.z + 10 && engine.mouseY > pos.z - 10) {
+        pos.z += engine.yorig;
+        var radius = pa.radius * engine.drawingScale * engine.zoom * 15000;
+        var delta = (radius>10)?radius:10; //delta is at least 10, up to radius;
+        if( engine.mouseX < pos.x + delta && engine.mouseX > pos.x - delta &&
+            engine.mouseY < pos.z + delta && engine.mouseY > pos.z - delta) {
             foundObject = true;
             engine.log("Clicked on "+pa.name);
             engine.editPlanetDialog(i);
@@ -227,11 +235,7 @@ engine.mouseClick = function(e) {
 
 engine.touchStart = function(e) {
     engine.isHolding = false;
-    engine.holdStart = setTimeout(function() {
-        engine.holdStart = null;
-        engine.isHolding = true;
-        engine.log("Start holding");
-    },500);
+    engine.holdStart = setTimeout(engine.cancelClick,500);
     
     //Each touch shows up as it's own event
     //but each has it's own identifier so we can tell the difference
@@ -295,7 +299,7 @@ engine.touchEnd = function(e) {
 
 engine.touchMove = function(e) {
     e.preventDefault();
-    engine.isHolding = true;
+    engine.cancelClick();
     try {
         var touches = e.changedTouches;
         for(var i=0; i<touches.length; i++) {
