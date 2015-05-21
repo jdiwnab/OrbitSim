@@ -111,13 +111,15 @@
                     </form>
                     
                     <h2>File Export</h2>
-                    <button id="csvexport" name="csvexport" value="csvexport">Export to CSV</button><br/><br/>
+                    <button id="csvexport" name="csvexport" value="csvexport">Export to CSV</button>
+                    
+                    <h2>Precalculate</h2>
+                    <button id="precalculate" name="precalculate" value="precalculate">Precalculate</button>
                 </div>
-
+                <div class="inputpanel" id="console"></div>
             </div>
-            <div id="console"></div>
         </div>
-        <div class="remodal" data-remodal-id="editmodal" data-remodal-options="hashTracking: false">
+        <div class="remodal" id="editmodal" data-remodal-id="editmodal" data-remodal-options="hashTracking: false">
             <h2><span id="modal_head">New Object</span></h2>
             
             <div class="modallabel"><label for="name">Name:</label></div>
@@ -155,6 +157,15 @@
             <input type="checkbox" id="new_fixed" name="new_fixed" value="false" checked="false"/><br/>
             
             <input type="hidden" name="is_edit" id="is_edit" value="false"/><input type="hidden" name="edit_index" id="edit_index" value="-1"/>
+            <a class="remodal-confirm" href="#">OK</a>
+            <a class="remodal-cancel" href="#">Cancel</a>
+        </div>
+        <div class="remodal" id="precalcmodal" data-remodal-id="precalcmodal" data-remodal-options="hashTracking: false">
+            <h2>Precalculate</h2>
+            <div class="modallabel"><label for="precalc_timestep">Timestep</label>
+            <input class="modalinput" type="number" id="precalc_timestep" name="precalc_timestep" value="3600"/><br/>
+            <div class="modallabel"><label for="precalc_timespan">Timespan</label>
+            <input class="modalinput" type="number" id="precalc_timespan" name="precalc_timespan" value="31557600"/><br/>
             <a class="remodal-confirm" href="#">OK</a>
             <a class="remodal-cancel" href="#">Cancel</a>
         </div>

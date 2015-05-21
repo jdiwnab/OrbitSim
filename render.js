@@ -43,7 +43,7 @@ engine.drawSubset = function(refresh, timeStep, cx, cy, array) {
     }
     for(var i = 0; i < array.length; i++) {
         var p = array[i]
-        engine.updateOrbitHistory(p);
+        engine.updateOrbitHistory(p, false);
         var pp = engine.scaleOrbitingBody(p);
         var hist = engine.scaleHistory(p);
         engine.ctx.strokeStyle = 'gray';

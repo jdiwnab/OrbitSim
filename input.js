@@ -109,6 +109,10 @@ engine.setupControlEvents = function() {
         engine.loadPreset(e);
         return false;
     }, false);
+    engine.id("precalculate").addEventListener('click', function(e) {
+        engine.precalculateDialog();
+        return false;
+    }, false);
     /*engine.id("algo1").addEventListener('change', function(e) {
         engine.algorithm = e.target.value;
         return false;
@@ -157,6 +161,7 @@ engine.setupFancyControls = function() {
         step: 1
     });
     engine.createForm();
+    engine.createPrecalculateForm();
 }
 
 engine.cancelClick = function() {
@@ -424,6 +429,17 @@ engine.editPlanetDialog = function(i) {
     modal.open();
 }
 
+engine.precalculateDialog = function() {
+    var modal = $.remodal.lookup[$('[data-remodal-id=precalcmodal]').data('remodal')];
+    modal.open();
+}
+
+engine.createPrecalculateForm = function() {
+    $(document).on('confirm', '#precalcmodal', function () {
+        engine.precalculate(parseInt(engine.id('precalc_timestep').value), parseInt(engine.id('precalc_timespan').value));
+    });
+}
+
 engine.createForm = function() {
     $('#new_mass').noUiSlider({
         start: 1.3275E+011,
@@ -497,7 +513,7 @@ engine.createForm = function() {
         colors.add(option);
     }
     
-    $(document).on('confirm', '.remodal', function () {
+    $(document).on('confirm', '#editmodal', function () {
         if(engine.id('is_edit').value === "false") {
             engine.submitNewForm();
         } else {

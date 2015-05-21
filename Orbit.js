@@ -99,7 +99,7 @@ engine.pause = function(e) {
 }
 
 //For the submit button of a form, old
-engine.addBody = function(e) {
+/*engine.addBody = function(e) {
     engine.animate = false;
     var name = engine.id('new_name').value;
     var pos = engine.id('new_pos').value;
@@ -118,16 +118,16 @@ engine.addBody = function(e) {
     engine.id('new_vel').value = '';
     engine.id('new_color').value = '';
     engine.reset();
-}
+}*/
 
 //For the modal dialog, sends basic info
-engine.addObject = function(name, pos, mass, vel, color) {
+/*engine.addObject = function(name, pos, mass, vel, color) {
     engine.animate = false;
     var radius = 10;
     var body = new OrbitBody(name, parseFloat(radius), new Cart3(parseFloat(pos),0,0), new Cart3(0,0,parseFloat(vel)), parseFloat(mass), color);
     orbit_data.planet_array.push(body);
     engine.reset();
-}
+}*/
 
 //Takes cart3 for position and velocity
 engine.addPlanet = function(name, pos, mass, vel, color, radius, fixed) {
@@ -155,12 +155,30 @@ engine.updateObjects = function(array, dt) {
     engine.elapsedTime += dt;
 }
 
-engine.updateOrbitHistory = function(pa) {
-    if(pa.history.length >= 1000) {
+engine.updateOrbitHistory = function(pa, unlimited) {
+    if(pa.history.length >= 1000 && !unlimited) {
         pa.history.shift();
     }
     pa.history.push(new Cart3(pa.pos));
     pa.history[pa.history.length-1].timestamp = engine.elapsedTime;
+}
+
+engine.precalculate = function(dt, time) {
+    engine.precalcStep(dt);
+    if(engine.elapsedTime < time) {
+        engine.log("Calculating... ("+(engine.elapsedTime/time) * 100+"%)");
+        engine.orbitTimer = requestAnimationFrame(function() {engine.precalculate( dt,time);});
+    } else {
+        engine.csvexport();
+    }
+}
+
+engine.precalcStep = function(dt) {
+    engine.updateObjects(engine.orbit_data.planet_array,dt);
+    for(var i = 0; i < engine.orbit_data.planet_array.length; i++) {
+        var p = engine.orbit_data.planet_array[i]
+        engine.updateOrbitHistory(p, true);
+    }
 }
 
 engine.calcAccel = function(pa, pos, array) {
