@@ -373,6 +373,7 @@ engine.newPlanetDialog = function() {
     engine.fireEvent(engine.id('vel_angle'), 'change');
     engine.id('new_rad').value=6000;
     engine.id('new_name').value='';
+    engine.id('new_fixed').checked = false;
     /*setTimeout(function() {
     //    document.getElementById('new_name').focus();
     }, 300);*/
@@ -403,6 +404,7 @@ engine.editPlanetDialog = function(i) {
     
     engine.id('new_rad').value = p.radius;
     engine.id('new_color').value=p.color;
+    engine.id('new_fixed').checked = p.fixed;
     /*setTimeout(function() {
         document.getElementById('new_name').focus();
     }, 300);*/
@@ -502,7 +504,7 @@ engine.submitNewForm = function() {
     var pos_angle = parseFloat(engine.id('pos_angle').value) * Math.PI / 180;
     var pos_x = pos * Math.cos(pos_angle);
     var pos_y = pos * Math.sin(pos_angle);
-    engine.addPlanet(engine.id('new_name').value, new Cart3(pos_x, 0, pos_y), parseFloat(engine.id('hidden_mass').value), new Cart3(parseFloat(vel_x), 0, parseFloat(vel_y)), engine.id('new_color').value, parseFloat(engine.id('new_rad').value));
+    engine.addPlanet(engine.id('new_name').value, new Cart3(pos_x, 0, pos_y), parseFloat(engine.id('hidden_mass').value), new Cart3(parseFloat(vel_x), 0, parseFloat(vel_y)), engine.id('new_color').value, parseFloat(engine.id('new_rad').value), engine.id('new_fixed').checked);
 }
 
 engine.submitEditForm = function() {
@@ -519,6 +521,7 @@ engine.submitEditForm = function() {
     p.startvel.z = vel * Math.sin(angle);
     p.color = engine.id('new_color').value;
     p.radius = parseFloat(engine.id('new_rad').value);
+    p.fixed = engine.id('new_fixed').checked;
     engine.reset();
 }
 

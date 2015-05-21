@@ -42,11 +42,12 @@ engine.loadObject = function(planetList, loadingState) {
         planet.startpos = startpos;
         planet.startvel = startvel;
         planet.history = history;
+        planet.fixed = p.fixed;
         engine.orbit_data.planet_array.push(planet);
     }
 
     if(loadingState) {
-        engine.perform(true);
+        engine.perform(0, true);
     } else {
         engine.reset();
     }

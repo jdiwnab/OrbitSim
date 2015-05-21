@@ -104,6 +104,7 @@
                     <select id="presetSelect">
                         <option value=0>Solar System</option>
                         <option value=1>Double Star</option>
+                        <option value=2>Figure 8</option>
                     </select>
                     <button name="loadPreset" id="loadPreset" value="loadPreset">Load</button><br/>
                 </div>
@@ -137,8 +138,10 @@
             <span class="modallabel"><label for="color">Color:</label></span>
             <select class="modalinput" id="new_color" name="color" placeholder="Color"></select><br/>
             <span class="modallabel"><label for="new_rad">Radius:</label></span>
-            <input type="number" id="new_rad" name="new_rad" value="6000"/>
-            <input type="hidden" name="is_edit" id="is_edit" value="false"/><input type="hidden" name="edit_index" id="edit_index" value="-1"/><br/>
+            <input type="number" id="new_rad" name="new_rad" value="6000"/><br/>
+            <span class="modallabel"><label for="new_fixed">Fixed: </label></span>
+            <input type="checkbox" id="new_fixed" name="new_fixed" value="false" checked="false"/><br/>
+            <input type="hidden" name="is_edit" id="is_edit" value="false"/><input type="hidden" name="edit_index" id="edit_index" value="-1"/>
             <a class="remodal-confirm" href="#">OK</a>
             <a class="remodal-cancel" href="#">Cancel</a>
         </div>

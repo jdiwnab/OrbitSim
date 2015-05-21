@@ -72,8 +72,6 @@ function OrbitData() {
                 "color":"yellow",
                 "startpos":{"x":0,"y":0,"z":0},
                 "startvel":{"x":0,"y":0,"z":0},
-                "history":[],
-                "renderPos":{"x":0,"y":0,"z":0}
             },
             {
                 "name":"Mercury",
@@ -84,8 +82,6 @@ function OrbitData() {
                 "color":"orange",
                 "startpos":{"x":57900000,"y":0,"z":0},
                 "startvel":{"x":0,"y":0,"z":47.9},
-                "history":[],
-                "renderPos":{"x":57900000,"y":0,"z":0}
             },
             {
                 "name":"Venus",
@@ -96,8 +92,6 @@ function OrbitData() {
                 "color":"yellow",
                 "startpos":{"x":108000000,"y":0,"z":0},
                 "startvel":{"x":0,"y":0,"z":35},
-                "history":[],
-                "renderPos":{"x":108000000,"y":0,"z":0}
             },
             {
                 "name":"Earth",
@@ -108,8 +102,6 @@ function OrbitData() {
                 "color":"blue",
                 "startpos":{"x":150000000,"y":0,"z":0},
                 "startvel":{"x":0,"y":0,"z":29.8},
-                "history":[],
-                "renderPos":{"x":150000000,"y":0,"z":0}
             },
             {
                 "name":"Moon",
@@ -120,8 +112,6 @@ function OrbitData() {
                 "color":"white",
                 "startpos":{"x":150385000,"y":0,"z":0},
                 "startvel":{"x":0,"y":0,"z":30.822},
-                "history":[],
-                "renderPos":{"x":150385000,"y":0,"z":0}
             },
             {
                 "name":"Mars",
@@ -132,8 +122,6 @@ function OrbitData() {
                 "color":"red",
                 "startpos":{"x":227900000,"y":0,"z":0},
                 "startvel":{"x":0,"y":0,"z":24.077},
-                "history":[],
-                "renderPos":{"x":227900000,"y":0,"z":0}
             },
             {
                 "name":"Jupiter",
@@ -144,8 +132,6 @@ function OrbitData() {
                 "color":"orange",
                 "startpos":{"x":778330000,"y":0,"z":0},
                 "startvel":{"x":0,"y":0,"z": 13.1},
-                "history":[],
-                "renderPos":{"x":778330000,"y":0,"z":0}
             },
             {
                 "name":"Saturn",
@@ -156,8 +142,6 @@ function OrbitData() {
                 "color":"yellow",
                 "startpos":{"x":1429400000,"y":0,"z":0},
                 "startvel":{"x":0,"y":0,"z": 9.64},
-                "history":[],
-                "renderPos":{"x":1429400000,"y":0,"z":0}
             },
             {
                 "name":"Uranus",
@@ -168,8 +152,6 @@ function OrbitData() {
                 "color":"cyan",
                 "startpos":{"x":2870990000,"y":0,"z":0},
                 "startvel":{"x":0,"y":0,"z": 6.81},
-                "history":[],
-                "renderPos":{"x":2870990000,"y":0,"z":0}
             },
             {
                 "name":"Neptune",
@@ -180,8 +162,6 @@ function OrbitData() {
                 "color":"blue",
                 "startpos":{"x":4504300000,"y":0,"z":0},
                 "startvel":{"x":0,"y":0,"z": 5.43},
-                "history":[],
-                "renderPos":{"x":4504300000,"y":0,"z":0}
             },
             {
                 "name":"Pluto",
@@ -192,8 +172,6 @@ function OrbitData() {
                 "color":"white",
                 "startpos":{"x":5913520000,"y":0,"z":0},
                 "startvel":{"x":0,"y":0,"z": 4.74},
-                "history":[],
-                "renderPos":{"x":5913520000,"y":0,"z":0}
             }
         ]}
     );
@@ -209,8 +187,6 @@ function OrbitData() {
                 "color":"yellow",
                 "startpos":{"x":57900000,"y":0,"z":0},
                 "startvel":{"x":0,"y":0,"z":23.94},
-                "history":[],
-                "renderPos":{"x":57900000,"y":0,"z":0}
             },
             {
                 "name":"Sun 2",
@@ -221,8 +197,6 @@ function OrbitData() {
                 "color":"orange",
                 "startpos":{"x":-57900000,"y":0,"z":0},
                 "startvel":{"x":0,"y":0,"z":-23.94},
-                "history":[],
-                "renderPos":{"x":-57900000,"y":0,"z":0}
             },
             {
                 "name":"Earth",
@@ -233,9 +207,45 @@ function OrbitData() {
                 "color":"cyan",
                 "startpos":{"x":536182804.55,"y":0,"z":0},
                 "startvel":{"x":0,"y":0,"z":22.13},
-                "history":[],
-                "renderPos":{"x":536182804.55,"y":0,"z":0},
             }
         ]}
     );
+    //Fixed stars
+    this.presets.push({ planetArray: 
+        [
+            {
+                "name":"Sun1",
+                "radius":600000,
+                "mass":132750000192,
+                "pos":{"x":0,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":0,"y":0,"z":0,"timestamp":0},
+                "color":"yellow",
+                "startpos":{"x":0,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":0,"y":0,"z":0,"timestamp":0},
+                "fixed":true,
+            },
+            {
+                "name":"Sun2",
+                "radius":600000,
+                "mass":132750000192,
+                "pos":{"x":254166667.27,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":0,"y":0,"z":0,"timestamp":0},
+                "color":"orange",
+                "startpos":{"x":254166667.27,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":0,"y":0,"z":0,"timestamp":0},
+                "fixed":true,
+            },
+            {
+                "name":"Earth",
+                "radius":6000,
+                "mass":782981.08,
+                "pos":{"x":-162583444.55,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":0,"y":0,"z":-30.5,"timestamp":0},
+                "color":"blue",
+                "startpos":{"x":-162583444.55,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":0,"y":0,"z":-24.105,"timestamp":0},
+                "fixed":false,
+            }
+        ]
+    });
 }

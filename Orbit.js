@@ -130,9 +130,10 @@ engine.addObject = function(name, pos, mass, vel, color) {
 }
 
 //Takes cart3 for position and velocity
-engine.addPlanet = function(name, pos, mass, vel, color, radius) {
+engine.addPlanet = function(name, pos, mass, vel, color, radius, fixed) {
     engine.animate = false;
     var body = new OrbitBody(name, radius, pos, vel, mass, color);
+    body.fixed = fixed;
     orbit_data.planet_array.push(body);
     engine.reset();
 }
@@ -140,6 +141,9 @@ engine.addPlanet = function(name, pos, mass, vel, color, radius) {
 
 engine.updateObjects = function(array, dt) {
     for(var i = 0; i<array.length; i++) {
+        if(array[i].fixed) { 
+            continue;
+        }
         if(engine.algorithm === "rk") {
             engine.rkIterate(array[i],dt,array);
         } else if(engine.algorithm === "verlet") {
@@ -190,6 +194,7 @@ function OrbitBody(name, radius, pos, vel, mass, color) {
     this.startvel = new Cart3(vel);
     this.history = [new Cart3(pos)];
     this.scaledHistory; //cart3 array;
+    this.fixed = false;
     this.renderPos = new Cart3();
     this.reset = function() {
         this.pos = new Cart3(this.startpos);
