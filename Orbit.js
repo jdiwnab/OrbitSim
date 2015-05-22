@@ -20,6 +20,7 @@ engine.frame_delay_ms = 4; // delay between frames. Not to be confused with fram
 engine.drawingScale = 1e-9;
 engine.substeps = 4;
 engine.fps = 0; //for performance monitoring
+engine.tps = 0; //for performance monitoring
 engine.algorithm = "rk";
 
 // Mass: Kg

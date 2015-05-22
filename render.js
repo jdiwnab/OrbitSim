@@ -13,20 +13,7 @@ engine.perform = function(time, refresh) {
 
         //This is the amount of simulation time elapsed per second. Determined based on framerate
         engine.tps = (engine.timeStep * engine.stepsPerFrame) * engine.fps;
-        /*var t1 = performance.now();
-        if(t1-t0 == 0) {
-            //low percision numbers
-            t1 += .1;
-        }
-        var fps = 1/((t1-t0)/1000);
-        engine.frame_count += 1
-        if(engine.fps == 0) {
-            engine.fps = fps;
-        } else {
-            engine.fps = engine.fps + (fps - engine.fps)/10;
-        }*/
-        
-        
+  
     }
     if(!refresh) {
         //engine.orbitTimer = setTimeout(engine.perform,engine.frame_delay_ms, false);
