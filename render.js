@@ -1,8 +1,19 @@
 engine.perform = function(time, refresh) {
     if(engine.animate || refresh) {
-        var t0 = performance.now();
+        //var t0 = performance.now();
         engine.render(refresh);
-        var t1 = performance.now();
+
+        if(engine.oldTime == undefined) { engine.oldTime = 0; }
+        var time_delta = time - engine.oldTime;
+        if(time_delta == 0) { time_delta += .1; }
+        var fps = 1/(time_delta/1000);
+        if(engine.fps == 0) { engine.fps = fps; }
+        else { engine.fps = engine.fps + (fps - engine.fps)/10; }
+        engine.oldTime = time;
+
+        //This is the amount of simulation time elapsed per second. Determined based on framerate
+        engine.tps = (engine.timeStep * engine.stepsPerFrame) * engine.fps;
+        /*var t1 = performance.now();
         if(t1-t0 == 0) {
             //low percision numbers
             t1 += .1;
@@ -13,11 +24,13 @@ engine.perform = function(time, refresh) {
             engine.fps = fps;
         } else {
             engine.fps = engine.fps + (fps - engine.fps)/10;
-        }
+        }*/
+        
+        
     }
     if(!refresh) {
         //engine.orbitTimer = setTimeout(engine.perform,engine.frame_delay_ms, false);
-        engine.orbitTimer = requestAnimationFrame(engine.perform, false);
+        engine.orbitTimer = requestAnimationFrame(function(time) { engine.perform(time, false);});
     }
 
 }
@@ -116,9 +129,22 @@ engine.drawLabels = function() {
             time = engine.elapsedTime/60/60/24/365.25;
             timeUnit = "y";
         }
+        var tps;
+        var tps_unit;
+        if(engine.tps < 24*60*60) {
+            tps = engine.tps/60/60;
+            tps_unit = "h";
+        } else if(engine.tps < 365.25*24*60*60) {
+            tps = engine.tps/60/60/24;
+            tps_unit = "d";
+        } else {
+            tps = engine.tps/60/60/24/365.25;
+            tps_unit = "y";
+        }
         engine.ctx.fillText('Time ' + engine.formatNum(time,2,8) + timeUnit,8, engine.ysize-24);
         engine.ctx.fillText('Zoom ' + engine.formatNum(engine.zoom,2,8) + 'x',8, engine.ysize-8);
         engine.ctx.fillText('fps  ' + engine.formatNum(engine.fps, 2, 8),8, engine.ysize-40);
+        engine.ctx.fillText('tps  ' + engine.formatNum(tps,2,8) + tps_unit,8, engine.ysize-56);
 
         
     }
