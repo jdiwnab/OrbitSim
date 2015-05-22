@@ -22,6 +22,7 @@ engine.substeps = 4;
 engine.fps = 0; //for performance monitoring
 engine.tps = 0; //for performance monitoring
 engine.algorithm = "rk";
+engine.collisions = false;
 
 // Mass: Kg
 // Distance: Meters
@@ -99,36 +100,6 @@ engine.pause = function(e) {
     }
 }
 
-//For the submit button of a form, old
-/*engine.addBody = function(e) {
-    engine.animate = false;
-    var name = engine.id('new_name').value;
-    var pos = engine.id('new_pos').value;
-    //var radius = engine.id('new_radius').value;
-    var radius = 10;
-    var mass = engine.id('new_mass').value;
-    var vel = engine.id('new_vel').value;
-    var color = engine.id('new_color').value;
-    var body = new OrbitBody(name, parseFloat(radius), new Cart3(parseFloat(pos),0,0), new Cart3(0,0,parseFloat(vel)), parseFloat(mass), color);
-    orbit_data.planet_array.push(body);
-    //orbit_data.addToTable(body);
-    engine.id('new_name').value = '';
-    engine.id('new_pos').value = '';
-    //engine.id('new_radius').value = '';
-    engine.id('new_mass').value = '';
-    engine.id('new_vel').value = '';
-    engine.id('new_color').value = '';
-    engine.reset();
-}*/
-
-//For the modal dialog, sends basic info
-/*engine.addObject = function(name, pos, mass, vel, color) {
-    engine.animate = false;
-    var radius = 10;
-    var body = new OrbitBody(name, parseFloat(radius), new Cart3(parseFloat(pos),0,0), new Cart3(0,0,parseFloat(vel)), parseFloat(mass), color);
-    orbit_data.planet_array.push(body);
-    engine.reset();
-}*/
 
 //Takes cart3 for position and velocity
 engine.addPlanet = function(name, pos, mass, vel, color, radius, fixed) {
@@ -139,18 +110,22 @@ engine.addPlanet = function(name, pos, mass, vel, color, radius, fixed) {
     engine.reset();
 }
 
-
 engine.updateObjects = function(array, dt) {
     for(var i = 0; i<array.length; i++) {
-        if(array[i].fixed) { 
+        if(array[i].fixed || array[i].destroyed) { 
             continue;
         }
+        array[i].oldVel = array[i].vel;
+        
         if(engine.algorithm === "rk") {
             engine.rkIterate(array[i],dt,array);
         } else if(engine.algorithm === "verlet") {
             engine.verletIntegrate(array[i], dt, array);
         } else {
             engine.eulerIntegrate(array[i], dt, array);
+        }
+        if(engine.collisions) {
+            engine.calcCollision(array[i],array);
         }
     }
     engine.elapsedTime += dt;
@@ -188,7 +163,7 @@ engine.calcAccel = function(pa, pos, array) {
     for(var i = 0; i<array.length; i++) {
         var pb = array[i];
         //don't compute self-gravitation
-        if(pa != undefined && pb != undefined && pa != pb) {
+        if(pa != undefined && pb != undefined && pa != pb && !pb.destroyed) {
             //1. vel += dt * radius * -G * mass * radius.abs()^(-3/2)
             //2. pos += dt * vel
             //G is normalized to 1, so removed here
@@ -198,6 +173,31 @@ engine.calcAccel = function(pa, pos, array) {
         }
     }
     return accel;
+}
+
+engine.calcCollision = function(pa, array) {
+    var radius = new Cart3();
+    for(var i = 0; i<array.length; i++) {
+        var pb = array[i];
+        if(pa != undefined && pb != undefined && pa != pb && !pb.destroyed) {
+            if(pa.mass >= pb.mass) { //otherwise, wait for pb to become pa
+                radius.x=0;radius.y=0;radius.z=0;
+                radius.addTo(pa.pos).subFrom(pb.pos);
+                if(radius.abs() < pa.radius + pb.radius) {
+                    //collision!
+                    var p_a = new Cart3(pa.oldVel).multBy(pa.mass);
+                    var p_b = new Cart3(pb.oldVel).multBy(pb.mass);
+                    var vf = new Cart3(p_a).addTo(p_b).divBy(pa.mass+pb.mass);
+                    engine.log('collide: '+p_a.toString()+' with '+p_b.toString()+' = '+vf.toString());
+                    pa.mass += pb.mass;
+                    pa.vel = vf;
+                    //array.splice(i,1);
+                    array[i].destroyed = true;
+                    break; //only one collision at a time for now.
+                }
+            }
+        }
+    }
 }
 
 function OrbitBody(name, radius, pos, vel, mass, color) {
@@ -211,16 +211,20 @@ function OrbitBody(name, radius, pos, vel, mass, color) {
     this.color = color; //string
     this.startpos = new Cart3(pos);
     this.startvel = new Cart3(vel);
+    this.startmass = mass;
     this.history = [new Cart3(pos)];
     this.scaledHistory; //cart3 array;
     this.fixed = false;
     this.renderPos = new Cart3();
+    this.destroyed = false;
     this.reset = function() {
         this.pos = new Cart3(this.startpos);
         this.vel = new Cart3(this.startvel);
+        this.mass = this.startmass;
         this.history = [new Cart3(this.startpos)];
         this.scaledHistory = undefined; 
         this.oldPos = undefined;
+        this.destroyed = false;
     }
     this.resetScaledHistory = function() {
         this.scaledHistory = undefined;

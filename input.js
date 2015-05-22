@@ -542,6 +542,7 @@ engine.submitEditForm = function() {
     p.startpos.x = pos * Math.cos(pos_angle);
     p.startpos.z = pos * Math.sin(pos_angle);
     p.mass = parseFloat(engine.id('hidden_mass').value);
+    p.startmass = parseFloat(engine.id('hidden_mass').value);
     var angle = parseFloat(engine.id('vel_angle').value) * Math.PI / 180;
     var vel = parseFloat(engine.id('hidden_vel').value);
     p.startvel.x = vel * Math.cos(angle);

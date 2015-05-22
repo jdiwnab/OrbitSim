@@ -22,6 +22,14 @@ function Cart3Prototype() {
         this.z *= m;
         return this;
     }
+    
+    this.divBy = function(m) {
+        this.x /= m;
+        this.y /= m;
+        this.z /= m;
+        return this;
+    }
+    
     this.add = function(a) {
         return new Cart3(this.x + a.x, this.y+a.y, this.z+a.z);
     }

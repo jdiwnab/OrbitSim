@@ -42,7 +42,10 @@ engine.drawSubset = function(refresh, timeStep, cx, cy, array) {
         }
     }
     for(var i = 0; i < array.length; i++) {
-        var p = array[i]
+        var p = array[i];
+        if(p.destroyed) {
+            continue;
+        }
         engine.updateOrbitHistory(p, false);
         var pp = engine.scaleOrbitingBody(p);
         var hist = engine.scaleHistory(p);
