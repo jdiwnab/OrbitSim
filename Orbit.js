@@ -22,8 +22,9 @@ engine.substeps = 4;
 engine.fps = 0; //for performance monitoring
 engine.tps = 0; //for performance monitoring
 engine.algorithm = "rk";
-engine.collisions = false;
+engine.collisions = true;
 engine.history = true;
+engine.clipping = true;
 
 // Mass: Kg
 // Distance: Meters
@@ -129,13 +130,17 @@ engine.updateObjects = function(array, dt) {
             engine.calcCollision(array[i],array);
         }
         
+        if(engine.clipping) {
+            engine.calcClipping(array[i]);
+        }
+        
         engine.updateOrbitHistory(array[i], false);
     }
     engine.elapsedTime += dt;
 }
 
 engine.updateOrbitHistory = function(pa, unlimited) {
-    if(!engine.history) return;
+    //if(!engine.history) return;
 
     if(pa.history.length >= 1000 && !unlimited) {
         pa.history.shift();
@@ -202,6 +207,11 @@ engine.calcCollision = function(pa, array) {
                 }
             }
         }
+    }
+}
+engine.calcClipping = function(pa) {
+    if(pa.pos.abs() > 100000000000) {
+        pa.destroyed = true;
     }
 }
 

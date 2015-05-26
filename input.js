@@ -69,6 +69,7 @@ engine.setupControlEvents = function() {
     });
     engine.id("showHistory").addEventListener('change', function(e) {
         engine.history = true;
+        engine.resetScaledHistory();
     }, false);
     engine.id("hideHistory").addEventListener('change', function(e) {
         engine.history = false;
@@ -113,6 +114,10 @@ engine.setupControlEvents = function() {
     }, false);
     engine.id("loadPreset").addEventListener('click', function(e) {
         engine.loadPreset(e);
+        return false;
+    }, false);
+    engine.id("loadRandom").addEventListener('click', function(e) {
+        engine.loadRandomPlanets(500);
         return false;
     }, false);
     engine.id("precalculate").addEventListener('click', function(e) {
