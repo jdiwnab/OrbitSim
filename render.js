@@ -46,11 +46,8 @@ engine.drawSubset = function(refresh, timeStep, cx, cy, array) {
         if(p.destroyed) {
             continue;
         }
-        engine.updateOrbitHistory(p, false);
         var pp = engine.scaleOrbitingBody(p);
-        var hist = engine.scaleHistory(p);
-        engine.ctx.strokeStyle = 'gray';
-        engine.drawOrbit(hist, cx, cy);
+        engine.drawOrbit(p, cx, cy);
         engine.ctx.fillStyle = p.color;
         var radius = p.radius * engine.drawingScale * engine.zoom * 15000;
         radius = (radius < 2) ? 2 : radius;
@@ -151,8 +148,12 @@ engine.drawOval = function(x, y, cx, cy, ovalSize) {
     }
 }
 
-engine.drawOrbit = function(history, cx, cy) {
+engine.drawOrbit = function(p, cx, cy) {
+    if(!engine.history) return;
+    
+    var history = engine.scaleHistory(p);
     try {
+        engine.ctx.strokeStyle = 'gray';
         engine.ctx.moveTo(history[1].x + cx, history[1].y + cy);
         engine.ctx.beginPath();
         for(var i = 2; i<history.length; i++) {

@@ -23,6 +23,7 @@ engine.fps = 0; //for performance monitoring
 engine.tps = 0; //for performance monitoring
 engine.algorithm = "rk";
 engine.collisions = false;
+engine.history = true;
 
 // Mass: Kg
 // Distance: Meters
@@ -127,11 +128,15 @@ engine.updateObjects = function(array, dt) {
         if(engine.collisions) {
             engine.calcCollision(array[i],array);
         }
+        
+        engine.updateOrbitHistory(array[i], false);
     }
     engine.elapsedTime += dt;
 }
 
 engine.updateOrbitHistory = function(pa, unlimited) {
+    if(!engine.history) return;
+
     if(pa.history.length >= 1000 && !unlimited) {
         pa.history.shift();
     }

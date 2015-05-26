@@ -67,6 +67,12 @@ engine.setupControlEvents = function() {
             return engine.updateFramerate(e, this);
         } 
     });
+    engine.id("showHistory").addEventListener('change', function(e) {
+        engine.history = true;
+    }, false);
+    engine.id("hideHistory").addEventListener('change', function(e) {
+        engine.history = false;
+    }, false);
     engine.id("stop").addEventListener('click', function(e) {
         engine.pause(e);
         return false;
