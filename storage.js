@@ -37,7 +37,7 @@ engine.loadObject = function(planetList, loadingState) {
             var entry = p.history[j];
             history.push(new Cart3(entry.x, entry.y, entry.z));
         }
-        var planet = new OrbitBody(p.name, p.radius, pos, vel, p.mass, p.color);
+        var planet = new OrbitBody(p.name, parseFloat(p.radius), pos, vel, parseFloat(p.mass), p.color);
         planet.radius = p.radius;
         planet.startpos = startpos;
         planet.startvel = startvel;
