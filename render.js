@@ -46,6 +46,7 @@ engine.drawSubset = function(refresh, timeStep, cx, cy, array) {
         if(p.destroyed) {
             continue;
         }
+        engine.updateOrbitHistory(p, true);
         var pp = engine.scaleOrbitingBody(p);
         engine.drawOrbit(p, cx, cy);
         engine.ctx.fillStyle = p.color;
@@ -73,21 +74,22 @@ engine.unscaleCoordinate = function(x, y) {
 
 engine.scaleHistory = function(p) {
     var history = p.history;
-    if(p.scaledHistory === undefined) {
+    //if(p.scaledHistory === undefined) {
         var new_hist = [];
+        //p.scaledHistory = []
+        //console.log('Rescaling all history for '+p.name);
         for(var i=0; i<history.length; i++) {
             var h = new Cart3(history[i]).multBy(engine.drawingScale*engine.zoom*engine.xsize/2);
             new_hist.push(h);
         }
-        p.scaledHistory = new_hist;
-    } else {
+    /*} else {
         var h = new Cart3(history[history.length-1]).multBy(engine.drawingScale*engine.zoom*engine.xsize/2);
         if(p.scaledHistory.length >= 1000) {
             p.scaledHistory.shift();
         }
         p.scaledHistory.push(h);
-    }
-    return p.scaledHistory;
+    }*/
+    return new_hist;
 }
 
 engine.resetScaledHistory = function() {

@@ -248,4 +248,83 @@ function OrbitData() {
             }
         ]
     });
+    
+    /*this.presets.push( { planetArray:
+        [
+            {
+                "name":"Sun",
+                "radius":600000,
+                "mass":140000000000,
+                "pos":{"x":0,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":0,"y":0,"z":0,"timestamp":0},
+                "color":"yellow",
+                "startpos":{"x":0,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":0,"y":0,"z":0,"timestamp":0},
+                "startmass":140000000000,
+                "fixed":false,
+            },
+            {
+                "name":"Earth",
+                "radius":6000,
+                "mass":500000,
+                "pos":{"x":200000000,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":0,"y":0,"z":26.457513,"timestamp":0},
+                "color":"blue",
+                "startpos":{"x":200000000,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":0,"y":0,"z":26.457513,"timestamp":0},
+                "startmass":500000,
+                "fixed":false,
+            },
+            {
+                "name":"L5",
+                "radius":6000,
+                "mass":5,
+                "pos":{"x":100000000,"y":0,"z":173205080.7568877,"timestamp":0},
+                "vel":{"x":-22.9128784,"y":0,"z":26.457513,"timestamp":0},
+                "color":"red",
+                "startpos":{"x":100000000,"y":0,"z":173205080.7568877,"timestamp":0},
+                "startvel":{"x":-22.9128784,"y":0,"z":26.457513,"timestamp":0},
+                "startmass":5,
+                "fixed":false,
+            },
+            {
+                "name":"L4",
+                "radius":6000,
+                "mass":5,
+                "pos":{"x":100000000,"y":0,"z":-173205080.7568877,"timestamp":0},
+                "vel":{"x":22.9128784,"y":0,"z":26.457513,"timestamp":0},
+                "color":"magenta",
+                "startpos":{"x":100000000,"y":0,"z":-173205080.7568877,"timestamp":0},
+                "startvel":{"x":22.9128784,"y":0,"z":26.457513,"timestamp":0},
+                "startmass":5,
+                "fixed":false,
+            },
+            {
+                "name":"L2",
+                "radius":6000,
+                "mass":5,
+                "pos":{"x":200218217.890236,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":0,"y":0,"z":26.4863806,"timestamp":0},
+                "color":"orange",
+                "startpos":{"x":200218217.890236,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":0,"y":0,"z":26.4863806,"timestamp":0},
+                "startmass":5,
+                "fixed":false,
+            },
+            {
+                "name":"L1",
+                "radius":6000,
+                "mass":5,
+                "pos":{"x":199781782.109764,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":0,"y":0,"z":26.4286456,"timestamp":0},
+                "color":"yellow",
+                "startpos":{"x":199781782.109764,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":0,"y":0,"z":26.4286456,"timestamp":0},
+                "startmass":5,
+                "fixed":false,
+            }
+        ]
+    });*/
+    
+    
 }

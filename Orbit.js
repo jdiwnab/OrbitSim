@@ -134,7 +134,6 @@ engine.updateObjects = function(array, dt) {
             engine.calcClipping(array[i]);
         }
         
-        engine.updateOrbitHistory(array[i], false);
     }
     engine.elapsedTime += dt;
 }
@@ -161,6 +160,7 @@ engine.precalculate = function(dt, time) {
 
 engine.precalcStep = function(dt) {
     engine.updateObjects(engine.orbit_data.planet_array,dt);
+    
     for(var i = 0; i < engine.orbit_data.planet_array.length; i++) {
         var p = engine.orbit_data.planet_array[i]
         engine.updateOrbitHistory(p, true);
