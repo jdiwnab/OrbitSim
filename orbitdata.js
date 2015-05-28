@@ -248,8 +248,7 @@ function OrbitData() {
             }
         ]
     });
-<<<<<<< HEAD
-    
+   
     /*this.presets.push( { planetArray:
         [
             {
