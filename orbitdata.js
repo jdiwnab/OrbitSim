@@ -66,7 +66,7 @@ function OrbitData() {
             {
                 "name":"Sun",
                 "radius":695000,
-                "mass":"132750000192.00",
+                "mass":132750000192.00,
                 "pos":{"x":0,"y":0,"z":0},
                 "vel":{"x":0,"y":0,"z":0},
                 "color":"yellow",
@@ -76,7 +76,7 @@ function OrbitData() {
             {
                 "name":"Mercury",
                 "radius":2440,
-                "mass":"22225",
+                "mass":22225,
                 "pos":{"x":57900000,"y":0,"z":0},
                 "vel":{"x":0,"y":0,"z":47.9},
                 "color":"orange",
@@ -86,7 +86,7 @@ function OrbitData() {
             {
                 "name":"Venus",
                 "radius":6050,
-                "mass":"324900",
+                "mass":324900,
                 "pos":{"x":108000000,"y":0,"z":0},
                 "vel":{"x":0,"y":0,"z":35},
                 "color":"yellow",
@@ -96,7 +96,7 @@ function OrbitData() {
             {
                 "name":"Earth",
                 "radius":6378,
-                "mass":"398850",
+                "mass":398850,
                 "pos":{"x":150000000,"y":0,"z":0},
                 "vel":{"x":0,"y":0,"z":29.8},
                 "color":"blue",
@@ -106,7 +106,7 @@ function OrbitData() {
             {
                 "name":"Moon",
                 "radius":1738,
-                "mass":"4904",
+                "mass":4904,
                 "pos":{"x":150385000,"y":0,"z":0},
                 "vel":{"x":0,"y":0,"z":30.822},
                 "color":"white",
@@ -116,7 +116,7 @@ function OrbitData() {
             {
                 "name":"Mars",
                 "radius":3389,
-                "mass":"42830",
+                "mass":42830,
                 "pos":{"x":227900000,"y":0,"z":0},
                 "vel":{"x":0,"y":0,"z":24.077},
                 "color":"red",
@@ -126,7 +126,7 @@ function OrbitData() {
             {
                 "name":"Jupiter",
                 "radius":71492,
-                "mass":"126800000",
+                "mass":126800000,
                 "pos":{"x":778330000,"y":0,"z":0},
                 "vel":{"x":0,"y":0,"z": 13.1},
                 "color":"orange",
@@ -136,7 +136,7 @@ function OrbitData() {
             {
                 "name":"Saturn",
                 "radius":60268,
-                "mass":"37960000",
+                "mass":37960000,
                 "pos":{"x":1429400000,"y":0,"z":0},
                 "vel":{"x":0,"y":0,"z": 9.64},
                 "color":"yellow",
@@ -146,7 +146,7 @@ function OrbitData() {
             {
                 "name":"Uranus",
                 "radius":25559,
-                "mass":"5797000",
+                "mass":5797000,
                 "pos":{"x":2870990000,"y":0,"z":0},
                 "vel":{"x":0,"y":0,"z": 6.81},
                 "color":"cyan",
@@ -156,7 +156,7 @@ function OrbitData() {
             {
                 "name":"Neptune",
                 "radius":24746,
-                "mass":"6954000",
+                "mass":6954000,
                 "pos":{"x":4504300000,"y":0,"z":0},
                 "vel":{"x":0,"y":0,"z": 5.43},
                 "color":"blue",
@@ -166,7 +166,7 @@ function OrbitData() {
             {
                 "name":"Pluto",
                 "radius":1137,
-                "mass":"8476.2",
+                "mass":8476.2,
                 "pos":{"x":5913520000,"y":0,"z":0},
                 "vel":{"x":0,"y":0,"z": 4.74},
                 "color":"white",
@@ -181,7 +181,7 @@ function OrbitData() {
             {
                 "name":"Sun",
                 "radius":695000,
-                "mass":"132750000192.00",
+                "mass":132750000192.00,
                 "pos":{"x":57900000,"y":0,"z":23.94},
                 "vel":{"x":0,"y":0,"z":0},
                 "color":"yellow",
@@ -191,7 +191,7 @@ function OrbitData() {
             {
                 "name":"Sun 2",
                 "radius":695000,
-                "mass":"132750000192.00",
+                "mass":132750000192.00,
                 "pos":{"x":-57900000,"y":0,"z":-23.94},
                 "vel":{"x":0,"y":0,"z":0},
                 "color":"orange",
