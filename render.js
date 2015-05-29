@@ -74,21 +74,21 @@ engine.unscaleCoordinate = function(x, y) {
 
 engine.scaleHistory = function(p) {
     var history = p.history;
-    //if(p.scaledHistory === undefined) {
-        var new_hist = [];
-        //p.scaledHistory = []
+    if(p.scaledHistory === undefined) {
+        //var new_hist = [];
+        p.scaledHistory = []
         //console.log('Rescaling all history for '+p.name);
         for(var i=0; i<history.length; i++) {
             var h = new Cart3(history[i]).multBy(engine.drawingScale*engine.zoom*engine.xsize/2);
-            new_hist.push(h);
+            p.scaledHistory.push(h);
         }
-    /*} else {
+    } else {
         var h = new Cart3(history[history.length-1]).multBy(engine.drawingScale*engine.zoom*engine.xsize/2);
         if(p.scaledHistory.length >= 1000) {
             p.scaledHistory.shift();
         }
         p.scaledHistory.push(h);
-    }*/
+    }
     return new_hist;
 }
 
