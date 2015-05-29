@@ -76,7 +76,7 @@ engine.scaleHistory = function(p) {
     var history = p.history;
     if(p.scaledHistory === undefined) {
         //var new_hist = [];
-        p.scaledHistory = []
+        p.scaledHistory = [];
         //console.log('Rescaling all history for '+p.name);
         for(var i=0; i<history.length; i++) {
             var h = new Cart3(history[i]).multBy(engine.drawingScale*engine.zoom*engine.xsize/2);
