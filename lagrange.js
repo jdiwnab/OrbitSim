@@ -33,7 +33,7 @@ engine.loadLagrange = function() {
     
     var R = planet.pos.abs();
     var period_planet =  2 * Math.PI * Math.sqrt(R * R * R / (sun.mass+planet.mass));
-    var deltaLimit = 1/(Math.pow(10, Math.round(Math.log10(R*100))));
+    var deltaLimit = 1/(Math.pow(10, Math.round(Math.log10(R))));
 
     engine.loadL1(sun, planet, R, deltaLimit, period_planet);
     engine.loadL2(sun, planet, R, deltaLimit, period_planet);
@@ -42,52 +42,86 @@ engine.loadLagrange = function() {
     engine.loadL5(sun, planet);
 }
 
-engine.lagrangePoint = function(point, radius, m_sun, m_planet, R, period) {
-    var alpha = R * m_planet / (m_sun + m_planet)
+engine.lagrangeForces = function(point, radius, m_sun, m_planet, R, period) {
+    //point is which lagrange point we are solving for
+    //radius is the proposed radius of vehicle, based on barrycenter
+    //m_sun is mass of primary object
+    //m_planet is mass of secondary object
+    //R is distance between primary and secondary
+    //period is orbital period of secondary around primary
+    
+    //L1 is between sun and planet
 
-    //Point 3 is opposite of sun
-    if (point == 3) {
-        //Projected speed
-        var v = 2 * Math.PI * (radius + alpha) / period;
-        var beta = (v * v) / (radius + alpha);
+    //distance of sun from barrycenter
+    var r_1 = R * m_planet / (m_sun + m_planet)
+
+    //centrifugal force
+    var v = 2 * Math.PI * (radius) / period;
+    var centrifugal = (v * v) / (radius);
+    /*if (point == 3) {
+        //Point 3 is opposite of sun
+        
+        //Orbital velocity at proposed radius
+        var v = 2 * Math.PI * (radius + r_1) / period;
+        //centrifugal force at proposed velocity
+        var centrifugal = (v * v) / (radius + r_1);
     } else  {
         //Others are near planet
-        var v = 2 * Math.PI * (radius - alpha) / period;
-        var beta = (v * v) / (radius - alpha);
-    }
+        var v = 2 * Math.PI * (radius - r_1) / period;
+        var centrifugal = (v * v) / (radius - r_1);
+    }*/
 
-    if (point == 1) {
-       // M1 / r^2 - M2 / ((r-R)*(r-R))
-       var gamma = (m_sun / (radius * radius)) - (m_planet / ((radius - R) * (radius-R)));
-    } else if (point == 2) {
-       var gamma = (m_sun / (radius * radius)) + (m_planet / ((radius - R) * (radius-R)));  
+    
+    var distance_from_sun = radius-r_1;
+    // L3 is behind sun, so add full distance, else find difference
+    if(point == 3) {
+        var distance_from_earth = Math.abs(distance_from_sun+R);
     } else {
-       var gamma = (m_sun / (radius * radius)) + (m_planet / ((radius + R) * (radius+R)));
-    }            
+        var distance_from_earth = Math.abs(R-distance_from_sun);
+    }
+    // L1 is between, so gravity cancels, else adds.
+    if(point == 1) {
+        var gravitational = (m_sun / (Math.pow(distance_from_sun, 2))) - (m_planet / (Math.pow(distance_from_earth,2)));
+    } else {
+        var gravitational = (m_sun / (Math.pow(distance_from_sun, 2))) + (m_planet / (Math.pow(distance_from_earth,2)));
+    }
+    /*if (point == 1) {
+       //Force of sun - force of earth
+       var gravitational = (m_sun / Math.pow(radius,2)) - (m_planet / (Math.pow(radius - R,2)));
+    } else if (point == 2) {
+       //Force of sun + force of earth
+       var gravitational = (m_sun / Math.pow(radius,2)) + (m_planet / (Math.pow(radius - R,2)));  
+    } else {
+        //Force of sun + force of earth
+       var gravitational = (m_sun / Math.pow(radius,2)) + (m_planet / (Math.pow(radius + R,2)));
+    }*/
+    
 
-    return beta - gamma;
+    
+    //centrifugal force - gravitational force.
+    return centrifugal - gravitational;
 }
 
 engine.loadL1 = function(sun, planet, R, deltaLimit, period_planet) {
 
     var radius = 1;
     var delta = 1000000000000; 
-    //hill climbing until crossing the top, then back off and narrow delta to refine search
+    // iteratively minimize forces. If b < a, b is better, so go there. if a > b, went too far, so back up and reduce step size.
     while (delta > deltaLimit) {
         do {
-            var a = engine.lagrangePoint (1, radius,         sun.mass, planet.mass, R, period_planet);
-            var b = engine.lagrangePoint (1, radius + delta, sun.mass, planet.mass, R, period_planet);
+            var a = engine.lagrangeForces (1, radius,         sun.mass, planet.mass, R, period_planet);
+            var b = engine.lagrangeForces (1, radius + delta, sun.mass, planet.mass, R, period_planet);
             radius += delta;
         } while (Math.abs(a) > Math.abs(b))
         radius -= 2 * delta;
         delta = delta / 10;
     }
-
-    // L1 = R * (1-cuberoot((M2/(M1+M2))/3))
+    //radius is currently from barrycenter, so correct to from true center
+    radius += R * planet.mass / (sun.mass + planet.mass);
 
     var dist = 2 * Math.PI * radius;
     var vel = dist/period_planet;
-    engine.addPlanet('L1', new Cart3(radius,0,0), 50, new Cart3(0,0,vel), 'red', 6000, false);
+    engine.addPlanet('L1', new Cart3(radius,0,0), 1, new Cart3(0,0,vel), 'red', 6000, false);
 }
 
 engine.loadL2 = function(sun, planet, R, deltaLimit, period_planet) {
@@ -96,17 +130,20 @@ engine.loadL2 = function(sun, planet, R, deltaLimit, period_planet) {
 
     while (delta > deltaLimit) {
         do {
-            var a = engine.lagrangePoint (2, radius,         sun.mass, planet.mass, R, period_planet);
-            var b = engine.lagrangePoint (2, radius + delta, sun.mass, planet.mass, R, period_planet);
+            var a = engine.lagrangeForces (2, radius,         sun.mass, planet.mass, R, period_planet);
+            var b = engine.lagrangeForces (2, radius + delta, sun.mass, planet.mass, R, period_planet);
             radius += delta;
         } while (Math.abs(a) > Math.abs(b))
         radius -= 2 * delta;
         delta = delta / 10;
     }
-    // L2 = R * (1+cuberoot((M2/(M1+M2))/3))
+    
+    //radius is currently from barrycenter, so correct to from true center
+    radius += R * planet.mass / (sun.mass + planet.mass);
+    
     var dist = 2 * Math.PI * radius;
     var vel = dist/period_planet;
-    engine.addPlanet('L2', new Cart3(radius,0,0), 50, new Cart3(0,0,vel), 'green', 6000, false);
+    engine.addPlanet('L2', new Cart3(radius,0,0), 1, new Cart3(0,0,vel), 'green', 6000, false);
 }
 
 engine.loadL3 = function(sun, planet, R, deltaLimit, period_planet) {
@@ -115,18 +152,20 @@ engine.loadL3 = function(sun, planet, R, deltaLimit, period_planet) {
     //hill climbing until crossing the top, then back off and narrow delta to refine search
     while (delta > deltaLimit) {
         do {
-            var a = engine.lagrangePoint (3, radius,         sun.mass, planet.mass, R, period_planet);
-            var b = engine.lagrangePoint (3, radius + delta, sun.mass, planet.mass, R, period_planet);
+            var a = engine.lagrangeForces (3, radius,         sun.mass, planet.mass, R, period_planet);
+            var b = engine.lagrangeForces (3, radius + delta, sun.mass, planet.mass, R, period_planet);
             radius += delta;
         } while (Math.abs(a) > Math.abs(b))
         radius -= 2 * delta;
         delta = delta / 10;
     }
-
-    // L3 = -1R * (1+5/12 * (M2/(M1+M2)))
+    
+    //radius is currently from barrycenter, so correct to from true center
+    radius -= R * planet.mass / (sun.mass + planet.mass);
+    
     var dist = 2 * Math.PI * radius;
     var vel = dist/period_planet;
-    engine.addPlanet('L3', new Cart3(-radius,0,0), 50, new Cart3(0,0,-vel), 'orange', 6000, false);
+    engine.addPlanet('L3', new Cart3(-radius,0,0), 1, new Cart3(0,0,-vel), 'orange', 6000, false);
 }
 
 engine.loadL4 = function(sun, planet) {
@@ -137,7 +176,7 @@ engine.loadL4 = function(sun, planet) {
     var pos_y = radius * Math.sin( -60 * Math.PI / 180);
     var vel_x = vel * Math.cos( 30 * Math.PI / 180);
     var vel_y = vel * Math.sin( 30 * Math.PI / 180);
-    engine.addPlanet('L4', new Cart3(pos_x,0,pos_y), 50, new Cart3(vel_x,0,vel_y), 'magenta', 6000, false);
+    engine.addPlanet('L4', new Cart3(pos_x,0,pos_y), 1, new Cart3(vel_x,0,vel_y), 'magenta', 6000, false);
 }
 
 engine.loadL5 = function(sun, planet) {
@@ -148,5 +187,5 @@ engine.loadL5 = function(sun, planet) {
     var pos_y = radius * Math.sin( 60 * Math.PI / 180);
     var vel_x = vel * Math.cos( 150 * Math.PI / 180);
     var vel_y = vel * Math.sin( 150 * Math.PI / 180);
-    engine.addPlanet('L5', new Cart3(pos_x,0,pos_y), 50, new Cart3(vel_x,0,vel_y), 'cyan', 6000, false);
+    engine.addPlanet('L5', new Cart3(pos_x,0,pos_y), 1, new Cart3(vel_x,0,vel_y), 'cyan', 6000, false);
 }

@@ -459,7 +459,7 @@ engine.createForm = function() {
     $('#new_mass').noUiSlider({
         start: 1.3275E+011,
         range: {
-            'min': [ 0 ],
+            'min': [ 1 ],
             '25%': [1e+3],
             '50%': [1e+6],
             '75%': [1e+9],
