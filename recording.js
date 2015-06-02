@@ -30,7 +30,6 @@ engine.recordFrame = function(status) {
 
 engine.stopRecord = function() {
     engine.id('record').textContent = 'Record';
-    engine.recording = false;
     //engine.encoder.finish();
     engine.gifworker.onmessage = function(e) {
         var bin_data = e.data['frame_data'];
@@ -56,4 +55,5 @@ engine.stopRecord = function() {
     downloadLink.click();
     }
     engine.recordFrame('stop');
+    engine.recording = false;
 }
