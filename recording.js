@@ -24,7 +24,7 @@ engine.recordFrame = function(status) {
             frameindex = 1;
             framelength = 10;
         }
-        engine.gifworker.postMessage({"frame_index": frameindex, "delay": 26, "frame_length":framelength, "height":engine.ysize, "width":engine.xsize, "imageData":engine.getImageData(0,0,engine.xsize,engine.ysize).data});
+        engine.gifworker.postMessage({"frame_index": frameindex, "delay": 26, "frame_length":framelength, "height":engine.ysize, "width":engine.xsize, "imageData":engine.ctx.getImageData(0,0,engine.xsize,engine.ysize).data});
     }
 }
 
