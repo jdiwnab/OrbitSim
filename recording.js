@@ -32,13 +32,15 @@ engine.recordFrame = function(status) {
         } else {
             framelength = engine.recFrame +1;
         }
-        engine.gifworker.postMessage({"frame_index": engine.recFrame, "delay": 26, "frame_length":framelength, "height":engine.ysize, "width":engine.xsize, "imageData":engine.ctx.getImageData(0,0,engine.xsize,engine.ysize).data});
+        engine.gifworker.postMessage({"frame_index": engine.recFrame, "delay": 26, "frame_length":framelength, "height":engine.ysize, "width":engine.xsize, "imageData":engine.ctx});
+        //engine.encoder.addFrame(engine.ctx);
     }
 }
 
 engine.stopRecord = function() {
     engine.id('record').textContent = 'Record';
     //engine.encoder.finish();
+    //engine.saveGif(engine.encoder.stream().getData());
     engine.recordFrame('stop');
     engine.recording = false;
 }
