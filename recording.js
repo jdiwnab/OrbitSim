@@ -2,7 +2,7 @@ engine.startRecord = function() {
     engine.id('record').textContent = 'Stop Rec';
     engine.recording = true;
     engine.recFrame = -1;
-    engine.encoder = new GIF({wokers:2, quality: 10, width: engine.xsize, height: engine.ysize, workerScript: 'lib/gifjs/gif.worker.js'});
+    engine.encoder = new GIF({wokers:4, quality: 10, width: engine.xsize, height: engine.ysize, workerScript: 'lib/gifjs/gif.worker.js'});
     //engine.encoder = new GIFEncoder();
     //engine.encoder.setRepeat(0);
     //engine.encoder.setDelay(26);
@@ -20,6 +20,9 @@ engine.startRecord = function() {
     };*/
     engine.encoder.on('finished', function(blob) {
         engine.saveGif(blob);
+    });
+    engine.encoder.on('progress', function(p) {
+        engine.log('encoding ('+p+'%)');
     });
 
 }
@@ -58,14 +61,14 @@ engine.saveGif = function(bin_data) {
         // Chrome allows the link to be clicked
         // without actually adding it to the DOM.
         //downloadLink.href = data;
-        downloadLink.href = window.URL.createObjectURL(blob);
+        downloadLink.href = window.URL.createObjectURL(bin_data);
     }
     else
     {
         // Firefox requires the link to be added to the DOM
         // before it can be clicked.
         //downloadLink.href = data;
-        downloadLink.href = window.URL.createObjectURL(blob);
+        downloadLink.href = window.URL.createObjectURL(bin_data);
         downloadLink.onclick = destroyClickedElement;
         downloadLink.style.display = "none";
         document.body.appendChild(downloadLink);
