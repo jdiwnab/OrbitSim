@@ -32,7 +32,7 @@ engine.recordFrame = function(status) {
         } else {
             framelength = engine.recFrame +1;
         }
-        engine.gifworker.postMessage({"frame_index": engine.recFrame, "delay": 26, "frame_length":framelength, "height":engine.ysize, "width":engine.xsize, "imageData":engine.ctx.getImageData(0,0,engine.xsize, engine.ysize)});
+        engine.gifworker.postMessage({"frame_index": engine.recFrame, "delay": 26, "frame_length":framelength, "height":engine.ysize, "width":engine.xsize, "imageData":engine.ctx.getImageData(0,0,engine.xsize, engine.ysize).data()});
         //engine.encoder.addFrame(engine.ctx);
     }
 }
