@@ -1,7 +1,7 @@
 engine.startRecord = function() {
     engine.id('record').textContent = 'Stop Rec';
     engine.recording = true;
-    engine.recFrame = 0;
+    engine.recFrame = -1;
     //engine.encoder = new GIFEncoder();
     //engine.encoder.setRepeat(0);
     //engine.encoder.setDelay(26);
@@ -11,7 +11,8 @@ engine.startRecord = function() {
     
     engine.gifworker.onmessage = function(e) {
         var frame_index = e.data['frame_index'];
-        if(frame_index == 10) {
+        var gif_done = e.data['gif_done'];
+        if(gif_done) {
             engine.saveGif(e.data['frame_data']);
         } else {
             engine.log('recording frame '+frame_index+' of '+engine.recFrame);
@@ -24,14 +25,14 @@ engine.startRecord = function() {
 engine.recordFrame = function(status) {
     if(engine.recording) {
         //engine.encoder.addFrame(engine.ctx);
-        var frameindex, framelength;
+        engine.recFrame ++;
+        var framelength;
         if(status == 'stop') {
             framelength = engine.recFrame;
         } else {
             framelength = engine.recFrame +1;
         }
         engine.gifworker.postMessage({"frame_index": engine.recFrame, "delay": 26, "frame_length":framelength, "height":engine.ysize, "width":engine.xsize, "imageData":engine.ctx.getImageData(0,0,engine.xsize,engine.ysize).data});
-        engine.recFrame ++;
     }
 }
 
