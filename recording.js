@@ -12,11 +12,9 @@ engine.startRecord = function() {
     engine.gifworker.onmessage = function(e) {
         var frame_index = e.data['frame_index'];
         var gif_done = e.data['gif_done'];
+        engine.log('recording frame '+frame_index+' of '+engine.recFrame+' ('+Math.floor(frame_index/engine.recFrame * 100)+')');
         if(gif_done) {
             engine.saveGif(e.data['frame_data']);
-        } else {
-            engine.log('recording frame '+frame_index+' of '+engine.recFrame);
-            console.log('recording frame '+frame_index+' of '+engine.recFrame);
         }
     };
 
