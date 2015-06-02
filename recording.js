@@ -5,7 +5,7 @@ engine.startRecord = function() {
     //engine.encoder.setRepeat(0);
     //engine.encoder.setDelay(26);
     //engine.encoder.start();
-  	engine.gifworker = new Worker('/lib/jsgif/animWorker.js');
+  	engine.gifworker = new Worker('lib/jsgif/animWorker.js');
     engine.recordFrame('start');
 
 }
