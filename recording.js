@@ -40,7 +40,7 @@ engine.stopRecord = function() {
     engine.recordFrame('stop');
     engine.recording = false;
 }
-engine.saveGif(bin_data) {
+engine.saveGif = function(bin_data) {
     var data = 'data:image/gif;base64,'+encode64(bin_data);
     var downloadLink = document.createElement("a");
     downloadLink.download = "OrbitAnimation.gif";
