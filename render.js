@@ -33,6 +33,7 @@ engine.render = function(refresh) {
     //ovalSize = (ovalSize < 2) ? 2 : ovalSize
     engine.drawSubset(refresh,engine.timeStep, engine.xorig, engine.yorig,engine.orbit_data.planet_array);
     engine.drawLabels();
+    engine.recordFrame();
 }
 
 engine.drawSubset = function(refresh, timeStep, cx, cy, array) {

@@ -87,6 +87,14 @@ engine.setupControlEvents = function() {
         engine.reset();
         return false;
     }, false);
+    engine.id("record").addEventListener('click', function(e) {
+        if(engine.recording) {
+            engine.stopRecord();
+        } else {
+            engine.startRecord();
+        }
+        return false;
+    }, false);
     engine.id("saveLocal").addEventListener('click', function(e) {
         engine.removePlanetData();
         localStorage.planetList = engine.getSaveData();
