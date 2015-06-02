@@ -2,7 +2,7 @@ engine.startRecord = function() {
     engine.id('record').textContent = 'Stop Rec';
     engine.recording = true;
     engine.recFrame = -1;
-    engine.encoder = new GIF({wokers:2, quality: 10, width: engine.xsize, height: engine.ysize});
+    engine.encoder = new GIF({wokers:2, quality: 10, width: engine.xsize, height: engine.ysize, workerScript: '/lib/gifjs/gif.worker.js'});
     //engine.encoder = new GIFEncoder();
     //engine.encoder.setRepeat(0);
     //engine.encoder.setDelay(26);
