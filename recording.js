@@ -32,7 +32,7 @@ engine.stopRecord = function() {
     engine.id('record').textContent = 'Record';
     engine.recording = false;
     //engine.encoder.finish();
-    engine.worker.onmessage = function(e) {
+    engine.gifworker.onmessage = function(e) {
         var bin_data = e.data['frame_data'];
         var data = 'data:image/gif;base64,'+encode64(bin_data);
         var downloadLink = document.createElement("a");
