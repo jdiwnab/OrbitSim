@@ -35,7 +35,7 @@ It is capable of storing the current state into your browser's Local Storage, or
 
 This simulation works by iteritivly calculating the forces on objects. Universal Gravitation says that:
 
-F = G * (M1 + M2)/r^2
+![equation](http://www.sciweavers.org/tex2img.php?eq=F%20%3D%20G%20%20%5Cfrac%7BM_%7B1%7D%20%20%2B%20M_%7B2%7D%7D%7B%20r%5E%7B2%7D%20%7D%20&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
 
 where G is the gravitational constant, M1 and M2 are masses being attacted, and r is the distance between them. Newton's second law also says:
 
