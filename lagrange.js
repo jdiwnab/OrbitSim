@@ -1,24 +1,47 @@
-    //Lagrange points
-    /* 
+    /*Lagrange points
+        
+    * Orbital period
+    * T = 2 * pi * sqrt(R^3/(G*(M1+M2)))
+    * Orbital velocity
+    * V = sqrt(G*M1/R)
+    * Orbital Distance
+    * D = 2 * pi * R
     
+    * Centrifugal force
+    * F = (v^2) / (R)
+    * Gravitational force
+    * F = G*M/R^2
+    * Barrycenter
+    * a = R*M2/(M1+M2)
+    * Proposed New orbital velocity
+    * 2*pi*R/(period)
     
+    * Approx solutions
     * L1 = R * (1-cuberoot((M2/(M1+M2))/3))
     * L2 = R * (1+cuberoot((M2/(M1+M2))/3))
     * L3 = -1R * (1+5/12 * (M2/(M1+M2)))
+    * L4 = -60deg
+    * L5 = +60deg
+    * r1 = R * cuberoot(M2/3*M1) = > R1 = R - r1
+    * r2 = R * cuberoot(M2/3*M1) = > R2 = R + r2
+    * R3 = R * (7 * M2)/(12* M1)
+    * R4 = R (60 deg)
+    * R5 = R (-60deg)
+    * v1 = (2 * pi * R1) / Te = R1/sqrt(R^3/M1)
+    * v2 = (2 * pi * R2) / Te = R2/sqrt(R^3/M1)
+    
+    * Full solution
+    * u = distance from M2
+    * a = M2/(M1+M2)
+    * s0 = sign(u), s1 = sign(u+1)
+    * u^2 ( (1-s1) + 3u + 3u^2 + u^3 ) = a ( s0 + 2s0u + (1+s0-s1)u^2 + 2u^3 + u^4 )
+    
+    * L1: s0 = s1 = -1
+    * u^2 ( 2 + 3u + 3u^2 + u^3 ) = a ( -1 -2u + u^2 + 2u^3 + u^4 )
+    * L2: s0 = s1 = 1
+    * u^3 ( 3 + 3u + u^2 ) = a (1 + 2u + u^2 + 2u^3 + u^4 )
 
     
-    *  r1 = R * cuberoot(M2/3*M1) = > R1 = R - r1
-    *  r2 = R * cuberoot(M2/3*M1) = > R2 = R + r2
-    *  R3 = R * (7 * M2)/(12* M1)
-    *  R4 = R (60 deg)
-    *  R5 = R (-60deg)
-
-    * 
-    *  Te = 2 * pi * sqrt(R^3/(G*(M1+M2)))
-    *  v1 = (2 * pi * R1) / Te = R1/sqrt(R^3/M1)
-    *  v2 = (2 * pi * R2) / Te = R2/sqrt(R^3/M1)
-
-    *  v = sqrt(G*M1/R)
     */
 
 engine.loadLagrange = function() {
@@ -58,19 +81,6 @@ engine.lagrangeForces = function(point, radius, m_sun, m_planet, R, period) {
     //centrifugal force
     var v = 2 * Math.PI * (radius) / period;
     var centrifugal = (v * v) / (radius);
-    /*if (point == 3) {
-        //Point 3 is opposite of sun
-        
-        //Orbital velocity at proposed radius
-        var v = 2 * Math.PI * (radius + r_1) / period;
-        //centrifugal force at proposed velocity
-        var centrifugal = (v * v) / (radius + r_1);
-    } else  {
-        //Others are near planet
-        var v = 2 * Math.PI * (radius - r_1) / period;
-        var centrifugal = (v * v) / (radius - r_1);
-    }*/
-
     
     var distance_from_sun = radius-r_1;
     // L3 is behind sun, so add full distance, else find difference
@@ -85,19 +95,7 @@ engine.lagrangeForces = function(point, radius, m_sun, m_planet, R, period) {
     } else {
         var gravitational = (m_sun / (Math.pow(distance_from_sun, 2))) + (m_planet / (Math.pow(distance_from_earth,2)));
     }
-    /*if (point == 1) {
-       //Force of sun - force of earth
-       var gravitational = (m_sun / Math.pow(radius,2)) - (m_planet / (Math.pow(radius - R,2)));
-    } else if (point == 2) {
-       //Force of sun + force of earth
-       var gravitational = (m_sun / Math.pow(radius,2)) + (m_planet / (Math.pow(radius - R,2)));  
-    } else {
-        //Force of sun + force of earth
-       var gravitational = (m_sun / Math.pow(radius,2)) + (m_planet / (Math.pow(radius + R,2)));
-    }*/
-    
-
-    
+  
     //centrifugal force - gravitational force.
     return centrifugal - gravitational;
 }

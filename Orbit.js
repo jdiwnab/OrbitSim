@@ -39,8 +39,8 @@ engine.reset = function() {
     
     engine.canvas = engine.id("orbit_disp");
     engine.ctx = engine.canvas.getContext("2d");
-    engine.ctx.canvas.width = window.innerWidth;
-    engine.ctx.canvas.height= window.innerHeight/2;
+    engine.ctx.canvas.width = document.body.clientWidth -16;
+    engine.ctx.canvas.height= document.body.clientHeight -16;
     engine.xsize = engine.ctx.canvas.width;
     engine.ysize = engine.ctx.canvas.height;
     engine.yorig = Math.floor(engine.ysize /2 );
@@ -72,8 +72,8 @@ engine.reset = function() {
 }
 
 engine.resize = function() {
-    engine.ctx.canvas.width = window.innerWidth;
-    engine.ctx.canvas.height= window.innerHeight/2;
+    engine.ctx.canvas.width = document.body.clientWidth -16;
+    engine.ctx.canvas.height= document.body.clientHeight -16;
     engine.xsize = engine.ctx.canvas.width;
     engine.ysize = engine.ctx.canvas.height;
     engine.yorig = Math.floor(engine.ysize /2 );

@@ -25,12 +25,33 @@
         <title>Orbits</title>
         <style>
             .inputpanel {
-                display: inline-block;
+                width: 350px;
                 vertical-align: top;
-                width: 300px;
+                display: block;
+                margin-top: 2px;
+                margin-bottom: 2px;
+
+            }
+            .inputmenu {
+                background: rgba(200,200,200,.9);
+            }
+            .inputmenu h2 {
+                font-size: 1em;
+                margin: 0px;
+                padding: 5px;               
+            }
+            .inputcontrols {
+                display: none;
+                padding: 5px;
+            }
+            .inputcontrols.show {
+                display: block;
+            }
+            .inputcontrols .modallabel {
+                width: 80px;
             }
             .modallabel {
-                width: 50px;
+                width: 75px;
                 display:inline-block;
                 font-weight: bold;
                 margin-top: 5px;
@@ -59,12 +80,24 @@
             }
             .slider_with_pips {
                 margin-bottom: 40px;
+                margin-top: 5px;
             }
             #input_panel {
-                display: inline-block;
+                background-color: rgba(255,255,255,.9);
+                position: absolute;
+                top: 12px;
+                left: 12px;
             }
+
             .remodal-confirm, .remodal-cancel {
                 margin-top: 10px;
+            }
+            div .noUi-extended {
+                display: inline-block;
+                width: 50%;
+            }
+            .inputcontrols label {
+                width: 20%;
             }
         </style>
     </head>
@@ -72,60 +105,72 @@
         <div class="remodal-bg">
             <canvas id="orbit_disp"></canvas>
             <div id="input_panel">
-                <div class="inputpanel" id="main-controls">
-                    <label>Time Step:</label>
-                    <div id="timestep" class="noUi-extended"></div>
-                    <span id="stepvalue">10</span><br/>
-                    <label>Steps per frame:</label>
-                    <div id="framestep" class="noUi-extended"></div>
-                    <span id="stepcount">1</span><br/>
-                    <form action="">
-                        <input type="radio" name="show_history" id="showHistory" value="show_history" checked />Show History<br/>
-                        <input type="radio" name="show_history" id="hideHistory" value="hide_history"/>Hide History<br/>
-                    </form>
-                    <!--Engine:-->
-                    <!--<input type="radio" id="algo1" name="algorithm" value="euler">Euler</input><br/>
-                    <input type="radio" id="algo2" name="algorithm" value="verlet">Verlet</input>
-                    <input type="radio" id="algo3" name="algorithm" value="rk" checked>Runge-Kutta</input><br/>-->
-                    <button id="stop" name="start" value="start">Start</button>
-                    <button id="reset" name="reset" value="reset">Reset</button>
-                    <button id="clear" name="clear" value="clear">Clear</button>
-                    <button id="record" name="record" value="record">Record</button><br/>
+                <div class="inputpanel">
+                    <div class="inputmenu" id="main-menu">
+                        <h2>Playback</h2>
+                    </div>
+                    <div class="inputcontrols show" id="main-controls">
+                        <label><span class="modallabel">Timestep:</span></label>
+                        <div id="timestep" class="noUi-extended"></div>
+                        <span id="stepvalue">10</span><br/>
+                        <label><span class="modallabel">Framestep:</span></label>
+                        <div id="framestep" class="noUi-extended"></div>
+                        <span id="stepcount">1</span><br/>
+                        <label for="showHistory"><span class="modallabel">Show History:</span></label><input type="checkbox" name="show_history" id="showHistory" value="show_history" checked/><br/>
+                        <!--Engine:-->
+                        <!--<input type="radio" id="algo1" name="algorithm" value="euler">Euler</input><br/>
+                        <input type="radio" id="algo2" name="algorithm" value="verlet">Verlet</input>
+                        <input type="radio" id="algo3" name="algorithm" value="rk" checked>Runge-Kutta</input><br/>-->
+                        <button id="stop" name="start" value="start">Start</button>
+                        <button id="reset" name="reset" value="reset">Reset</button>
+                        <button id="clear" name="clear" value="clear">Clear</button>
+                        <button id="record" name="record" value="record">Record</button><br/>
+                    </div>
+                    <div class="inputcontrols" id="console"></div>
                 </div>
-                <div id="preset-controls"  class="inputpanel" >
-                    <h2>Presets:</h2>
-                    <select id="presetSelect">
-                        <option value=0>Solar System</option>
-                        <option value=1>Double Star</option>
-                        <option value=2>Figure 8</option>
-                    </select>
-                    <button name="loadPreset" id="loadPreset" value="loadPreset">Load</button><br/>
-                    <button name="loadRandom" id="loadRandom" value="loadRandom">Load Random</button><br/>
-                    <button name="loadLagrange" id="loadLagrange" value="loadLagrange">Load Lagrange</button><br/>
+                 <div class="inputpanel">
+               
+                    <div class="inputmenu" id="preset-menu">
+                        <h2>Presets</h2>
+                    </div>
+                    <div id="preset-controls"  class="inputcontrols" >
+                        <select id="presetSelect">
+                            <option value=0>Solar System</option>
+                            <option value=1>Double Star</option>
+                            <option value=2>Figure 8</option>
+                        </select>
+                        <button name="loadPreset" id="loadPreset" value="loadPreset">Load</button><br/>
+                        <button name="loadRandom" id="loadRandom" value="loadRandom">Load Random</button><br/>
+                        <button name="loadLagrange" id="loadLagrange" value="loadLagrange">Load Lagrange</button><br/>
+                    </div>
                 </div>
-                <div id="storage-controls" class="inputpanel">
-                <!--local Storage -->
-                    <h2>Local Storage:</h2>
-                    <button id="saveLocal" name="saveLocal" value="saveLocal">Save To Browser</button><br/><br/>
-                    <button id="loadSetup" name="loadSetup" value="loadSetup">Load Setup</button>
-                    <button id="loadState" name="loadState" value="loadState">Load State</button><br/><br/>
-
-                    <h2>File Storage:</h2>
-                    <button id="export" name="export" value="export">Export To File</button><br/><br/>
-                    <label for="import">Upload file: </label>
-                    <input type="file" id="import" /><button id="loadImport">Load</button><br/>
-                    <form action="">
-                        <input type="radio" name="LoadOption" id="stateOption" value="state" checked>State<br/>
-                        <input type="radio" name="LoadOption" id="setupOption" value="setup">Setup<br/>
-                    </form>
-                    
-                    <h2>File Export</h2>
-                    <button id="csvexport" name="csvexport" value="csvexport">Export to CSV</button>
-                    
-                    <h2>Precalculate</h2>
-                    <button id="precalculate" name="precalculate" value="precalculate">Precalculate</button>
+                <div class="inputpanel">
+                    <div class="inputmenu" id="lstorage-menu">
+                        <h2>Local Storage</h2>
+                    </div>
+                    <div id="lstorage-controls" class="inputcontrols">
+                    <!--local Storage -->
+                        <button id="saveLocal" name="saveLocal" value="saveLocal">Save To Browser</button><br/><br/>
+                        <button id="loadSetup" name="loadSetup" value="loadSetup">Load Setup</button>
+                        <button id="loadState" name="loadState" value="loadState">Load State</button><br/><br/>
+                    </div>
                 </div>
-                <div class="inputpanel" id="console"></div>
+                <div class="inputpanel">
+                    <div class="inputmenu" id="fstorage-menu">
+                        <h2>File Storage</h2>
+                    </div>
+                    <div id="fstorage-controls" class="inputcontrols">
+                        <button id="export" name="export" value="export">Export To File</button><br/><br/>
+                        <label for="import">Upload file: </label>
+                        <input type="file" id="import" /><button id="loadImport">Load</button><br/>
+                        <form action="">
+                            <input type="radio" name="LoadOption" id="stateOption" value="state" checked>State<br/>
+                            <input type="radio" name="LoadOption" id="setupOption" value="setup">Setup<br/>
+                        </form>
+                        
+                        <button id="csvexport" name="csvexport" value="csvexport">Export to CSV</button>
+                    </div>
+                </div>
             </div>
         </div>
         <div class="remodal" id="editmodal" data-remodal-id="editmodal" data-remodal-options="hashTracking: false">
@@ -136,7 +181,7 @@
             
             <label class="modallabel" for="new_pos">Position:</label>
             <div class="noUi-extended slider_with_pips" id="new_pos"></div>
-            <input class="modalinput" type="number" name="vel" id="hidden_pos" step="any"/>
+            <input class="modalinput" type="number" name="vel" id="hidden_pos" step="any"/><br/>
             <div class="modallabel"><label for="pos_angle">Angle:</label></div>
             <input class="modalinput" type="number" id="pos_angle" name="pos_angle" value="0" step="any"/>
             <div id="direction" class="arrowcircle">
@@ -149,7 +194,7 @@
             
             <div class="modallabel"><label for="pos">Velocity:</label></div>
             <div class="noUi-extended slider_with_pips" id="new_vel"></div>
-            <input class="modalinput" type="number" name="vel" id="hidden_vel" step="any"/>
+            <input class="modalinput" type="number" name="vel" id="hidden_vel" step="any"/><br/>
             <div class="modallabel"><label for="vel_angle">Angle:</label></div>
             <input class="modalinput" type="number" id="vel_angle" name="vel_angle" value="0" step="any"/>
             <div id="direction" class="arrowcircle">

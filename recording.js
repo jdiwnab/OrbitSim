@@ -15,7 +15,7 @@ engine.startRecord = function() {
 
 engine.recordFrame = function(status) {
     if(engine.recording) {
-        engine.encoder.addFrame(engine.ctx, {copy: true, delay: 26});
+        engine.encoder.addFrame(engine.ctx, {copy: true, delay: 13});
     }
 }
 
@@ -30,16 +30,10 @@ engine.saveGif = function(bin_data) {
     downloadLink.innerHTML = "Download File";
     if (window.URL != null)
     {
-        // Chrome allows the link to be clicked
-        // without actually adding it to the DOM.
-        //downloadLink.href = data;
         downloadLink.href = window.URL.createObjectURL(bin_data);
     }
     else
     {
-        // Firefox requires the link to be added to the DOM
-        // before it can be clicked.
-        //downloadLink.href = data;
         downloadLink.href = window.URL.createObjectURL(bin_data);
         downloadLink.onclick = destroyClickedElement;
         downloadLink.style.display = "none";

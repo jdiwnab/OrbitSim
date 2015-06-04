@@ -68,11 +68,12 @@ engine.setupControlEvents = function() {
         } 
     });
     engine.id("showHistory").addEventListener('change', function(e) {
-        engine.history = true;
-        engine.resetScaledHistory();
-    }, false);
-    engine.id("hideHistory").addEventListener('change', function(e) {
-        engine.history = false;
+        if( engine.id("showHistory").checked ) {
+            engine.history = true;
+            engine.resetScaledHistory();
+        } else {
+            engine.history = false;
+        }
     }, false);
     engine.id("stop").addEventListener('click', function(e) {
         engine.pause(e);
@@ -132,10 +133,10 @@ engine.setupControlEvents = function() {
         engine.loadLagrange();
         return false;
     }, false);
-    engine.id("precalculate").addEventListener('click', function(e) {
+    /*engine.id("precalculate").addEventListener('click', function(e) {
         engine.precalculateDialog();
         return false;
-    }, false);
+    }, false);*/
     /*engine.id("algo1").addEventListener('change', function(e) {
         engine.algorithm = e.target.value;
         return false;
@@ -151,7 +152,19 @@ engine.setupControlEvents = function() {
     
     //engine.orbit_data.createDataSets();
     
-
+    //Draw controls
+    engine.id("main-menu").addEventListener('click', function(e) {
+        $('#main-controls').toggleClass('show');
+    }, false);
+    engine.id("preset-menu").addEventListener('click', function(e) {
+        $('#preset-controls').toggleClass('show');
+    }, false);
+    engine.id("lstorage-menu").addEventListener('click', function(e) {
+        $('#lstorage-controls').toggleClass('show');
+    }, false);
+    engine.id("fstorage-menu").addEventListener('click', function(e) {
+        $('#fstorage-controls').toggleClass('show');
+    }, false);
     
 }
 
@@ -173,13 +186,29 @@ engine.setupFancyControls = function() {
             'min': [ 1 ],
             'max': [100]
         },
-        //step: 1
+        format: {
+            to: function(i) {
+                return Math.round(i);
+            },
+            from: function(i) {
+                return Math.round(i);
+            }
+        },
+        step: 1
     });
     $('#framestep').noUiSlider({
         start: 1,
         range: {
             'min': [ 1 ],
             'max': [500]
+        },
+        format: {
+            to: function(i) {
+                return Math.round(i);
+            },
+            from: function(i) {
+                return Math.round(i);
+            }
         },
         step: 1
     });

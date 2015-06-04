@@ -130,10 +130,10 @@ engine.drawLabels = function() {
             tps = engine.tps/60/60/24/365.25;
             tps_unit = "y";
         }
-        engine.ctx.fillText('Time ' + engine.formatNum(time,2,8) + timeUnit,8, engine.ysize-24);
-        engine.ctx.fillText('Zoom ' + engine.formatNum(engine.zoom,2,8) + 'x',8, engine.ysize-8);
-        engine.ctx.fillText('fps  ' + engine.formatNum(engine.fps, 2, 8),8, engine.ysize-40);
-        engine.ctx.fillText('tps  ' + engine.formatNum(tps,2,8) + tps_unit,8, engine.ysize-56);
+        engine.ctx.fillText('tps  ' + engine.formatNum(tps,2,8) + tps_unit,engine.xsize - 8*14, 12);
+        engine.ctx.fillText('fps  ' + engine.formatNum(engine.fps, 2, 8),engine.xsize - 8*14, 28);
+        engine.ctx.fillText('Time ' + engine.formatNum(time,2,8) + timeUnit,engine.xsize - 8*14, 44);
+        engine.ctx.fillText('Zoom ' + engine.formatNum(engine.zoom,2,8) + 'x',engine.xsize - 8*14, 60);
 
         
     }
