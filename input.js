@@ -157,15 +157,19 @@ engine.setupControlEvents = function() {
     //Draw controls
     engine.id("main-menu").addEventListener('click', function(e) {
         $('#main-controls').toggleClass('show');
+        $('#main-menu').toggleClass('show');
     }, false);
     engine.id("preset-menu").addEventListener('click', function(e) {
         $('#preset-controls').toggleClass('show');
+        $('#preset-menu').toggleClass('show');
     }, false);
     engine.id("lstorage-menu").addEventListener('click', function(e) {
         $('#lstorage-controls').toggleClass('show');
+        $('#lstorage-menu').toggleClass('show');
     }, false);
     engine.id("fstorage-menu").addEventListener('click', function(e) {
         $('#fstorage-controls').toggleClass('show');
+        $('#fstorage-menu').toggleClass('show');
     }, false);
     
 }

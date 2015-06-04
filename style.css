@@ -8,6 +8,12 @@
 }
 .inputmenu {
     background: rgba(200,200,200,.9);
+    background-image: url(images/ic_expand_more_black_48dp.png);
+    background-position: right center;
+    background-repeat: no-repeat;
+}
+.inputmenu.show {
+    background-image: url(images/ic_expand_less_black_48dp.png);
 }
 .inputmenu h2 {
     font-size: 1em;
