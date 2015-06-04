@@ -34,6 +34,10 @@ engine.id = function(s) { return document.getElementById(s); }
 
 
 engine.reset = function() {
+    if(engine.animate) {
+        engine.id("start").click();
+
+    }
     engine.animate = false;
     engine.frame_count = 0;
     
@@ -61,9 +65,6 @@ engine.reset = function() {
     
     $("#timestep").val(10);
     $("#framestep").val(1);
-    if(engine.id("stop").value==="stop") {
-        engine.id("stop").click();
-    }
     //engine.id("algo3").checked = true;
 
     engine.orbit_data = orbit_data;
@@ -88,14 +89,10 @@ engine.log = function(err) {
 }
 
 engine.pause = function(e) {
-    if(e.target.value == "stop") {
+    if(engine.animate == true) {
         engine.animate = false;
-        e.target.value = "start";
-        e.target.textContent = "Start";
     } else {
         engine.animate = true;
-        e.target.value = "stop";
-        e.target.textContent = "Stop";
         if(engine.orbitTimer == null) {
             engine.perform(0, false);
         }

@@ -75,7 +75,8 @@ engine.setupControlEvents = function() {
             engine.history = false;
         }
     }, false);
-    engine.id("stop").addEventListener('click', function(e) {
+    engine.id("start").addEventListener('click', function(e) {
+        $('#start').toggleClass('stop');
         engine.pause(e);
         return false;
     }, false);
@@ -89,6 +90,7 @@ engine.setupControlEvents = function() {
         return false;
     }, false);
     engine.id("record").addEventListener('click', function(e) {
+        $('#record').toggleClass('stop');
         if(engine.recording) {
             engine.stopRecord();
         } else {

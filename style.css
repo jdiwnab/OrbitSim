@@ -1,0 +1,108 @@
+.inputpanel {
+    width: 350px;
+    vertical-align: top;
+    display: block;
+    margin-top: 2px;
+    margin-bottom: 2px;
+
+}
+.inputmenu {
+    background: rgba(200,200,200,.9);
+}
+.inputmenu h2 {
+    font-size: 1em;
+    margin: 0px;
+    padding: 5px;               
+}
+.inputcontrols {
+    display: none;
+    padding: 5px;
+}
+.inputcontrols.show {
+    display: block;
+}
+.inputcontrols .modallabel {
+    width: 80px;
+}
+.modallabel {
+    width: 75px;
+    display:inline-block;
+    font-weight: bold;
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+.modalinput {
+    width: 150px;
+}
+.arrowcircle {
+    position: relative;
+    height: 50px;
+    width: 50px;
+    background: lightgray;
+    border-radius:50%;
+    display: inline-block;
+}
+.arrowpointer {
+    height: 0px;
+    width: 20px;
+    transform: rotate(0 deg);
+    border: 2px solid black;
+    transform-origin: 0% 50%;
+    -webkit-transform-origin: 0% 50%;
+    position: absolute;
+    top: 50%; left: 50%;
+}
+.slider_with_pips {
+    margin-bottom: 40px;
+    margin-top: 5px;
+}
+#input_panel {
+    background-color: rgba(255,255,255,.9);
+    position: absolute;
+    top: 12px;
+    left: 12px;
+}
+
+.remodal-confirm, .remodal-cancel {
+    margin-top: 10px;
+}
+div .noUi-extended {
+    display: inline-block;
+    width: 50%;
+}
+.inputcontrols label {
+    width: 20%;
+}
+#start {
+    height: 30px;
+    width: 30px;
+    background-size: cover;
+    background-image: url(images/ic_play_arrow_black_48dp.png);
+}
+#start.stop {
+    background-image: url(images/ic_pause_black_48dp.png);
+}
+#reset {
+    height: 30px;
+    width: 30px;
+    background-image: url(images/ic_replay_black_48dp.png);
+    background-size: cover;
+}
+#clear {
+    height: 30px;
+    width: 30px;
+    background-image: url(images/ic_clear_black_48dp.png);
+    background-size: cover;
+}
+#record {
+    height: 30px;
+    width: 30px;
+    background-image: url(images/ic_brightness_1_black_48dp.png);
+    background-size: cover;
+}
+#record.stop {
+    height: 30px;
+    width: 30px;
+    background-image: url(images/ic_stop_black_48dp.png);
+    background-size: cover;
+}

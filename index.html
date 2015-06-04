@@ -1,50 +1,151 @@
-<!doctype html>
 <html>
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="chrome=1">
-    <title>Orbitsim by jdiwnab</title>
-
-    <link rel="stylesheet" href="stylesheets/styles.css">
-    <link rel="stylesheet" href="stylesheets/pygment_trac.css">
-    <script src="javascripts/scale.fix.js"></script>
-    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
-
-    <!--[if lt IE 9]>
-    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    <div class="wrapper">
-      <header>
-        <h1>Orbitsim</h1>
-        <p>JavaScript Gravity simulator</p>
-        <p class="view"><a href="https://github.com/jdiwnab/OrbitSim">View the Project on GitHub <small>jdiwnab/OrbitSim</small></a></p>
-        <ul>
-          <li><a href="https://github.com/jdiwnab/OrbitSim/zipball/master">Download <strong>ZIP File</strong></a></li>
-          <li><a href="https://github.com/jdiwnab/OrbitSim/tarball/master">Download <strong>TAR Ball</strong></a></li>
-          <li><a href="https://github.com/jdiwnab/OrbitSim">View On <strong>GitHub</strong></a></li>
-        </ul>
-      </header>
-      <section>
-
-<h3><a href="Orbit.html">Link to simulator</a></h3>
-
-<pre><code>$ cd your_repo_root/repo_name
-$ git fetch origin
-$ git checkout gh-pages
-</code></pre>
-
-<p>If you're using the GitHub for Mac, simply sync your repository and you'll see the new branch.</p>
-
-
-      </section>
-    </div>
-    <footer>
-      <p>Project maintained by <a href="https://github.com/jdiwnab">jdiwnab</a></p>
-      <p>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></p>
-    </footer>
-    <!--[if !IE]><script>fixScale(document);</script><![endif]-->
-    
-  </body>
+    <head>
+        <link rel="stylesheet" href="lib/jquery.nouislider.css"></link>
+        <link rel="stylesheet" href="lib/jquery.remodal.css"></link>
+        <link rel="stylesheet" href="lib/jquery.nouislider.pips.css"></link>
+        <link rel="stylesheet" href="style.css"></link>
+        <script src="lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+        <script src="lib/jquery.nouislider.all.js" type="text/javascript"></script>
+        <script src="lib/jquery.remodal.min.js" type="text/javascript"></script>
+        <script src="lib/gifjs/gif.js" type="text/javascript"></script>
+        <script src="cart3.js" type="text/javascript"></script>
+        <script src="performance.js" type="text/javascript"></script>
+        <script src="orbitdata.js" type="text/javascript"></script>
+        <script src="Orbit.js" type="text/javascript"></script>
+        <script src="input.js" type="text/javascript"></script>
+        <script src="storage.js" type="text/javascript"></script>
+        <script src="render.js" type="text/javascript"></script>
+        <script src="rungekutta.js" type="text/javascript"></script>
+        <script src="random.js" type="text/javascript"></script>
+        <script src="lagrange.js" type="text/javascript"></script>
+        <script src="recording.js" type="text/javascript"></script>
+        <script type="text/javascript">
+            addEvent(window,'load',engine.reset);
+            addEvent(window,'load',engine.setupControlEvents);
+        </script>
+        <title>Orbits</title>
+    </head>
+    <body onresize="engine.resize()">
+        <div class="remodal-bg">
+            <canvas id="orbit_disp"></canvas>
+            <div id="input_panel">
+                <div class="inputpanel">
+                    <div class="inputmenu" id="main-menu">
+                        <h2>Playback</h2>
+                    </div>
+                    <div class="inputcontrols show" id="main-controls">
+                        <label><span class="modallabel">Timestep:</span></label>
+                        <div id="timestep" class="noUi-extended"></div>
+                        <span id="stepvalue">10</span><br/>
+                        <label><span class="modallabel">Framestep:</span></label>
+                        <div id="framestep" class="noUi-extended"></div>
+                        <span id="stepcount">1</span><br/>
+                        <label for="showHistory"><span class="modallabel">Show History:</span></label><input type="checkbox" name="show_history" id="showHistory" value="show_history" checked/><br/>
+                        <!--Engine:-->
+                        <!--<input type="radio" id="algo1" name="algorithm" value="euler">Euler</input><br/>
+                        <input type="radio" id="algo2" name="algorithm" value="verlet">Verlet</input>
+                        <input type="radio" id="algo3" name="algorithm" value="rk" checked>Runge-Kutta</input><br/>-->
+                        <button id="start" name="start" value="start"></button>
+                        <button id="reset" name="reset" value="reset"></button>
+                        <button id="clear" name="clear" value="clear"></button>
+                        <button id="record" name="record" value="record"></button><br/>
+                    </div>
+                    <div class="inputcontrols" id="console"></div>
+                </div>
+                 <div class="inputpanel">
+               
+                    <div class="inputmenu" id="preset-menu">
+                        <h2>Presets</h2>
+                    </div>
+                    <div id="preset-controls"  class="inputcontrols" >
+                        <select id="presetSelect">
+                            <option value=0>Solar System</option>
+                            <option value=1>Double Star</option>
+                            <option value=2>Figure 8</option>
+                        </select>
+                        <button name="loadPreset" id="loadPreset" value="loadPreset">Load</button><br/>
+                        <button name="loadRandom" id="loadRandom" value="loadRandom">Load Random</button><br/>
+                        <button name="loadLagrange" id="loadLagrange" value="loadLagrange">Load Lagrange</button><br/>
+                    </div>
+                </div>
+                <div class="inputpanel">
+                    <div class="inputmenu" id="lstorage-menu">
+                        <h2>Local Storage</h2>
+                    </div>
+                    <div id="lstorage-controls" class="inputcontrols">
+                    <!--local Storage -->
+                        <button id="saveLocal" name="saveLocal" value="saveLocal">Save To Browser</button><br/><br/>
+                        <button id="loadSetup" name="loadSetup" value="loadSetup">Load Setup</button>
+                        <button id="loadState" name="loadState" value="loadState">Load State</button><br/><br/>
+                    </div>
+                </div>
+                <div class="inputpanel">
+                    <div class="inputmenu" id="fstorage-menu">
+                        <h2>File Storage</h2>
+                    </div>
+                    <div id="fstorage-controls" class="inputcontrols">
+                        <button id="export" name="export" value="export">Export To File</button><br/><br/>
+                        <label for="import">Upload file: </label>
+                        <input type="file" id="import" /><button id="loadImport">Load</button><br/>
+                        <form action="">
+                            <input type="radio" name="LoadOption" id="stateOption" value="state" checked>State<br/>
+                            <input type="radio" name="LoadOption" id="setupOption" value="setup">Setup<br/>
+                        </form>
+                        
+                        <button id="csvexport" name="csvexport" value="csvexport">Export to CSV</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="remodal" id="editmodal" data-remodal-id="editmodal" data-remodal-options="hashTracking: false">
+            <h2><span id="modal_head">New Object</span></h2>
+            
+            <div class="modallabel"><label for="name">Name:</label></div>
+            <input class="modalinput" id="new_name" type="text" name="name" placeholder="Name"/><br/>
+            
+            <label class="modallabel" for="new_pos">Position:</label>
+            <div class="noUi-extended slider_with_pips" id="new_pos"></div>
+            <input class="modalinput" type="number" name="vel" id="hidden_pos" step="any"/><br/>
+            <div class="modallabel"><label for="pos_angle">Angle:</label></div>
+            <input class="modalinput" type="number" id="pos_angle" name="pos_angle" value="0" step="any"/>
+            <div id="direction" class="arrowcircle">
+                <div id="pos_arrow" class="arrowpointer"></div>
+            </div><br/>
+            
+            <div class="modallabel"><label for="pos">Mass:</label></div>
+            <div class="noUi-extended slider_with_pips" id="new_mass"></div>
+            <input class="modalinput" type="number" name="mass" id="hidden_mass" step="any"/><br/>
+            
+            <div class="modallabel"><label for="pos">Velocity:</label></div>
+            <div class="noUi-extended slider_with_pips" id="new_vel"></div>
+            <input class="modalinput" type="number" name="vel" id="hidden_vel" step="any"/><br/>
+            <div class="modallabel"><label for="vel_angle">Angle:</label></div>
+            <input class="modalinput" type="number" id="vel_angle" name="vel_angle" value="0" step="any"/>
+            <div id="direction" class="arrowcircle">
+                <div id="vel_arrow" class="arrowpointer"></div>
+            </div><br/>
+            
+            <div class="modallabel"><label for="color">Color:</label></div>
+            <select class="modalinput" id="new_color" name="color" placeholder="Color"></select><br/>
+            
+            <div class="modallabel"><label for="new_rad">Radius:</label></div>
+            <input class="modalinput"type="number" id="new_rad" name="new_rad" value="6000" step="any"/><br/>
+            
+            <div class="modallabel"><label for="new_fixed">Fixed: </label></div>
+            <input type="checkbox" id="new_fixed" name="new_fixed" value="false" checked="false"/><br/>
+            
+            <input type="hidden" name="is_edit" id="is_edit" value="false"/><input type="hidden" name="edit_index" id="edit_index" value="-1"/>
+            <a class="remodal-confirm" href="#">OK</a>
+            <a class="remodal-cancel" href="#">Cancel</a>
+        </div>
+        <div class="remodal" id="precalcmodal" data-remodal-id="precalcmodal" data-remodal-options="hashTracking: false">
+            <h2>Precalculate</h2>
+            <div class="modallabel"><label for="precalc_timestep">Timestep</label>
+            <input class="modalinput" type="number" id="precalc_timestep" name="precalc_timestep" value="3600"/><br/>
+            <div class="modallabel"><label for="precalc_timespan">Timespan</label>
+            <input class="modalinput" type="number" id="precalc_timespan" name="precalc_timespan" value="31557600"/><br/>
+            <a class="remodal-confirm" href="#">OK</a>
+            <a class="remodal-cancel" href="#">Cancel</a>
+        </div>
+    </body>
 </html>

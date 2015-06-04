@@ -1,5 +1,4 @@
 engine.startRecord = function() {
-    engine.id('record').textContent = 'Stop Rec';
     engine.recording = true;
     engine.recFrame = -1;
     engine.encoder = new GIF({wokers:4, quality: 10, width: engine.xsize, height: engine.ysize, workerScript: 'lib/gifjs/gif.worker.js'});
@@ -20,7 +19,6 @@ engine.recordFrame = function(status) {
 }
 
 engine.stopRecord = function() {
-    engine.id('record').textContent = 'Record';
     engine.recording = false;
     engine.encoder.render();
 }
