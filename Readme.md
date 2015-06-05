@@ -73,4 +73,32 @@ When adding a new object, the panel is initialized with a resonable first guess 
 
 ### Lagrange
 
+Lagrange points are simi-stable orbits that remain fixed in reference to a primary and secondary (sun and planet, planet and moon) object. At these points, the gravitation of the two objects, combined with the cretrifgual force experienced in orbit, cancel each other out. These are approximatly on either side of the secondary object inline with the primary (L1 and L2), in the opposite side of the secondary's orbit (L3), and at 60 degrees ahead and behind the secondary's orbit (L4 and L5).
 
+The full derivation becomes quite complicated and results in a 5th order equation that can't be generally solved. So either estimates are made, assuming the secondary object is much smaller than the primary, or it is solved iterativly, searching for these equalibrium points with finer and finer grain passes. This simulator uses the second approach.
+
+L4 and L5 are trivial to calculate, as they are at the same disance from the barrycenter as the secondary, and in the same orbit, just offset by 60 degrees either side.
+
+The primary orbits the barrycenter at
+
+![r_{1} = R \frac{M_{2}}{M_{1} + M_{2}}](http://mathurl.com/p9dmzsb.png)
+
+Using that, you can calculate the distance from both the primary and secondary objects, depending on which point you want to solve for, with L1 being between primary and secondary, L2 being near the secondary but with both primary and secondary on the same side, and L3 being on the opposite side of the primary from the secondary.
+
+The gravitation experienced at each of these points depends on which point to consider, some adding and some subtracting, but the base is the same, so we'll consider the L1 point.
+
+![F_g = G\frac{M_1}{r_1^2} - G\frac{M_2}{r_2^2}](http://mathurl.com/o5regqe.png)
+
+that is, the gravitational force of the primary, minus the gravitational force of the secondary. For L2 and L3, the forces add.
+
+The object also has centrifigual forces, as it orbits, based on it's speed. As the object short orbit in the same period as the secondary, we can calculate speed for the proposed orbit.
+
+![T = 2 \pi \sqrt{\frac{R^3}{M_1 + M_2}}](http://mathurl.com/oza88xq.png)
+
+![v = 2 \pi \frac{r}{T}](http://mathurl.com/nc7z7k7.png)
+
+![F_c = \frac{v^2}{r}](http://mathurl.com/pxyt5v3.png)
+
+To solve for the proper radius, itterativly propose a radius, and find out when the forces over balance, and then try again, with a smaller step, until you find approximatly 0 difference. Then you have your solution. Much easier than solving this:
+
+![\vec{F_\Omega} = 0 = \Omega^2\left(x - \frac{\beta(x + \alpha R)R^3}{((x+\alpha R)^2 + y^2)^{3/2}} - \frac{\alpha (x-\beta R)R^3}{((x-\beta R)^2 + y^2)^{3/2}}\right)\hat{i} + \Omega^2\left(y - \frac{\beta y R^3}{((x+\alpha R)^2 + y^2)^{3/2}} - \frac{\alpha yR^3}{((x-\beta R)^2 + y^2)^{3/2}}\right)\hat{j}](http://mathurl.com/opmbdp6.png)
