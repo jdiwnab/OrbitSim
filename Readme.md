@@ -39,15 +39,15 @@ This simulation works by iteritivly calculating the forces on objects. Universal
 
 where G is the gravitational constant, M1 and M2 are masses being attacted, and r is the distance between them. Newton's second law also says:
 
-F = M1 * a
+![equation]([img]http://www.sciweavers.org/tex2img.php?eq=F%3DM_%7B1%7Da&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
 
 or
 
-a = F/M1
+![equation](http://www.sciweavers.org/tex2img.php?eq=a%20%3D%20%20%5Cfrac%7BF%7D%7BM_%7B1%7D%7D%20&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
 
 so we know that the force acting on an object changes the acceleration based on the mass of the object. Therefore
 
-a = G * M2 / r^2
+![equation](http://www.sciweavers.org/tex2img.php?eq=a%20%3D%20G%20%20%5Cfrac%7BM_%7B2%7D%7D%7B%20r%5E%7B2%7D%20%7D%20&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
 
 which means that the acceleration experinced by an object is based on the mass of the other object divided by the square of the distance between them, multiplied by a constant. Do this for every object acting on the current one, and you have the new acceleration. Update the position and velocity based on the time between calculations. 
 
@@ -69,7 +69,7 @@ This simulator uses the third algorithm, as it gave the best accuracy without co
 ### Orbital velocity
 When adding a new object, the panel is initialized with a resonable first guess of a circular orbit. This is because the velocity of a circular orbit is approximatly:
 
-V = sqrt(G * M_sun / r)
+![equation](http://www.sciweavers.org/tex2img.php?eq=V%20%3D%20%20%5Csqrt%7BG%20%20%5Cfrac%7BM_%7Bsun%7D%7D%7Br%7D%20%7D%20&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
 
 ### Lagrange
 
