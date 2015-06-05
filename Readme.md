@@ -35,19 +35,19 @@ It is capable of storing the current state into your browser's Local Storage, or
 
 This simulation works by iteritivly calculating the forces on objects. Universal Gravitation says that:
 
-![equation](http://www.sciweavers.org/tex2img.php?eq=F%20%3D%20G%20%20%5Cfrac%7BM_%7B1%7D%20%20%2B%20M_%7B2%7D%7D%7B%20r%5E%7B2%7D%20%7D%20&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
+![F = G \frac{M_{1}+M_{2}}{r^{2} }](http://mathurl.com/oc9ttnw.png)
 
 where G is the gravitational constant, M1 and M2 are masses being attacted, and r is the distance between them. Newton's second law also says:
 
-![equation]([img]http://www.sciweavers.org/tex2img.php?eq=F%3DM_%7B1%7Da&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
+![F=M_{1}a](http://mathurl.com/q97l4ed.png)
 
 or
 
-![equation](http://www.sciweavers.org/tex2img.php?eq=a%20%3D%20%20%5Cfrac%7BF%7D%7BM_%7B1%7D%7D%20&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
+![a =  \frac{F}{M_{1}}](http://mathurl.com/otezlxk.png)
 
 so we know that the force acting on an object changes the acceleration based on the mass of the object. Therefore
 
-![equation](http://www.sciweavers.org/tex2img.php?eq=a%20%3D%20G%20%20%5Cfrac%7BM_%7B2%7D%7D%7B%20r%5E%7B2%7D%20%7D%20&bc=White&fc=Black&im=jpg&fs=12&ff=arev&edit=0)
+![a = G  \frac{M_{2}}{ r^{2} }](http://mathurl.com/nn5xy82.png)
 
 which means that the acceleration experinced by an object is based on the mass of the other object divided by the square of the distance between them, multiplied by a constant. Do this for every object acting on the current one, and you have the new acceleration. Update the position and velocity based on the time between calculations. 
 
@@ -69,7 +69,7 @@ This simulator uses the third algorithm, as it gave the best accuracy without co
 ### Orbital velocity
 When adding a new object, the panel is initialized with a resonable first guess of a circular orbit. This is because the velocity of a circular orbit is approximatly:
 
-![V =  \sqrt{G  \frac{M_{sun}}{r} } ](http://mathurl.com/pmwtd4y.png)
+![V = \sqrt{G \frac{M_{sun}}{r}}](http://mathurl.com/pmwtd4y.png)
 
 ### Lagrange
 
