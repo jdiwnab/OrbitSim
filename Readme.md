@@ -69,7 +69,7 @@ This simulator uses the third algorithm, as it gave the best accuracy without co
 ### Orbital velocity
 When adding a new object, the panel is initialized with a resonable first guess of a circular orbit. This is because the velocity of a circular orbit is approximatly:
 
-![V =  \sqrt{G  \frac{M_{sun}}{r} } ](http://mathurl.com/pmwtd4y)
+![V =  \sqrt{G  \frac{M_{sun}}{r} } ](http://mathurl.com/pmwtd4y.png)
 
 ### Lagrange
 
