@@ -1,5 +1,5 @@
 .inputpanel {
-    width: 350px;
+    width: 100%;
     vertical-align: top;
     display: block;
     margin-top: 2px;
@@ -63,6 +63,8 @@
     margin-top: 5px;
 }
 #input_panel {
+    width: 50%;
+    max-width:350px;
     background-color: rgba(255,255,255,.9);
     position: absolute;
     top: 12px;

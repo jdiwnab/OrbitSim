@@ -226,7 +226,6 @@ engine.cancelClick = function() {
     if(engine.isMouseDown) {
         engine.holdStart = null;
         engine.isHolding = true;
-        engine.log("Start holding");
     }
 }
 
@@ -281,7 +280,6 @@ engine.mouseClick = function(e) {
     }
     var foundObject = false;
     //determine if the user clicked on an object;
-    engine.log('click at ('+engine.mouseX+','+engine.mouseY+')');
     for(var i = 0; i<engine.orbit_data.planet_array.length && !foundObject; i++) {
         var pa = engine.orbit_data.planet_array[i];
         var pos = new Cart3(pa.renderPos);
@@ -313,7 +311,7 @@ engine.touchStart = function(e) {
         //engine.log('touch start '+touch.identifier);
         if(engine.taid === undefined) {
             //first touch is for panning
-            engine.log('touch start A '+touch.identifier+' ('+touch.clientX+','+touch.clientY+')');
+            //engine.log('touch start A '+touch.identifier+' ('+touch.clientX+','+touch.clientY+')');
             engine.zoomFlag = false;
             engine.tax = touch.pageX - engine.canvas.offsetLeft;
             engine.tay = touch.pageY - engine.canvas.offsetTop;
@@ -326,7 +324,7 @@ engine.touchStart = function(e) {
                
         } else if(engine.tbid === undefined) {
             //second touch is for zoom/pan
-            engine.log('touch start B '+touch.identifier+' ('+touch.clientX+','+touch.clientY+')');
+            //engine.log('touch start B '+touch.identifier+' ('+touch.clientX+','+touch.clientY+')');
             engine.tbx = touch.pageX - engine.canvas.offsetLeft;
             engine.tby = touch.pageY - engine.canvas.offsetTop;
             engine.tbid = touch.identifier;
@@ -338,11 +336,11 @@ engine.touchStart = function(e) {
 }
 
 engine.touchEnd = function(e) {
-    engine.log("touches ending: "+e.changedTouches[0].identifier+" "+e.changedTouches.length);
+    //engine.log("touches ending: "+e.changedTouches[0].identifier+" "+e.changedTouches.length);
     var touches = e.changedTouches;
     for(var i=0; i<touches.length; i++) {
         var touch = touches[i].identifier;
-        engine.log("touch end "+touch);
+        //engine.log("touch end "+touch);
         if(touch === engine.taid) {
             engine.tax = undefined;
             engine.tay = undefined;
@@ -399,7 +397,7 @@ engine.touchDrag = function(dax, day) {
         engine.xorig = engine.initX + (dax - engine.mouseX);
         engine.yorig = engine.initY + (day - engine.mouseY);
         engine.mouseMotion();
-        engine.log('moving ('+dax+','+day+'), ('+engine.mouseX+','+engine.mouseY+')');
+        //engine.log('moving ('+dax+','+day+'), ('+engine.mouseX+','+engine.mouseY+')');
     }
 }
 
@@ -412,7 +410,7 @@ engine.touchZoom = function(dax, day, dbx, dby) {
     engine.yorig = (engine.initY-engine.yctr)*r + engine.yctr;
     //If zooming, don't pan, or else it will cause weirdness
     engine.zoomFlag = true;
-    engine.log('('+dax+','+day+') ('+dbx+','+dby+') zoom: '+r+'x to '+engine.zoom+'x');
+    //engine.log('('+dax+','+day+') ('+dbx+','+dby+') zoom: '+r+'x to '+engine.zoom+'x');
     engine.resetScaledHistory();
     engine.mouseMotion();
 }
