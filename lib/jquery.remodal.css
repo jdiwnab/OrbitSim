@@ -233,7 +233,8 @@ body.remodal-is-active .remodal {
 /* Dialog buttons */
 
 .remodal-confirm,
-.remodal-cancel {
+.remodal-cancel,
+.remodal-delete {
     font-size: 10pt;
 
     display: inline-block;
@@ -275,6 +276,19 @@ body.remodal-is-active .remodal {
 
 .remodal-cancel:hover,
 .remodal-cancel:active {
+    color: #f4f4f4;
+    background: #c0392b;
+}
+
+.remodal-delete {
+    color: #c0392b;
+    border: 2px solid #c0392b;
+    background: #ff4f4f4;
+    float: right;
+}
+
+.remodal-delete:hover,
+.remodal-delete:active {
     color: #f4f4f4;
     background: #c0392b;
 }

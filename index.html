@@ -20,9 +20,12 @@
         <script src="random.js" type="text/javascript"></script>
         <script src="lagrange.js" type="text/javascript"></script>
         <script src="recording.js" type="text/javascript"></script>
+        <script src="modals.js" type="text/javascript"></script>
+        <script src="controls.js" type="text/javascript"></script>
         <script type="text/javascript">
             addEvent(window,'load',engine.reset);
             addEvent(window,'load',engine.setupControlEvents);
+            addEvent(window,'load',engine.setupInputEvents);
         </script>
         <title>Orbits</title>
     </head>
@@ -138,6 +141,8 @@
             <input type="hidden" name="is_edit" id="is_edit" value="false"/><input type="hidden" name="edit_index" id="edit_index" value="-1"/>
             <a class="remodal-confirm" href="#">OK</a>
             <a class="remodal-cancel" href="#">Cancel</a>
+            <a class="remodal-delete" id="delete_object" href="#">Delete</a>
+
         </div>
         <div class="remodal" id="precalcmodal" data-remodal-id="precalcmodal" data-remodal-options="hashTracking: false">
             <h2>Precalculate</h2>
