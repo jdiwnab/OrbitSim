@@ -9,6 +9,7 @@ engine.verletIntegrate = function(pa, dt, array) {
     } else {
         Xn.multBy(2).subFrom(pa.oldPos).addTo(accel.multBy(dt * dt));
     }
+    pa.vel = new Cart3(Xn).subFrom(pa.pos).divBy(dt); //This is not needed for verlet, but is needed to switch to other algorithms
     pa.oldPos = new Cart3(pa.pos);
     pa.pos = Xn;
     

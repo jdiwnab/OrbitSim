@@ -68,7 +68,7 @@ engine.createForm = function() {
             '25%': [1e+3],
             '50%': [1e+6],
             '75%': [1e+9],
-            'max': [1.4E+011]
+            'max': [1e+12]
         },
     });
     $('#new_mass').noUiSlider_pips({
@@ -87,23 +87,24 @@ engine.createForm = function() {
     $('#new_vel').noUiSlider({
         start: 0,
         range: {
-            'min': [ -50 ],
-            '50%': [0],
-            'max': [50]
+            'min': [0],
+            'max': [100]
         },
     });
     $('#new_vel').noUiSlider_pips({
-        mode: 'range',
-        density: 3
+        mode: 'positions',
+        values: [0, 25, 50, 75, 100],
+        density: 4
     });
     $('#new_vel').Link('lower').to($('#hidden_vel'));
     $('#new_pos').noUiSlider({
         start: 0,
         range: {
             'min': [ 0 ],
-            '33%': [100000000],
-            '66%': [1000000000],
-            'max': [10000000000]
+            '25%': [1e+3],
+            '50%': [1e+6],
+            '75%': [1e+9],
+            'max': [1e+12]
         },
     });
     $('#new_pos').noUiSlider_pips({

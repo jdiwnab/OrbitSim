@@ -25,6 +25,8 @@ engine.algorithm = "rk";
 engine.collisions = true;
 engine.history = true;
 engine.clipping = true;
+engine.basestep = 360;
+engine.timestepmulti = 10;
 
 // Mass: Kg
 // Distance: Meters
@@ -53,9 +55,12 @@ engine.reset = function() {
     engine.yctr  = engine.yorig;
     
     engine.zoom = 1.0;
-    engine.pFactor = 1000;
-    engine.timeStep = 3600;
+    //engine.pFactor = 1000;
+    engine.timestepmulti = 10;
+    engine.timeStep = engine.basestep * engine.timestepmulti;
     engine.stepsPerFrame = 1;
+    engine.id('stepcount').textContent = engine.stepsPerFrame;
+    engine.id('stepvalue').textContent = engine.timestepmulti;
     engine.elapsedTime = 0;
     engine.fps = 0;
     //engine.algorithm = "rk";
@@ -63,8 +68,8 @@ engine.reset = function() {
     
     engine.legend = true;
     
-    $("#timestep").val(10);
-    $("#framestep").val(1);
+    //$("#timestep").val(10);
+    //$("#framestep").val(1);
     //engine.id("algo3").checked = true;
 
     engine.orbit_data = orbit_data;

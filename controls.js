@@ -1,7 +1,7 @@
 engine.setupControlEvents = function() {
     /* Form Events */
     engine.setupFancyControls();
-    $("#timestep").on({
+    /*$("#timestep").on({
         slide: function(e) {
             return engine.updateTimestep(e, this);
         },
@@ -16,7 +16,49 @@ engine.setupControlEvents = function() {
         set: function(e) {
             return engine.updateFramerate(e, this);
         } 
-    });
+    });*/
+    engine.id("stepfast").addEventListener('click', function(e) {
+        var step = engine.timestepmulti;
+        if(step >= 1000) return false;
+        if(Math.floor(Math.log10(step)) == Math.log10(step)) {
+            engine.timestepmulti *= 5;
+        } else {
+            engine.timestepmulti *= 2;
+        }
+        engine.id("stepvalue").textContent = engine.timestepmulti;
+        engine.timeStep = engine.basestep * engine.timestepmulti;
+    }, false);
+    engine.id("stepslow").addEventListener('click', function(e) {
+        var step = engine.timestepmulti;
+        if(step <= 1) return false;
+        if(Math.floor(Math.log10(step)) == Math.log10(step)) {
+            engine.timestepmulti /= 2;
+        } else {
+            engine.timestepmulti /= 5;
+        }
+        engine.id("stepvalue").textContent = engine.timestepmulti;
+        engine.timeStep = engine.basestep * engine.timestepmulti;
+    }, false);
+    engine.id("fastfwd").addEventListener('click', function(e) {
+        var step = engine.stepsPerFrame;
+        if(step >= 1000) return false;
+        if(Math.floor(Math.log10(step)) == Math.log10(step)) {
+            engine.stepsPerFrame *= 5;
+        } else {
+            engine.stepsPerFrame *= 2;
+        }
+        engine.id("stepcount").textContent = engine.stepsPerFrame;
+    }, false);
+    engine.id("slowfwd").addEventListener('click', function(e) {
+        var step = engine.stepsPerFrame;
+        if(step <= 1) return false;
+        if(Math.floor(Math.log10(step)) == Math.log10(step)) {
+            engine.stepsPerFrame /= 2;
+        } else {
+            engine.stepsPerFrame /= 5;
+        }
+        engine.id("stepcount").textContent = engine.stepsPerFrame;
+    }, false);
     engine.id("showHistory").addEventListener('change', function(e) {
         if( engine.id("showHistory").checked ) {
             engine.history = true;
@@ -89,7 +131,7 @@ engine.setupControlEvents = function() {
         engine.precalculateDialog();
         return false;
     }, false);*/
-    /*engine.id("algo1").addEventListener('change', function(e) {
+    engine.id("algo1").addEventListener('change', function(e) {
         engine.algorithm = e.target.value;
         return false;
     }, false);
@@ -100,10 +142,8 @@ engine.setupControlEvents = function() {
     engine.id("algo3").addEventListener('change', function(e) {
         engine.algorithm =  e.target.value;
         return false;
-    }, false);*/
-    
-    //engine.orbit_data.createDataSets();
-    
+    }, false);
+        
     //Drawer controls
     engine.id("main-menu").addEventListener('click', function(e) {
         $('#main-controls').toggleClass('show');
@@ -120,6 +160,10 @@ engine.setupControlEvents = function() {
     engine.id("fstorage-menu").addEventListener('click', function(e) {
         $('#fstorage-controls').toggleClass('show');
         $('#fstorage-menu').toggleClass('show');
+    }, false);
+    engine.id("engine-menu").addEventListener('click', function(e) {
+        $('#engine-controls').toggleClass('show');
+        $('#engine-menu').toggleClass('show');
     }, false);
     
 }

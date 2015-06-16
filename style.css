@@ -114,3 +114,27 @@ div .noUi-extended {
     background-image: url(images/ic_stop_black_48dp.png);
     background-size: cover;
 }
+#stepfast {
+    height: 30px;
+    width: 30px;
+    background-size: cover;
+    background-image: url(images/ic_skip_next_black_48dp.png);
+}
+#stepslow {
+    height: 30px;
+    width: 30px;
+    background-size: cover;
+    background-image: url(images/ic_skip_previous_black_48dp.png);
+}
+#slowfwd {
+    height: 30px;
+    width: 30px;
+    background-size: cover;
+    background-image: url(images/ic_fast_rewind_black_48dp.png);
+}
+#fastfwd {
+    height: 30px;
+    width: 30px;
+    background-size: cover;
+    background-image: url(images/ic_fast_forward_black_48dp.png);
+}

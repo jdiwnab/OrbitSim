@@ -44,6 +44,7 @@ engine.rkIntegrate= function(pa, dt, array) {
     engine.rkVars.xf.addTo(engine.rkVars.v2).addTo(engine.rkVars.v3).multBy(2).addTo(engine.rkVars.v1).addTo(engine.rkVars.v4).multBy(dt/6);
     engine.rkVars.vf.addTo(a2).addTo(a3).multBy(2).addTo(a1).addTo(a4).multBy(dt/6);
     
+    pa.oldPos = new Cart3(pa.pos); //This is needed to switch to verlet
     pa.pos.addTo(engine.rkVars.xf);
     pa.vel.addTo(engine.rkVars.vf);
 }
