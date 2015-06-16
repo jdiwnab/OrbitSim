@@ -73,6 +73,7 @@ The trick is the acculated error from large enough time steps. There are three m
  * ![x_{rk4} = v_{rk3} \Delta t + x_{n-1}  v_{rk4} = accel(x_{rk3}) \Delta t + v_{n-1}](http://mathurl.com/p96r3ss.png)
  * ![x_n = \frac {1}{6} \left( v_{rk1} + 2v_{rk2} + 2v_{rk3} + v_{rk4} \right)  v_n = \frac {1}{6} \left( accel(x_rk1) + 2accel(x_{rk2}) + 2accel(x_{rk3}) + accel(x_{rk4}) \right)](http://mathurl.com/qgh6aor.png)
  * where accel(x) is the acceleration of the object being considered at point x at the current time.
+
 This simulator defaults to Runge-Kutta, as it is reasonably fast, and very accurate. It also implements Euler and Verlet as options as they are faster, but these tend to be unstable for tight orbits.
 
 ### Orbital velocity
