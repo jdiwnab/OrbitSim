@@ -28,7 +28,7 @@
     display: block;
 }
 .inputcontrols .modallabel {
-    width: 80px;
+    width: 50%;
 }
 .modallabel {
     width: 75px;
@@ -63,7 +63,7 @@
     margin-top: 5px;
 }
 #input_panel {
-    width: 50%;
+    width: 30%;
     max-width:350px;
     background-color: rgba(255,255,255,.9);
     position: absolute;
@@ -81,60 +81,51 @@ div .noUi-extended {
 .inputcontrols label {
     width: 20%;
 }
-#start {
-    height: 30px;
-    width: 30px;
+.imgbutton {
+    height: 2em;
+    width: 2em;
     background-size: cover;
+    margin: initial;
+}
+select {
+    font-size:1.5em;
+    margin: 5px;
+}
+button {
+    font-size: 1.5em;
+    margin: 5px;
+}
+input[type=radio], input[type="checkbox"] {
+    width: 1.5em;
+    height: 1.5em;
+}
+#start {
     background-image: url(images/ic_play_arrow_black_48dp.png);
 }
 #start.stop {
     background-image: url(images/ic_pause_black_48dp.png);
 }
 #reset {
-    height: 30px;
-    width: 30px;
     background-image: url(images/ic_replay_black_48dp.png);
-    background-size: cover;
 }
 #clear {
-    height: 30px;
-    width: 30px;
     background-image: url(images/ic_clear_black_48dp.png);
-    background-size: cover;
 }
 #record {
-    height: 30px;
-    width: 30px;
     background-image: url(images/ic_brightness_1_black_48dp.png);
-    background-size: cover;
 }
 #record.stop {
-    height: 30px;
-    width: 30px;
     background-image: url(images/ic_stop_black_48dp.png);
-    background-size: cover;
 }
 #stepfast {
-    height: 30px;
-    width: 30px;
-    background-size: cover;
     background-image: url(images/ic_skip_next_black_48dp.png);
 }
 #stepslow {
-    height: 30px;
-    width: 30px;
-    background-size: cover;
     background-image: url(images/ic_skip_previous_black_48dp.png);
 }
 #slowfwd {
-    height: 30px;
-    width: 30px;
-    background-size: cover;
     background-image: url(images/ic_fast_rewind_black_48dp.png);
 }
 #fastfwd {
-    height: 30px;
-    width: 30px;
-    background-size: cover;
     background-image: url(images/ic_fast_forward_black_48dp.png);
 }
