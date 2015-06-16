@@ -8,6 +8,7 @@ This is my attempt to create an orbit simulator that is intuitive, easy to use a
 
 ## Features
 * Full N-body simulation in Javascript
+* Three different algorithms to choose from
 * Play, pause and reset a simulation
 * Record a simulation to an animated GIF
 * Accelerate simulation either by calculating more between frames (accurate, but slower), or by skipping more time (less accurate, but fast)
@@ -21,7 +22,7 @@ This is my attempt to create an orbit simulator that is intuitive, easy to use a
 * Collisions between objects
 
 ## Details
-This simulator uses a Runge-Kutta algorithm to simulate gravity. This has shown to be the most accurate and fastest algorithm tested. Also implemented, but not used or exposed are Euler and Verlet integration.
+This simulator implements three different iterative algorithms to simulate gravity. By default, we use Runge-Kutta, as it has shown to be much more stable than Euler or Verlet, with only a small speed difference.
 
 The code supports a 3D simulation, but display an input are limited to 2 dimentions at this time.
 
@@ -59,12 +60,21 @@ Easy, right?
 The trick is the acculated error from large enough time steps. There are three methods considered for this simulator:
 * Euler
  * Simple, just do the calculation at every step
+ * ![v_1 = a_1 * \Delta t  x_1 = v_1 * \Delta t](http://mathurl.com/pea9fz3.png)
 * Verlet
  * Estimates a half way value to correct for some error
+ * First iteration bootstraps based on velocity, while the rest just use the previous position
+ * ![x_1 = x_0 = v_0 \Delta t + \frac{1}{2} a \Delta t^2   x_{n} = 2 * x_{n-1} - x_{n-2} + a \Delta t^2](http://mathurl.com/ohcjkoa.png)
 * Runge-Kutta
  * Estimates, based on differential equations, 4 sub steps, to correct for more error
+ * ![x_{rk1} = x_{n-1}  v_{rk1} = v_{n-1}](http://mathurl.com/oo8fzlg.png)
+ * ![x_{rk2} = v_{rk1} \frac{1}{2} \Delta t + x_{n-1}  v_{rk2} = accel(x_{rk1}) \frac{1}{2} \Delta t + v_{n-1}](http://mathurl.com/paolsf3.png)
+ * ![x_{rk3} = v_{rk2} \frac{1}{2} \Delta t + x_{n-1}  v_{rk3} = accel(x_{rk2}) \frac{1}{2} \Delta t + v_{n-1}](http://mathurl.com/oe9vylq.png)
+ * ![x_{rk4} = v_{rk3} \Delta t + x_{n-1}  v_{rk4} = accel(x_{rk3}) \Delta t + v_{n-1}](http://mathurl.com/p96r3ss.png)
+ * ![x_n = \frac {1}{6} \left( v_{rk1} + 2v_{rk2} + 2v_{rk3} + v_{rk4} \right)  v_n = \frac {1}{6} \left( accel(x_rk1) + 2accel(x_{rk2}) + 2accel(x_{rk3}) + accel(x_{rk4}) \right)](http://mathurl.com/qgh6aor.png)
+ * where accel(x) is the acceleration of the object being considered at point x at the current time.
 
-This simulator uses the third algorithm, as it gave the best accuracy without costing in speed.
+This simulator defaults to Runge-Kutta, as it is reasonably fast, and very accurate. It also implements Euler and Verlet as options as they are faster, but these tend to be unstable for tight orbits.
 
 ### Orbital velocity
 When adding a new object, the panel is initialized with a resonable first guess of a circular orbit. This is because the velocity of a circular orbit is approximatly:
