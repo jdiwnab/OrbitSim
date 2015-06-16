@@ -8,6 +8,7 @@ This is my attempt to create an orbit simulator that is intuitive, easy to use a
 
 ## Features
 * Full N-body simulation in Javascript
+* Three different algorithms to choose from
 * Play, pause and reset a simulation
 * Record a simulation to an animated GIF
 * Accelerate simulation either by calculating more between frames (accurate, but slower), or by skipping more time (less accurate, but fast)
@@ -21,7 +22,7 @@ This is my attempt to create an orbit simulator that is intuitive, easy to use a
 * Collisions between objects
 
 ## Details
-This simulator uses a Runge-Kutta algorithm to simulate gravity. This has shown to be the most accurate and fastest algorithm tested. Also implemented, but not used or exposed are Euler and Verlet integration.
+This simulator implements three different iterative algorithms to simulate gravity. By default, we use Runge-Kutta, as it has shown to be much more stable than Euler or Verlet, with only a small speed difference.
 
 The code supports a 3D simulation, but display an input are limited to 2 dimentions at this time.
 
@@ -64,7 +65,7 @@ The trick is the acculated error from large enough time steps. There are three m
 * Runge-Kutta
  * Estimates, based on differential equations, 4 sub steps, to correct for more error
 
-This simulator uses the third algorithm, as it gave the best accuracy without costing in speed.
+This simulator defaults to Runge-Kutta, as it is reasonably fast, and very accurate. It also implements Euler and Verlet as options as they are faster, but these tend to be unstable for tight orbits.
 
 ### Orbital velocity
 When adding a new object, the panel is initialized with a resonable first guess of a circular orbit. This is because the velocity of a circular orbit is approximatly:
