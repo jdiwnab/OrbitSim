@@ -143,7 +143,12 @@ engine.setupControlEvents = function() {
         engine.algorithm =  e.target.value;
         return false;
     }, false);
-        
+      
+    //Prevent double-tap-to-zoom on specific elements (like buttons)
+    $('.no-zoom').bind('touchend', function(e) {
+        e.preventDefault();
+    });
+      
     //Drawer controls
     engine.id("main-menu").addEventListener('click', function(e) {
         $('#main-controls').toggleClass('show');

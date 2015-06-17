@@ -134,8 +134,8 @@ engine.updateObjects = function(array, dt) {
         
         if(engine.clipping) {
             engine.calcClipping(array[i]);
-        }
         
+        }
     }
     engine.elapsedTime += dt;
 }

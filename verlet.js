@@ -5,7 +5,7 @@ engine.verletIntegrate = function(pa, dt, array) {
     var accel  = engine.calcAccel(pa, Xn, array);
     if(pa.oldPos === undefined) {
         var vel = new Cart3(pa.vel);
-        Xn.addTo(vel.multBy(dt)).add(accel.multBy(dt * dt).multBy(.5));
+        Xn.addTo(vel.multBy(dt)).addTo(accel.multBy(dt * dt).multBy(.5));
     } else {
         Xn.multBy(2).subFrom(pa.oldPos).addTo(accel.multBy(dt * dt));
     }

@@ -47,7 +47,7 @@ engine.drawSubset = function(refresh, timeStep, cx, cy, array) {
         if(p.destroyed) {
             continue;
         }
-        engine.updateOrbitHistory(p, true);
+        engine.updateOrbitHistory(p, false);
         var pp = engine.scaleOrbitingBody(p);
         engine.drawOrbit(p, cx, cy);
         engine.ctx.fillStyle = p.color;
@@ -59,7 +59,7 @@ engine.drawSubset = function(refresh, timeStep, cx, cy, array) {
 
 engine.scaleOrbitingBody = function (ob) {
     // make a copy, don't modify the original values
-    var p = new Cart3(ob.pos).multBy(engine.drawingScale * engine.zoom * engine.xsize /2);
+    var p = new Cart3(ob.pos).multBy(engine.scalingFactor());
     ob.renderPos = p;
     return p;
 }
@@ -68,9 +68,13 @@ engine.unscaleCoordinate = function(x, y) {
     var new_x, new_y;
     new_x = x - engine.xorig;
     new_y = y - engine.yorig;
-    new_x = new_x/(engine.drawingScale * engine.zoom * engine.xsize/2);
-    new_y = new_y/(engine.drawingScale * engine.zoom * engine.xsize/2);
+    new_x = new_x/(engine.scalingFactor());
+    new_y = new_y/(engine.scalingFactor());
     return new Cart3(new_x, new_y, 0);
+}
+
+engine.scalingFactor = function() {
+    return engine.drawingScale*engine.zoom * engine.xsize/2;
 }
 
 engine.scaleHistory = function(p) {
@@ -79,15 +83,17 @@ engine.scaleHistory = function(p) {
         //var new_hist = [];
         p.scaledHistory = [];
         for(var i=0; i<history.length; i++) {
-            var h = new Cart3(history[i]).multBy(engine.drawingScale*engine.zoom*engine.xsize/2);
+            var h = new Cart3(history[i]).multBy(engine.scalingFactor());
             p.scaledHistory.push(h);
         }
     } else {
-        var h = new Cart3(history[history.length-1]).multBy(engine.drawingScale*engine.zoom*engine.xsize/2);
-        if(p.scaledHistory.length >= 1000) {
-            p.scaledHistory.shift();
-        }
-        p.scaledHistory.push(h);
+        //for(var i = engine.stepsPerFrame; i>=0; i--) {
+        var h = new Cart3(history[history.length-1]).multBy(engine.scalingFactor());
+            if(p.scaledHistory.length >= 1000) {
+                p.scaledHistory.shift();
+            }
+            p.scaledHistory.push(h);
+        //}
     }
     return p.scaledHistory;
 }

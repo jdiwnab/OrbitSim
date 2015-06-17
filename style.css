@@ -28,7 +28,7 @@
     display: block;
 }
 .inputcontrols .modallabel {
-    width: 50%;
+    width: 40%;
 }
 .modallabel {
     width: 75px;
@@ -82,17 +82,17 @@ div .noUi-extended {
     width: 20%;
 }
 .imgbutton {
-    height: 2em;
-    width: 2em;
+    height: 1.5em;
+    width: 1.5em;
     background-size: cover;
     margin: initial;
 }
 select {
-    font-size:1.5em;
+    font-size:1.25em;
     margin: 5px;
 }
 button {
-    font-size: 1.5em;
+    font-size: 1.25em;
     margin: 5px;
 }
 input[type=radio], input[type="checkbox"] {
