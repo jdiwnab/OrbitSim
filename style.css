@@ -7,7 +7,6 @@
 
 }
 
-
 .inputmenu {
     background: rgba(200,200,200,.9);
     background-image: url(images/ic_expand_more_black_48dp.png);
@@ -68,7 +67,8 @@
     position: absolute;
     top: 12px;
     left: 12px;
-    width: 40%;
+    width: 35%;
+    max-width: 410px;
 }
 #inputpanels {
     display:none;
@@ -101,10 +101,11 @@ div .noUi-extended {
     width: 20%;
 }
 .imgbutton {
-    height: 1.5em;
-    width: 1.5em;
+    height: auto;
+    width: 14%;
     background-size: cover;
     margin: initial;
+    padding-top: 12%
 }
 select {
     font-size:1.25em;
@@ -115,8 +116,8 @@ button {
     margin: 5px;
 }
 input[type=radio], input[type="checkbox"] {
-    width: 1.5em;
-    height: 1.5em;
+    transform: scale(1.5);
+    -webkit-transform: scale(1.5);
 }
 #start {
     background-image: url(images/ic_play_arrow_black_48dp.png);
