@@ -6,6 +6,8 @@
     margin-bottom: 2px;
 
 }
+
+
 .inputmenu {
     background: rgba(200,200,200,.9);
     background-image: url(images/ic_expand_more_black_48dp.png);
@@ -63,12 +65,29 @@
     margin-top: 5px;
 }
 #input_panel {
-    width: 30%;
-    max-width:350px;
-    background-color: rgba(255,255,255,.9);
     position: absolute;
     top: 12px;
     left: 12px;
+    width: 40%;
+}
+#inputpanels {
+    display:none;
+    background-color: rgba(255,255,255,.9);
+    max-width:350px;
+    width: 100%;
+    float: left;
+}
+#inputpanels.show {
+    display: inline-block;
+}
+
+#pullout_menu {
+    display: inline-block;
+    font-size: 1em;
+    color: #fff;
+    margin: 0px;
+    padding: 5px;
+    float: left;
 }
 
 .remodal-confirm, .remodal-cancel {

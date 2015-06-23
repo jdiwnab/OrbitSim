@@ -171,6 +171,9 @@ engine.setupControlEvents = function() {
         $('#engine-menu').toggleClass('show');
     }, false);
     
+    engine.id("pullout_menu").addEventListener('click', function(e) {
+        $('#inputpanels').toggleClass('show');
+    }, false);
 }
 
 engine.updateTimestep = function(e, control) {

@@ -57,86 +57,92 @@
         <div class="remodal-bg">
             <canvas id="orbit_disp"></canvas>
             <div id="input_panel">
-                <div class="inputpanel">
-                    <div class="inputmenu show" id="main-menu">
-                        <h2>Playback</h2>
+                <div id="inputpanels" class="show">
+                    <div class="inputpanel">
+                        <div class="inputmenu show" id="main-menu">
+                            <h2>Playback</h2>
+                        </div>
+                        <div class="inputcontrols show" id="main-controls">
+                            <label><span class="modallabel">Timestep:</span></label>
+                            <!--<div id="timestep" class="noUi-extended"></div>-->
+                            <button class="imgbutton no-zoom" id="stepslow" name="stepslow" value="stepslow"></button>
+                            <button class="imgbutton no-zoom" id="stepfast" name="stepfast" value="stepfast"></button>
+                            <span id="stepvalue">10</span><br/>
+                            <label><span class="modallabel">Framestep:</span></label>
+                            <!--<div id="framestep" class="noUi-extended"></div>-->
+                            <button class="imgbutton no-zoom" id="slowfwd" name="slowfwd" value="slowfwd"></button>                        
+                            <button class="imgbutton no-zoom" id="fastfwd" name="fastfwd" value="fastfwd"></button>
+                            <span id="stepcount">1</span><br/>
+                            <label for="showHistory"><span class="modallabel">Show History:</span></label><input type="checkbox" name="show_history" id="showHistory" value="show_history" checked/><br/>
+                            <!--Engine:-->
+                            <!--<input type="radio" id="algo1" name="algorithm" value="euler">Euler</input><br/>
+                            <input type="radio" id="algo2" name="algorithm" value="verlet">Verlet</input>
+                            <input type="radio" id="algo3" name="algorithm" value="rk" checked>Runge-Kutta</input><br/>-->
+                            <button class="imgbutton no-zoom" id="start" name="start" value="start"></button>
+                            <button class="imgbutton no-zoom" id="reset" name="reset" value="reset"></button>
+                            <button class="imgbutton no-zoom" id="clear" name="clear" value="clear"></button>
+                            <button class="imgbutton no-zoom" id="record" name="record" value="record"></button><br/>
+                            <div id="console"></div>
+                        </div>
                     </div>
-                    <div class="inputcontrols show" id="main-controls">
-                        <label><span class="modallabel">Timestep:</span></label>
-                        <!--<div id="timestep" class="noUi-extended"></div>-->
-                        <button class="imgbutton no-zoom" id="stepslow" name="stepslow" value="stepslow"></button>
-                        <button class="imgbutton no-zoom" id="stepfast" name="stepfast" value="stepfast"></button>
-                        <span id="stepvalue">10</span><br/>
-                        <label><span class="modallabel">Framestep:</span></label>
-                        <!--<div id="framestep" class="noUi-extended"></div>-->
-                        <button class="imgbutton no-zoom" id="slowfwd" name="slowfwd" value="slowfwd"></button>                        
-                        <button class="imgbutton no-zoom" id="fastfwd" name="fastfwd" value="fastfwd"></button>
-                        <span id="stepcount">1</span><br/>
-                        <label for="showHistory"><span class="modallabel">Show History:</span></label><input type="checkbox" name="show_history" id="showHistory" value="show_history" checked/><br/>
-                        <!--Engine:-->
-                        <!--<input type="radio" id="algo1" name="algorithm" value="euler">Euler</input><br/>
-                        <input type="radio" id="algo2" name="algorithm" value="verlet">Verlet</input>
-                        <input type="radio" id="algo3" name="algorithm" value="rk" checked>Runge-Kutta</input><br/>-->
-                        <button class="imgbutton no-zoom" id="start" name="start" value="start"></button>
-                        <button class="imgbutton no-zoom" id="reset" name="reset" value="reset"></button>
-                        <button class="imgbutton no-zoom" id="clear" name="clear" value="clear"></button>
-                        <button class="imgbutton no-zoom" id="record" name="record" value="record"></button><br/>
-                        <div id="console"></div>
+                    <div class="inputpanel">
+                        <div class="inputmenu" id="preset-menu">
+                            <h2>Presets</h2>
+                        </div>
+                        <div id="preset-controls"  class="inputcontrols" >
+                            <select id="presetSelect">
+                                <option value=0>Solar System</option>
+                                <option value=1>Double Star</option>
+                                <option value=2>Figure 8</option>
+                            </select>
+                            <button name="loadPreset" id="loadPreset" value="loadPreset">Load</button><br/>
+                            <button name="loadRandom" id="loadRandom" value="loadRandom">Load Random</button><br/>
+                            <button name="loadLagrange" id="loadLagrange" value="loadLagrange">Load Lagrange</button><br/>
+                        </div>
+                    </div>
+                    <div class="inputpanel">
+                        <div class="inputmenu" id="engine-menu">
+                            <h2>Engine</h2>
+                        </div>
+                        <div id="engine-controls" class="inputcontrols">
+                            <label for="algo1"><span class="modallabel">Runge-Kutta</span></label><input type="radio" id="algo1" name="algo" value="rk" checked /><br/>
+                            <label for="algo2"><span class="modallabel">Euler</span></label><input type="radio" id="algo2" name="algo" value="euler" /><br/>
+                            <label for="algo3"><span class="modallabel">Verlet</span></label><input type="radio" id="algo3" name="algo" value="verlet" /><br/>
+                        </div>
+                    </div>
+                    <div class="inputpanel">
+                        <div class="inputmenu" id="lstorage-menu">
+                            <h2>Local Storage</h2>
+                        </div>
+                        <div id="lstorage-controls" class="inputcontrols">
+                        <!--local Storage -->
+                            <button id="saveLocal" name="saveLocal" value="saveLocal">Save To Browser</button><br/><br/>
+                            <button id="loadSetup" name="loadSetup" value="loadSetup">Load Setup</button>
+                            <button id="loadState" name="loadState" value="loadState">Load State</button><br/><br/>
+                        </div>
+                    </div>
+                    <div class="inputpanel">
+                        <div class="inputmenu" id="fstorage-menu">
+                            <h2>File Storage</h2>
+                        </div>
+                        <div id="fstorage-controls" class="inputcontrols">
+                            <button id="export" name="export" value="export">Export To File</button><br/><br/>
+                            <label for="import">Upload file: </label>
+                            <input type="file" id="import" /><button id="loadImport">Load</button><br/>
+                            <form action="">
+                                <input type="radio" name="LoadOption" id="stateOption" value="state" checked>State<br/>
+                                <input type="radio" name="LoadOption" id="setupOption" value="setup">Setup<br/>
+                            </form>
+                            
+                            <button id="csvexport" name="csvexport" value="csvexport">Export to CSV</button>
+                        </div>
                     </div>
                 </div>
-                <div class="inputpanel">
-                    <div class="inputmenu" id="preset-menu">
-                        <h2>Presets</h2>
-                    </div>
-                    <div id="preset-controls"  class="inputcontrols" >
-                        <select id="presetSelect">
-                            <option value=0>Solar System</option>
-                            <option value=1>Double Star</option>
-                            <option value=2>Figure 8</option>
-                        </select>
-                        <button name="loadPreset" id="loadPreset" value="loadPreset">Load</button><br/>
-                        <button name="loadRandom" id="loadRandom" value="loadRandom">Load Random</button><br/>
-                        <button name="loadLagrange" id="loadLagrange" value="loadLagrange">Load Lagrange</button><br/>
-                    </div>
-                </div>
-                <div class="inputpanel">
-                    <div class="inputmenu" id="engine-menu">
-                        <h2>Engine</h2>
-                    </div>
-                    <div id="engine-controls" class="inputcontrols">
-                        <label for="algo1"><span class="modallabel">Runge-Kutta</span></label><input type="radio" id="algo1" name="algo" value="rk" checked /><br/>
-                        <label for="algo2"><span class="modallabel">Euler</span></label><input type="radio" id="algo2" name="algo" value="euler" /><br/>
-                        <label for="algo3"><span class="modallabel">Verlet</span></label><input type="radio" id="algo3" name="algo" value="verlet" /><br/>
-                    </div>
-                </div>
-                <div class="inputpanel">
-                    <div class="inputmenu" id="lstorage-menu">
-                        <h2>Local Storage</h2>
-                    </div>
-                    <div id="lstorage-controls" class="inputcontrols">
-                    <!--local Storage -->
-                        <button id="saveLocal" name="saveLocal" value="saveLocal">Save To Browser</button><br/><br/>
-                        <button id="loadSetup" name="loadSetup" value="loadSetup">Load Setup</button>
-                        <button id="loadState" name="loadState" value="loadState">Load State</button><br/><br/>
-                    </div>
-                </div>
-                <div class="inputpanel">
-                    <div class="inputmenu" id="fstorage-menu">
-                        <h2>File Storage</h2>
-                    </div>
-                    <div id="fstorage-controls" class="inputcontrols">
-                        <button id="export" name="export" value="export">Export To File</button><br/><br/>
-                        <label for="import">Upload file: </label>
-                        <input type="file" id="import" /><button id="loadImport">Load</button><br/>
-                        <form action="">
-                            <input type="radio" name="LoadOption" id="stateOption" value="state" checked>State<br/>
-                            <input type="radio" name="LoadOption" id="setupOption" value="setup">Setup<br/>
-                        </form>
-                        
-                        <button id="csvexport" name="csvexport" value="csvexport">Export to CSV</button>
-                    </div>
+                <div id="pullout_menu">
+                    <img src="images/ic_menu_white_48dp.png"/>
                 </div>
             </div>
+
         </div>
         <div class="remodal" id="editmodal" data-remodal-id="editmodal" data-remodal-options="hashTracking: false">
             <h2><span id="modal_head">New Object</span></h2>
