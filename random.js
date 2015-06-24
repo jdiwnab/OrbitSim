@@ -5,10 +5,10 @@ engine.loadRandomPlanets = function(n) {
 }
 engine.randomPlanets = function(n) {
     for(var i = 0; i< n; i++) {
-        engine.randomPlanet();
+        engine.randomPlanet(i);
     }
 }
-engine.randomPlanet = function() {
+engine.randomPlanet = function(i) {
     var pos = engine.randomInt(0, 1000000000);
     var pos_angle = engine.randomInt(0,360);
     var pos_x = pos * Math.cos(pos_angle);
@@ -25,7 +25,7 @@ engine.randomPlanet = function() {
     
     var radius = engine.randomInt(10,1000);
     
-    engine.addPlanet('', new Cart3(pos_x, 0, pos_y), mass, new Cart3(vel_x, 0, vel_y), color, radius, false);   
+    engine.addPlanet(i, new Cart3(pos_x, 0, pos_y), mass, new Cart3(vel_x, 0, vel_y), color, radius, false);   
 }
 
 engine.randomInt = function(min, max) {

@@ -67,6 +67,13 @@ engine.setupControlEvents = function() {
             engine.history = false;
         }
     }, false);
+    engine.id('bhTree').addEventListener('change', function(e) {
+        if(engine.id('bhTree').checked) {
+            engine.useBhTree = true;
+        } else {
+            engine.useBhTree = false;
+        }
+    }, false);
     engine.id("start").addEventListener('click', function(e) {
         $('#start').toggleClass('stop');
         engine.pause(e);

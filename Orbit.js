@@ -27,6 +27,9 @@ engine.history = true;
 engine.clipping = true;
 engine.basestep = 360;
 engine.timestepmulti = 10;
+engine.maxDistance = 100000000000;
+engine.bhTheta = 0.5;
+engine.useBhTree = false;
 
 // Mass: Kg
 // Distance: Meters
@@ -74,6 +77,7 @@ engine.reset = function() {
 
     engine.orbit_data = orbit_data;
     engine.orbit_data.resetPlanets();
+    engine.bhTree = null;
     engine.perform(0, true);
 }
 
@@ -115,6 +119,11 @@ engine.addPlanet = function(name, pos, mass, vel, color, radius, fixed) {
 }
 
 engine.updateObjects = function(array, dt) {
+    if(engine.useBhTree) {
+        engine.bhTree = new bhTree();
+        engine.bhTree.addArray(array);
+    }
+
     for(var i = 0; i<array.length; i++) {
         if(array[i].fixed || array[i].destroyed) { 
             continue;
@@ -170,18 +179,24 @@ engine.precalcStep = function(dt) {
 }
 
 engine.calcAccel = function(pa, pos, array) {
-    var accel = new Cart3();
-    var radius = new Cart3();
-    for(var i = 0; i<array.length; i++) {
-        var pb = array[i];
-        //don't compute self-gravitation
-        if(pa != undefined && pb != undefined && pa != pb && !pb.destroyed) {
-            //1. vel += dt * radius * -G * mass * radius.abs()^(-3/2)
-            //2. pos += dt * vel
-            //G is normalized to 1, so removed here
-            radius.x=0;radius.y=0;radius.z=0;
-            radius.addTo(pos).subFrom(pb.pos);
-            accel.addTo(radius.multBy( (-1 * pb.mass * radius.invSumCube())));
+    var accel;
+    if(engine.useBhTree) {
+        //console.log('Calculating for '+pa.name);
+        accel = engine.bhTree.calcAccel(pa,pos,array);
+    } else {
+        accel = new Cart3();
+        var radius = new Cart3();
+        for(var i = 0; i<array.length; i++) {
+            var pb = array[i];
+            //don't compute self-gravitation
+            if(pa != undefined && pb != undefined && pa != pb && !pb.destroyed) {
+                //1. vel += dt * radius * -G * mass * radius.abs()^(-3/2)
+                //2. pos += dt * vel
+                //G is normalized to 1, so removed here
+                radius.x=0;radius.y=0;radius.z=0;
+                radius.addTo(pos).subFrom(pb.pos);
+                accel.addTo(radius.multBy( (-1 * pb.mass * radius.invSumCube())));
+            }
         }
     }
     return accel;
@@ -212,7 +227,7 @@ engine.calcCollision = function(pa, array) {
     }
 }
 engine.calcClipping = function(pa) {
-    if(pa.pos.abs() > 100000000000) {
+    if(pa.pos.abs() > engine.maxDistance) {
         pa.destroyed = true;
     }
 }
