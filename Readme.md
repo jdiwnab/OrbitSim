@@ -1,5 +1,5 @@
 # Orbit Simulator
-[View Simulator](http://jdiwnab.github.io/OrbitSim/Orbit.html)
+[View Simulator](http://jdiwnab.github.io/OrbitSim/)
 
 ## Overview
 There use to be a nifty orbit simulator for Mac Sytem 6 or so. It let users input an arbitrary system, then it would simulate how the planets and stars would orbit each other. It was all black and white, and was rather limited. But it was always fun to try and create the most complicated but stable system you could. I remember this program fondly, but can't find it anywhere. Nor can I find such an easy to use simulator like it.
