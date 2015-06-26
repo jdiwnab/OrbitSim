@@ -177,6 +177,7 @@ engine.submitEditForm = function() {
     p.startvel.z = vel * Math.sin(angle);
     p.color = engine.id('new_color').value;
     p.radius = parseFloat(engine.id('new_rad').value);
+    p.startrad = parseFloat(engine.id('new_rad').value);
     p.fixed = engine.id('new_fixed').checked;
     engine.reset();
 }

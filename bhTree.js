@@ -187,8 +187,10 @@ bhTreePrototype = function() {
         }
         this.root = new bhNode(-1* dist, dist, -1*dist, dist, -1*dist, dist);
         for(var i = 0; i<array.length; i++) {
-            //console.log('adding object '+array[i].name);
-            this.addObject(i, array[i]);
+            if(!array[i].destroyed){
+                //console.log('adding object '+array[i].name);
+                this.addObject(i, array[i]);
+            }
         }
     };
 }

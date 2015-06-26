@@ -215,8 +215,11 @@ engine.calcCollision = function(pa, array) {
                     var p_a = new Cart3(pa.oldVel).multBy(pa.mass);
                     var p_b = new Cart3(pb.oldVel).multBy(pb.mass);
                     var vf = new Cart3(p_a).addTo(p_b).divBy(pa.mass+pb.mass);
-                    engine.log('collide: '+p_a.toString()+' with '+p_b.toString()+' = '+vf.toString());
+                    engine.log('collide: '+pa.name+' with '+pb.name);
                     pa.mass += pb.mass;
+                    // add 'volumes' of spheres together and get a new radius
+                    var radius = Math.cbtr(Math.pow(pa.radius,3) + Math.pow(pb.radius,3));
+                    pa.radius = radius;
                     pa.vel = vf;
                     //array.splice(i,1);
                     array[i].destroyed = true;
@@ -244,6 +247,7 @@ function OrbitBody(name, radius, pos, vel, mass, color) {
     this.startpos = new Cart3(pos);
     this.startvel = new Cart3(vel);
     this.startmass = mass;
+    this.startrad = radius
     this.history = [new Cart3(pos)];
     this.scaledHistory; //cart3 array;
     this.fixed = false;
@@ -253,6 +257,7 @@ function OrbitBody(name, radius, pos, vel, mass, color) {
         this.pos = new Cart3(this.startpos);
         this.vel = new Cart3(this.startvel);
         this.mass = this.startmass;
+        this.radius = this.startrad;
         this.history = [new Cart3(this.startpos)];
         this.scaledHistory = undefined; 
         this.oldPos = undefined;
@@ -263,6 +268,11 @@ function OrbitBody(name, radius, pos, vel, mass, color) {
     }
 }
 
+// Polyfill for older browsers
+Math.cbtr = Math.cbrt || function(x) {
+    var y = Math.pow(Math.abs(x),1/3);
+    return x<0? -y: y;
+}
 
 
 
