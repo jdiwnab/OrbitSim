@@ -55,6 +55,10 @@ engine.drawSubset = function(refresh, timeStep, cx, cy, array) {
         radius = (radius < 2) ? 2 : radius;
         engine.drawOval(pp.x, pp.z, cx, cy, radius);
     }
+    //draw BH Tree for debugging
+    if(engine.useBhTree && engine.bhTree != null) {
+        engine.bhTree.drawTree();
+    }
 }
 
 engine.scaleOrbitingBody = function (ob) {
@@ -70,6 +74,14 @@ engine.unscaleCoordinate = function(x, y) {
     new_y = y - engine.yorig;
     new_x = new_x/(engine.scalingFactor());
     new_y = new_y/(engine.scalingFactor());
+    return new Cart3(new_x, new_y, 0);
+}
+engine.scaleCoordinate = function(x, y) {
+    var new_x, new_y;
+    new_x = x * engine.scalingFactor();
+    new_y = y * engine.scalingFactor();
+    new_x += engine.xorig;
+    new_y += engine.yorig;
     return new Cart3(new_x, new_y, 0);
 }
 
@@ -114,7 +126,13 @@ engine.drawLabels = function() {
         engine.ctx.fillStyle = '#c0c0c0';
         var time = 0;
         var timeUnit = "";
-        if(engine.elapsedTime < 24*60*60) {
+        if(engine.elapsedTime < 60 ) {
+            time = engine.elapsedTime;
+            timeUnit = "s";
+        }else if(engine.elapsedTime < 60*60 ) {
+            time = engine.elapsedTime/60;
+            timeUnit = "m";
+        }else if(engine.elapsedTime < 24*60*60) {
             time = engine.elapsedTime/60/60;
             timeUnit = "h";
         } else if(engine.elapsedTime < 365.25*24*60*60) {
@@ -126,7 +144,13 @@ engine.drawLabels = function() {
         }
         var tps;
         var tps_unit;
-        if(engine.tps < 24*60*60) {
+        if(engine.tps < 60) {
+            tps = engine.tps;
+            tps_unit = "s";
+        } else if(engine.tps < 60*60) {
+            tps = engine.tps /60;
+            tps_unit = "m";
+        }else if(engine.tps < 24*60*60) {
             tps = engine.tps/60/60;
             tps_unit = "h";
         } else if(engine.tps < 365.25*24*60*60) {
@@ -153,6 +177,22 @@ engine.drawOval = function(x, y, cx, cy, ovalSize) {
         engine.ctx.fill();
     } catch(e) {
             console.log(e);
+    }
+}
+
+engine.drawRect = function(x1, y1, x2, y2, color) {
+    try {
+        engine.ctx.strokeStyle = color;
+        engine.ctx.moveTo(x1, y1);
+        engine.ctx.beginPath();
+        engine.ctx.lineTo(x1, y2);
+        engine.ctx.lineTo(x2, y2);
+        engine.ctx.lineTo(x2, y1);
+        engine.ctx.lineTo(x1, y1);
+        engine.ctx.lineTo(x1, y2);
+        engine.ctx.stroke();
+    } catch (e) {
+        console.log(e);
     }
 }
 

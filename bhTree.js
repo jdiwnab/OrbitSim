@@ -132,6 +132,8 @@ function bhNodePrototype() {
                     //console.log('Calculating for '+pa.name+' with quadrant');
                     radius.addTo(pos).subFrom(new Cart3(this.com.x, this.com.y, this.com.z));
                     accel.addTo(radius.multBy( (-1 * this.com.mass * radius.invSumCube())));
+                    this.used = true;
+                    
                 } else {
                     // otherwise, recurse down the tree
                     //console.log('Calculating for '+pa.name+' with recuse');
@@ -144,6 +146,17 @@ function bhNodePrototype() {
             }
         }
         return accel;
+    };
+    this.drawNode = function() {
+        var c1 = engine.scaleCoordinate(this.size.x1, this.size.z1);
+        var c2 = engine.scaleCoordinate(this.size.x2, this.size.z2);
+        var color = this.used?'magenta':'gray';
+        engine.drawRect(c1.x, c1.y, c2.x, c2.y, color);
+        for(var i = 0; i < this.quads.length; i++) {
+            if(this.quads[i] !== undefined) {
+                this.quads[i].drawNode();
+            }
+        }
     }
 }
 function bhNode(x1, x2, y1, y2, z1, z2) {
@@ -167,6 +180,7 @@ function bhNode(x1, x2, y1, y2, z1, z2) {
     //this.index = undefined;
     this.index = undefined;
     this.maxDepth = 50;
+    this.used = false;
 };
 bhNode.prototype = new bhNodePrototype();
 
@@ -193,6 +207,9 @@ bhTreePrototype = function() {
             }
         }
     };
+    this.drawTree = function() {
+        this.root.drawNode();
+    }
 }
 bhTree = function() {
     //this.initTree();    
