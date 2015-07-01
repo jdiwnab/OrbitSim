@@ -30,7 +30,7 @@ engine.setupControlEvents = function() {
     }, false);
     engine.id("stepslow").addEventListener('click', function(e) {
         var step = engine.timestepmulti;
-        if(step <= .001) return false;
+        if(step <= .00001) return false;
         if(Math.floor(Math.log10(step)) == Math.log10(step)) {
             engine.timestepmulti /= 2;
         } else {

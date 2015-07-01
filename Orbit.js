@@ -16,8 +16,9 @@ var orbit_data = new OrbitData();
 var engine = engine || {}
 //engine.G = 6.6742e-11 // universal gravitational constant - factored out to 1
 engine.toRad = Math.PI /180.0 //convert degree to radians
-engine.frame_delay_ms = 4; // delay between frames. Not to be confused with frame rate
+//engine.frame_delay_ms = 4; // delay between frames. Not to be confused with frame rate
 engine.drawingScale = 1e-9;
+//engine.drawingScale = 1e-2;
 engine.substeps = 4;
 engine.fps = 0; //for performance monitoring
 engine.tps = 0; //for performance monitoring
@@ -124,6 +125,7 @@ engine.updateObjects = function(array, dt) {
         engine.bhTree.addArray(array);
     }
 
+    //Calculate Accelerations
     for(var i = 0; i<array.length; i++) {
         if(array[i].fixed || array[i].destroyed) { 
             continue;
@@ -137,6 +139,14 @@ engine.updateObjects = function(array, dt) {
         } else {
             engine.eulerIntegrate(array[i], dt, array);
         }
+    }
+    //Update position/velocity
+    for(var i = 0; i<array.length; i++) {
+        array[i].updatePosition();
+    }
+    
+    //Calculate other bits
+    for(var i = 0; i<array.length; i++) {
         if(engine.collisions) {
             engine.calcCollision(array[i],array);
         }
@@ -253,6 +263,8 @@ function OrbitBody(name, radius, pos, vel, mass, color) {
     this.fixed = false;
     this.renderPos = new Cart3();
     this.destroyed = false;
+    this.deltaV; //cart3
+    this.deltaX; //cart3
     this.reset = function() {
         this.pos = new Cart3(this.startpos);
         this.vel = new Cart3(this.startvel);
@@ -262,9 +274,16 @@ function OrbitBody(name, radius, pos, vel, mass, color) {
         this.scaledHistory = undefined; 
         this.oldPos = undefined;
         this.destroyed = false;
+        this.deltaV = undefined;
+        this.deltaX = undefined;
     }
     this.resetScaledHistory = function() {
         this.scaledHistory = undefined;
+    }
+    this.updatePosition = function() {
+        this.oldPos = new Cart3(this.pos); // This is needed to switch to verlet
+        this.pos.addTo(this.deltaX);
+        this.vel.addTo(this.deltaV);
     }
 }
 

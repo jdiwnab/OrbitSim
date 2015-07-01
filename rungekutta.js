@@ -45,8 +45,11 @@ engine.rkIntegrate= function(pa, dt, array) {
     engine.rkVars.vf.addTo(a2).addTo(a3).multBy(2).addTo(a1).addTo(a4).multBy(dt/6);
     
     pa.oldPos = new Cart3(pa.pos); //This is needed to switch to verlet
-    pa.pos.addTo(engine.rkVars.xf);
-    pa.vel.addTo(engine.rkVars.vf);
+    pa.deltaX = new Cart3(engine.rkVars.xf);
+    pa.deltaV = new Cart3(engine.rkVars.vf);
+    
+    //pa.pos.addTo(engine.rkVars.xf);
+    //pa.vel.addTo(engine.rkVars.vf);
 }
 
 engine.rkIterate = function(pa, dt, array) {
