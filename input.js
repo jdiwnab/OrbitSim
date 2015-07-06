@@ -73,9 +73,13 @@ engine.mouseDown = function(e) {
 engine.mouseDrag = function(e) {
     e.preventDefault();
     if(engine.isMouseDown) {
-        engine.cancelClick();
         var x = e.pageX - engine.canvas.offsetLeft;
         var y = e.pageY - engine.canvas.offsetTop;
+        
+        //Chrome fires move event immediatly after mouse down, so don't cancel click in that case.
+        if(x != engine.mouseX && y != engine.mouseY) {
+            engine.cancelClick();
+        }
         //engine.isHolding = true;
         engine.xorig = engine.initX + (x - engine.mouseX);
         engine.yorig = engine.initY + (y - engine.mouseY);
