@@ -130,10 +130,10 @@ engine.setupControlEvents = function() {
         engine.loadRandomPlanets(500);
         return false;
     }, false);
-    engine.id("loadLagrange").addEventListener('click', function(e) {
+    /*engine.id("loadLagrange").addEventListener('click', function(e) {
         engine.loadLagrange();
         return false;
-    }, false);
+    }, false);*/
     /*engine.id("precalculate").addEventListener('click', function(e) {
         engine.precalculateDialog();
         return false;

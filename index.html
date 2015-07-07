@@ -20,6 +20,7 @@
         <script src="cart3.js" type="text/javascript"></script>
         <script src="orbitdata.js" type="text/javascript"></script>
         <script src="Orbit.js" type="text/javascript"></script>
+        <script src="orbitbody.js" type="text/javascript"></script>
         
         <!-- presets -->
         <script src="lagrange.js" type="text/javascript"></script>
@@ -74,10 +75,6 @@
                             <button class="imgbutton no-zoom" id="fastfwd" name="fastfwd" value="fastfwd"></button>
                             <span id="stepcount">1</span><br/>
                             <label for="showHistory"><span class="modallabel">Show History:</span></label><input type="checkbox" name="show_history" id="showHistory" value="show_history" checked/><br/>
-                            <!--Engine:-->
-                            <!--<input type="radio" id="algo1" name="algorithm" value="euler">Euler</input><br/>
-                            <input type="radio" id="algo2" name="algorithm" value="verlet">Verlet</input>
-                            <input type="radio" id="algo3" name="algorithm" value="rk" checked>Runge-Kutta</input><br/>-->
                             <button class="imgbutton no-zoom" id="start" name="start" value="start"></button>
                             <button class="imgbutton no-zoom" id="reset" name="reset" value="reset"></button>
                             <button class="imgbutton no-zoom" id="clear" name="clear" value="clear"></button>
@@ -94,10 +91,11 @@
                                 <option value=0>Solar System</option>
                                 <option value=1>Double Star</option>
                                 <option value=2>Figure 8</option>
+                                <option value=3>Lagrange points</option>
                             </select>
                             <button name="loadPreset" id="loadPreset" value="loadPreset">Load</button><br/>
                             <button name="loadRandom" id="loadRandom" value="loadRandom">Load Random</button><br/>
-                            <button name="loadLagrange" id="loadLagrange" value="loadLagrange">Load Lagrange</button><br/>
+                            <!--<button name="loadLagrange" id="loadLagrange" value="loadLagrange">Load Lagrange</button><br/>-->
                         </div>
                     </div>
                     <div class="inputpanel">
