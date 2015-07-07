@@ -170,45 +170,33 @@ engine.drawLabels = function() {
 }
 
 engine.drawOval = function(x, y, cx, cy, ovalSize) {
-    try {
-        var os = ovalSize;
-        engine.ctx.beginPath();
-        engine.ctx.arc(x + cx, y + cy, os, 0, 2 * Math.PI, false);
-        engine.ctx.fill();
-    } catch(e) {
-            console.log(e);
-    }
+    var os = ovalSize;
+    engine.ctx.beginPath();
+    engine.ctx.arc(x + cx, y + cy, os, 0, 2 * Math.PI, false);
+    engine.ctx.fill();
 }
 
 engine.drawRect = function(x1, y1, x2, y2, color) {
-    try {
-        engine.ctx.strokeStyle = color;
-        engine.ctx.moveTo(x1, y1);
-        engine.ctx.beginPath();
-        engine.ctx.lineTo(x1, y2);
-        engine.ctx.lineTo(x2, y2);
-        engine.ctx.lineTo(x2, y1);
-        engine.ctx.lineTo(x1, y1);
-        engine.ctx.lineTo(x1, y2);
-        engine.ctx.stroke();
-    } catch (e) {
-        console.log(e);
-    }
+    engine.ctx.strokeStyle = color;
+    engine.ctx.moveTo(x1, y1);
+    engine.ctx.beginPath();
+    engine.ctx.lineTo(x1, y2);
+    engine.ctx.lineTo(x2, y2);
+    engine.ctx.lineTo(x2, y1);
+    engine.ctx.lineTo(x1, y1);
+    engine.ctx.lineTo(x1, y2);
+    engine.ctx.stroke();
 }
 
 engine.drawOrbit = function(p, cx, cy) {
     if(!engine.history) return;
     
     var history = engine.scaleHistory(p);
-    try {
-        engine.ctx.strokeStyle = 'gray';
-        engine.ctx.moveTo(history[1].x + cx, history[1].y + cy);
-        engine.ctx.beginPath();
-        for(var i = 2; i<history.length; i++) {
-            engine.ctx.lineTo(history[i].x + cx, history[i].z + cy);
-        }
-        engine.ctx.stroke();
-    } catch (e) {
-        console.log(e);
+    engine.ctx.strokeStyle = 'gray';
+    engine.ctx.moveTo(history[1].x + cx, history[1].y + cy);
+    engine.ctx.beginPath();
+    for(var i = 2; i<history.length; i++) {
+        engine.ctx.lineTo(history[i].x + cx, history[i].z + cy);
     }
+    engine.ctx.stroke();
 }
