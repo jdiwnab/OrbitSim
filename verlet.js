@@ -12,8 +12,5 @@ engine.verletIntegrate = function(pa, dt, array) {
     }
     pa.deltaX = new Cart3(Xn);
     pa.deltaV = new Cart3(Xn).divBy(dt).subFrom(pa.vel);
-    //pa.vel = new Cart3(Xn).subFrom(pa.pos).divBy(dt); //This is not needed for verlet, but is needed to switch to other algorithms
-    //pa.oldPos = new Cart3(pa.pos);
-    //pa.pos = Xn;
     
 }
