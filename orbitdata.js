@@ -347,5 +347,43 @@ function OrbitData() {
         ]
     });
     
+    //3 body figure 8
+    this.presets.push( { planetArray:
+        [
+            {
+                "name":"Star 1",
+                "radius":300000,
+                "mass":10000000000,
+                "pos":{"x":97004360,"y":0,"z":-24308753,"timestamp":0},
+                "vel":{"x":4.66203685,"y":0,"z":4.3236573,"timestamp":0},
+                "color":"blue",
+                "startpos":{"x":97004360,"y":0,"z":-24308753,"timestamp":0},
+                "startvel":{"x":4.66203685,"y":0,"z":4.3236573,"timestamp":0},
+                "fixed":false
+            },
+            {
+                "name":"Star 2",
+                "radius":300000,
+                "mass":10000000000,
+                "pos":{"x":-97004360,"y":0,"z":24308753,"timestamp":0},
+                "vel":{"x":4.66203685,"y":0,"z":4.3236573,"timestamp":0},
+                "color":"green",
+                "startpos":{"x":-97004360,"y":0,"z":24308753,"timestamp":0},
+                "startvel":{"x":4.66203685,"y":0,"z":4.3236573,"timestamp":0},
+                "fixed":false
+            },
+            {
+                "name":"Star 3",
+                "radius":300000,
+                "mass":10000000000,
+                "pos":{"x":0,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":-9.32407370,"y":0,"z":-8.6473146,"timestamp":0},
+                "color":"red",
+                "startpos":{"x":0,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":-9.32407370,"y":0,"z":-8.6473146,"timestamp":0},
+                "fixed":false
+            }
+        ]
+    });
     
 }
