@@ -385,5 +385,270 @@ function OrbitData() {
             }
         ]
     });
-    
+    //butterfly I
+    this.presets.push( { planetArray:
+        [
+            {
+                "name":"Star 1",
+                "radius":10000,
+                "mass":10000000,
+                "pos":{"x":-10000000,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":0.30689,"y":0,"z":0.12551,"timestamp":0},
+                "color":"blue",
+                "startpos":{"x":-10000000,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":0.30689,"y":0,"z":0.12551,"timestamp":0},
+                "fixed":false
+            },
+            {
+                "name":"Star 2",
+                "radius":10000,
+                "mass":10000000,
+                "pos":{"x":10000000,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":0.30689,"y":0,"z":0.12551,"timestamp":0},
+                "color":"green",
+                "startpos":{"x":10000000,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":0.30689,"y":0,"z":0.12551,"timestamp":0},
+                "fixed":false
+            },
+            {
+                "name":"Star 3",
+                "radius":10000,
+                "mass":10000000,
+                "pos":{"x":0,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":-0.61378,"y":0,"z":-0.25102,"timestamp":0},
+                "color":"red",
+                "startpos":{"x":0,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":-0.61378,"y":0,"z":-0.25102,"timestamp":0},
+                "fixed":false
+            }
+        ]
+    });
+    //butterfly II
+    this.presets.push( { planetArray:
+        [
+            {
+                "name":"Star 1",
+                "radius":10000,
+                "mass":10000000,
+                "pos":{"x":-10000000,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":0.39295,"y":0,"z":0.09758,"timestamp":0},
+                "color":"blue",
+                "startpos":{"x":-10000000,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":0.39295,"y":0,"z":0.09758,"timestamp":0},
+                "fixed":false
+            },
+            {
+                "name":"Star 2",
+                "radius":10000,
+                "mass":10000000,
+                "pos":{"x":10000000,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":0.39295,"y":0,"z":0.09758,"timestamp":0},
+                "color":"green",
+                "startpos":{"x":10000000,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":0.39295,"y":0,"z":0.09758,"timestamp":0},
+                "fixed":false
+            },
+            {
+                "name":"Star 3",
+                "radius":10000,
+                "mass":10000000,
+                "pos":{"x":0,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":-0.78590,"y":0,"z":-0.19516,"timestamp":0},
+                "color":"red",
+                "startpos":{"x":0,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":-0.78590,"y":0,"z":-0.19516,"timestamp":0},
+                "fixed":false
+            }
+        ]
+    });
+    //bumblebee
+    this.presets.push( { planetArray:
+        [
+            {
+                "name":"Star 1",
+                "radius":10000,
+                "mass":10000000,
+                "pos":{"x":-10000000,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":0.18428,"y":0,"z":0.58719,"timestamp":0},
+                "color":"blue",
+                "startpos":{"x":-10000000,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":0.18428,"y":0,"z":0.58719,"timestamp":0},
+                "fixed":false
+            },
+            {
+                "name":"Star 2",
+                "radius":10000,
+                "mass":10000000,
+                "pos":{"x":10000000,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":0.18428,"y":0,"z":0.58719,"timestamp":0},
+                "color":"green",
+                "startpos":{"x":10000000,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":0.18428,"y":0,"z":0.58719,"timestamp":0},
+                "fixed":false
+            },
+            {
+                "name":"Star 3",
+                "radius":10000,
+                "mass":10000000,
+                "pos":{"x":0,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":-0.36856,"y":0,"z":-1.17438,"timestamp":0},
+                "color":"red",
+                "startpos":{"x":0,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":-0.36856,"y":0,"z":-1.17438,"timestamp":0},
+                "fixed":false
+            }
+        ]
+    });
+    //Moth I
+    this.presets.push( { planetArray:
+        [
+            {
+                "name":"Star 1",
+                "radius":10000,
+                "mass":10000000,
+                "pos":{"x":-10000000,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":0.46444,"y":0,"z":0.39606,"timestamp":0},
+                "color":"blue",
+                "startpos":{"x":-10000000,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":0.46444,"y":0,"z":0.39606,"timestamp":0},
+                "fixed":false
+            },
+            {
+                "name":"Star 2",
+                "radius":10000,
+                "mass":10000000,
+                "pos":{"x":10000000,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":0.46444,"y":0,"z":0.39606,"timestamp":0},
+                "color":"green",
+                "startpos":{"x":10000000,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":0.46444,"y":0,"z":0.39606,"timestamp":0},
+                "fixed":false
+            },
+            {
+                "name":"Star 3",
+                "radius":10000,
+                "mass":10000000,
+                "pos":{"x":0,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":-0.92888,"y":0,"z":-0.79212,"timestamp":0},
+                "color":"red",
+                "startpos":{"x":0,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":-0.92888,"y":0,"z":-0.79212,"timestamp":0},
+                "fixed":false
+            }
+        ]
+    });
+    //Moth II
+    this.presets.push( { planetArray:
+        [
+            {
+                "name":"Star 1",
+                "radius":10000,
+                "mass":10000000,
+                "pos":{"x":-10000000,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":0.43917,"y":0,"z":0.45297,"timestamp":0},
+                "color":"blue",
+                "startpos":{"x":-10000000,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":0.43917,"y":0,"z":0.45297,"timestamp":0},
+                "fixed":false
+            },
+            {
+                "name":"Star 2",
+                "radius":10000,
+                "mass":10000000,
+                "pos":{"x":10000000,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":0.43917,"y":0,"z":0.45297,"timestamp":0},
+                "color":"green",
+                "startpos":{"x":10000000,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":0.43917,"y":0,"z":0.45297,"timestamp":0},
+                "fixed":false
+            },
+            {
+                "name":"Star 3",
+                "radius":10000,
+                "mass":10000000,
+                "pos":{"x":0,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":-0.87834,"y":0,"z":-0.90594,"timestamp":0},
+                "color":"red",
+                "startpos":{"x":0,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":-0.87834,"y":0,"z":-0.90594,"timestamp":0},
+                "fixed":false
+            }
+        ]
+    });
+    //Butterfly III
+    this.presets.push( { planetArray:
+        [
+            {
+                "name":"Star 1",
+                "radius":10000,
+                "mass":10000000,
+                "pos":{"x":-10000000,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":0.40592,"y":0,"z":0.23016,"timestamp":0},
+                "color":"blue",
+                "startpos":{"x":-10000000,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":0.40592,"y":0,"z":0.23016,"timestamp":0},
+                "fixed":false
+            },
+            {
+                "name":"Star 2",
+                "radius":10000,
+                "mass":10000000,
+                "pos":{"x":10000000,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":0.40592,"y":0,"z":0.23016,"timestamp":0},
+                "color":"green",
+                "startpos":{"x":10000000,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":0.40592,"y":0,"z":0.23016,"timestamp":0},
+                "fixed":false
+            },
+            {
+                "name":"Star 3",
+                "radius":10000,
+                "mass":10000000,
+                "pos":{"x":0,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":-0.81184,"y":0,"z":-0.46032,"timestamp":0},
+                "color":"red",
+                "startpos":{"x":0,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":-0.81184,"y":0,"z":-0.46032,"timestamp":0},
+                "fixed":false
+            }
+        ]
+    });
+    //Moth III
+    this.presets.push( { planetArray:
+        [
+            {
+                "name":"Star 1",
+                "radius":10000,
+                "mass":10000000,
+                "pos":{"x":-10000000,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":0.38344,"y":0,"z":0.37736,"timestamp":0},
+                "color":"blue",
+                "startpos":{"x":-10000000,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":0.38344,"y":0,"z":0.37736,"timestamp":0},
+                "fixed":false
+            },
+            {
+                "name":"Star 2",
+                "radius":10000,
+                "mass":10000000,
+                "pos":{"x":10000000,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":0.38344,"y":0,"z":0.37736,"timestamp":0},
+                "color":"green",
+                "startpos":{"x":10000000,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":0.38344,"y":0,"z":0.37736,"timestamp":0},
+                "fixed":false
+            },
+            {
+                "name":"Star 3",
+                "radius":10000,
+                "mass":10000000,
+                "pos":{"x":0,"y":0,"z":0,"timestamp":0},
+                "vel":{"x":-0.76688,"y":0,"z":-0.75472,"timestamp":0},
+                "color":"red",
+                "startpos":{"x":0,"y":0,"z":0,"timestamp":0},
+                "startvel":{"x":-0.76688,"y":0,"z":-0.75472,"timestamp":0},
+                "fixed":false
+            }
+        ]    
+    });
 }
