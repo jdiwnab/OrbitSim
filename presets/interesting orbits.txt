@@ -1,0 +1,28 @@
+from http://arxiv.org/pdf/1303.0181v1.pdf
+
+x1 = (-1,0)
+x2 = (1,0)
+x3 = (0,0)
+
+v2 = (˙x1, ˙y1)
+v3 = (-2*˙x1, -2*˙y1)
+
+m1 = m2 = m3 = 1
+G = 1
+
+Class, number and name      ˙x1(0)      ˙y1(0)      T           Free group element
+I.A.1 butterfly I           0.30689     0.12551     6.2356      (ab)^2(AB)^2
+I.A.2 butterfly II          0.39295     0.09758     7.0039      (ab)^2(AB)^2
+I.A.3 bumblebee             0.18428     0.58719     63.5345     (b^2(ABab)^2A^2(baBA)^2ba)(B^2(abAB)^2a^2(BAba)^2BA)
+I.B.1 moth I                0.46444     0.39606     14.8939     ba(BAB)ab(ABA)
+I.B.2 moth II               0.43917     0.45297     28.6703     (abAB)^2A(baBA)^2B
+I.B.3 butterfly III         0.40592     0.23016     13.8658     (ab)^2(ABA)(ba)^2(BAB)
+I.B.4 moth III              0.38344     0.37736     25.8406     (babABA)^2a(abaBAB)^2b
+I.B.5 goggles               0.08330     0.12789     10.4668     (ab)^2ABBA(ba)^2BAAB
+I.B.6 butterfly IV          0.350112    0.07934     79.4759     ((ab)^2(AB)^2)6A((ba)^2(BA)^2)6B
+I.B.7 dragonfly             0.08058     0.58884     21.2710     (b^2(ABabAB))(a^2(BAbaBA))
+II.B.1 yarn                 0.55906     0.34919     55.5018     (babABabaBA)^3
+II.C.2a yin-yang I          0.51394     0.30474     17.3284     (ab)^2(ABA)ba(BAB)
+II.C.2b yin-yang I          0.28270     0.32721     10.9626     (ab)^2(ABA)ba(BAB)
+II.C.3a yin-yang II         0.41682     0.33033     55.7898     (abaBAB)^3(abaBAbab)(ABAbab)^3(AB)^2
+II.C.3b yin-yang II         0.41734     0.31310     54.2076     (abaBAB)^3(abaBAbab)(ABAbab)^3(AB)^2

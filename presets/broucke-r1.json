@@ -1,0 +1,35 @@
+[
+    {
+        "name":"Star 1",
+        "radius":300000,
+        "mass":100000000000,
+        "pos":{"x":808310623,"y":0,"z":0,"timestamp":0},
+        "vel":{"x":0,"y":0,"z":9.9101979166,"timestamp":0},
+        "color":"blue",
+        "startpos":{"x":808310623,"y":0,"z":0,"timestamp":0},
+        "startvel":{"x":0,"y":0,"z":9.9101979166,"timestamp":0},
+        "fixed":false
+    },
+    {
+        "name":"Star 2",
+        "radius":300000,
+        "mass":100000000000,
+        "pos":{"x":-495414856.6,"y":0,"z":0,"timestamp":0},
+        "vel":{"x":0,"y":0,"z":-27.171431768,"timestamp":0},
+        "color":"green",
+        "startpos":{"x":-495414856.6,"y":0,"z":0,"timestamp":0},
+        "startvel":{"x":0,"y":0,"z":-27.171431768,"timestamp":0},
+        "fixed":false
+    },
+    {
+        "name":"Star 3",
+        "radius":300000,
+        "mass":100000000000,
+        "pos":{"x":-312895766.4,"y":0,"z":0,"timestamp":0},
+        "vel":{"x":0,"y":0,"z":17.269452602,"timestamp":0},
+        "color":"red",
+        "startpos":{"x":-312895766.4,"y":0,"z":0,"timestamp":0},
+        "startvel":{"x":0,"y":0,"z":17.269452602,"timestamp":0},
+        "fixed":false
+    }
+]
