@@ -4,10 +4,10 @@
         "radius":300000,
         "mass":1000000000000,
         "pos":{"x":-100000000,"y":0,"z":0,"timestamp":0},
-        "vel":{"x":30.689,"y":0,"z":12.551,"timestamp":0},
+        "vel":{"x":8.330,"y":0,"z":12.789,"timestamp":0},
         "color":"blue",
         "startpos":{"x":-100000000,"y":0,"z":0,"timestamp":0},
-        "startvel":{"x":30.689,"y":0,"z":12.551,"timestamp":0},
+        "startvel":{"x":8.330,"y":0,"z":12.789,"timestamp":0},
         "fixed":false
     },
     {
@@ -15,10 +15,10 @@
         "radius":300000,
         "mass":1000000000000,
         "pos":{"x":100000000,"y":0,"z":0,"timestamp":0},
-        "vel":{"x":30.689,"y":0,"z":12.551,"timestamp":0},
+        "vel":{"x":8.330,"y":0,"z":12.789,"timestamp":0},
         "color":"green",
         "startpos":{"x":100000000,"y":0,"z":0,"timestamp":0},
-        "startvel":{"x":30.689,"y":0,"z":12.551,"timestamp":0},
+        "startvel":{"x":8.330,"y":0,"z":12.789,"timestamp":0},
         "fixed":false
     },
     {
@@ -26,10 +26,10 @@
         "radius":300000,
         "mass":1000000000000,
         "pos":{"x":0,"y":0,"z":0,"timestamp":0},
-        "vel":{"x":-61.378,"y":0,"z":-25.102,"timestamp":0},
+        "vel":{"x":-16.660,"y":0,"z":-25.578,"timestamp":0},
         "color":"red",
         "startpos":{"x":0,"y":0,"z":0,"timestamp":0},
-        "startvel":{"x":-61.378,"y":0,"z":-25.102,"timestamp":0},
+        "startvel":{"x":-16.660,"y":0,"z":-25.578,"timestamp":0},
         "fixed":false
     }
 ]
