@@ -1,14 +1,23 @@
-<html>
+<!DOCTYPE html>
+<html lang="en">
     <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        
         <!-- jQuery -->
         <script src="lib/jquery-2.1.3.min.js" type="text/javascript"></script>
+        
+        <!-- Bootstrap -->
+        <link rel="stylesheet" href="lib/bootstrap/css/bootstrap.min.css"></link>
+        <link rel="stylesheet" href="lib/bootstrap/css/bootstrap-theme.min.css"></link>
+        <script src="lib/bootstrap/js/bootstrap.min.js"></script>
+        
         <!-- slider -->
         <link rel="stylesheet" href="lib/jquery.nouislider.css"></link>
         <link rel="stylesheet" href="lib/jquery.nouislider.pips.css"></link>
         <script src="lib/jquery.nouislider.all.js" type="text/javascript"></script>
-        <!-- modal -->
-        <link rel="stylesheet" href="lib/jquery.remodal.css"></link>
-        <script src="lib/jquery.remodal.min.js" type="text/javascript"></script>
+
         <!-- gif -->
         <script src="lib/gifjs/gif.js" type="text/javascript"></script>
         
@@ -27,7 +36,6 @@
         <script src="random.js" type="text/javascript"></script>
 
         <!-- engine -->
-
         <script src="render.js" type="text/javascript"></script>
         <script src="rungekutta.js" type="text/javascript"></script>
         <script src="euler.js" type="text/javascript"></script>
@@ -39,8 +47,6 @@
         <script src="input.js" type="text/javascript"></script>
         <script src="modals.js" type="text/javascript"></script>
         <script src="controls.js" type="text/javascript"></script>
-
-        <!--<script src="performance.js" type="text/javascript"></script>-->
         
         <!-- saving -->
         <script src="storage.js" type="text/javascript"></script>
@@ -52,159 +58,311 @@
             addEvent(window,'load',engine.setupControlEvents);
             addEvent(window,'load',engine.setupInputEvents);
         </script>
-        <title>Orbits</title>
+        <title>Orbit Simulator</title>
     </head>
     <body onresize="engine.resize()">
-        <div class="remodal-bg">
-            <canvas id="orbit_disp"></canvas>
-            <div id="input_panel">
-                <div id="inputpanels" class="show">
-                    <div class="inputpanel">
-                        <div class="inputmenu show" id="main-menu">
-                            <h2>Playback</h2>
-                        </div>
-                        <div class="inputcontrols show" id="main-controls">
-                            <label><span class="modallabel">Timestep:</span></label>
-                            <!--<div id="timestep" class="noUi-extended"></div>-->
-                            <button class="imgbutton no-zoom" id="stepslow" name="stepslow" value="stepslow"></button>
-                            <button class="imgbutton no-zoom" id="stepfast" name="stepfast" value="stepfast"></button>
-                            <span id="stepvalue">10</span><br/>
-                            <label><span class="modallabel">Framestep:</span></label>
-                            <!--<div id="framestep" class="noUi-extended"></div>-->
-                            <button class="imgbutton no-zoom" id="slowfwd" name="slowfwd" value="slowfwd"></button>                        
-                            <button class="imgbutton no-zoom" id="fastfwd" name="fastfwd" value="fastfwd"></button>
-                            <span id="stepcount">1</span><br/>
-                            <label for="showHistory"><span class="modallabel">Show History:</span></label><input type="checkbox" name="show_history" id="showHistory" value="show_history" checked/><br/>
-                            <button class="imgbutton no-zoom" id="start" name="start" value="start"></button>
-                            <button class="imgbutton no-zoom" id="reset" name="reset" value="reset"></button>
-                            <button class="imgbutton no-zoom" id="clear" name="clear" value="clear"></button>
-                            <button class="imgbutton no-zoom" id="record" name="record" value="record"></button><br/>
+        <canvas id="orbit_disp"></canvas>
+        <div id="input_panel">
+            <div class="panel-group" id="accordion" role="tablist" class="show">
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="main-menu">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#main-controls" >Playback</a>
+                        </h4>
+                    </div>
+                    <div id="main-controls" class="panel-collapse collapse in" role="tabpanel">
+                        <div class="panel-body">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <label class="control-label col-sm-3">Timestep:</label>
+                                    <div class="col-sm-4">
+                                        <div class="btn-group" role="group" aria-labelledby="timestepLabel">
+                                            <button type="button" class="no-zoom btn btn-default" id="stepslow" data-toggle="tooltip" title="Slower"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></button>
+                                            <button type="button" class="no-zoom btn btn-default" id="stepfast" data-toggle="tooltip" title="Faster"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></button>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <span id="stepvalue">10</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label class="control-label col-sm-3">Framestep:</label>
+                                    <div class="col-sm-4">
+                                        <div class="btn-group" role="group">
+                                            <button type="button" class="no-zoom btn btn-default" id="slowfwd" data-toggle="tooltip" title="Slower"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span></button>                        
+                                            <button type="button" class="no-zoom btn btn-default" id="fastfwd" data-toggle="tooltip" title="Faster"><span class="glyphicon glyphicon-forward" aria-hidden="true"></span></button>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-2">
+                                        <span id="stepcount">1</span>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-6">
+                                        <div class="btn-group" data-toggle="buttons">
+                                            <label class="btn btn-default active" onClick="engine.toggleHistory()">
+                                                <input type="checkbox" autocomplete="off" name="show_history" id="showHistory" checked>Show History</input>
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-8">
+                                        <div class="btn-group" role="group">
+                                            <button type="button" class="no-zoom btn btn-default" data-toggle="tooltip" title="Start" id="start">
+                                                <span class="glyphicon glyphicon-play start" aria-hidden="true"></span>
+                                                <span class="glyphicon glyphicon-stop stop" aria-hidden="true"></span>
+                                            </button>
+                                            <button type="button" class="no-zoom btn btn-default" data-toggle="tooltip" title="Reset" id="reset"><span class="glyphicon glyphicon-refresh" aria-hidden="true"></span></button>
+                                            <button type="button" class="no-zoom btn btn-default" data-toggle="tooltip" title="Clear" id="clear"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span></button>
+                                            <button type="button" class="no-zoom btn btn-default" data-toggle="tooltip" title="Record" id="record">
+                                                <span class="glyphicon glyphicon-record rec" aria-hidden="true"></span>
+                                                <span class="glyphicon glyphicon-stop stoprec" aria-hidden="true"></span>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
                             <div id="console"></div>
                         </div>
                     </div>
-                    <div class="inputpanel">
-                        <div class="inputmenu" id="preset-menu">
-                            <h2>Presets</h2>
-                        </div>
-                        <div id="preset-controls"  class="inputcontrols" >
-                            <select id="presetSelect">
-                                <option value=0>Solar System</option>
-                                <option value=1>Double Star</option>
-                                <option value=2>Fixed Figure 8</option>
-                                <option value=3>Lagrange points</option>
-                                <option value=4>Three Body Figure 8</option>
-                                <option value=5>Butterfly I</option>
-                                <option value=6>Butterfly II</option>
-                                <option value=7>Bumblebee</option>
-                                <option value=8>Moth I</option>
-                                <option value=9>Moth II</option>
-                                <option value=10>Butterfly III</option>
-                                <option value=11>Moth III</option>
-                                <option value=12>Goggles</option>
-                                <option value=13>Dragonfly</option>
-                                <option value=14>Yarn</option>
-                            </select>
-                            <button name="loadPreset" id="loadPreset" value="loadPreset">Load</button><br/>
-                            <button name="loadRandom" id="loadRandom" value="loadRandom">Load Random</button><br/>
-                            <!--<button name="loadLagrange" id="loadLagrange" value="loadLagrange">Load Lagrange</button><br/>-->
-                        </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="preset-menu">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#preset-controls" >Presets</a>
+                        </h4>
                     </div>
-                    <div class="inputpanel">
-                        <div class="inputmenu" id="engine-menu">
-                            <h2>Engine</h2>
-                        </div>
-                        <div id="engine-controls" class="inputcontrols">
-                            <label for="algo1"><span class="modallabel">Runge-Kutta</span></label><input type="radio" id="algo1" name="algo" value="rk" checked /><br/>
-                            <label for="algo2"><span class="modallabel">Euler</span></label><input type="radio" id="algo2" name="algo" value="euler" /><br/>
-                            <label for="algo3"><span class="modallabel">Verlet</span></label><input type="radio" id="algo3" name="algo" value="verlet" /><br/>
-                            <label for="bhTree"><span class="modallabel">Barnes-Hut</span></label><input type="checkbox" name="bhTree" id="bhTree" value="bhTree"/><br/>
-                        </div>
-                    </div>
-                    <div class="inputpanel">
-                        <div class="inputmenu" id="lstorage-menu">
-                            <h2>Local Storage</h2>
-                        </div>
-                        <div id="lstorage-controls" class="inputcontrols">
-                        <!--local Storage -->
-                            <button id="saveLocal" name="saveLocal" value="saveLocal">Save To Browser</button><br/><br/>
-                            <button id="loadSetup" name="loadSetup" value="loadSetup">Load Setup</button>
-                            <button id="loadState" name="loadState" value="loadState">Load State</button><br/><br/>
-                        </div>
-                    </div>
-                    <div class="inputpanel">
-                        <div class="inputmenu" id="fstorage-menu">
-                            <h2>File Storage</h2>
-                        </div>
-                        <div id="fstorage-controls" class="inputcontrols">
-                            <button id="export" name="export" value="export">Export To File</button><br/><br/>
-                            <label for="import">Upload file: </label>
-                            <input type="file" id="import" /><button id="loadImport">Load</button><br/>
-                            <form action="">
-                                <input type="radio" name="LoadOption" id="stateOption" value="state" checked>State<br/>
-                                <input type="radio" name="LoadOption" id="setupOption" value="setup">Setup<br/>
-                            </form>
-                            
-                            <button id="csvexport" name="csvexport" value="csvexport">Export to CSV</button>
+                    <div id="preset-controls"  class="panel-collapse collapse" role="tabpanel">
+                        <div class="panel-body">
+                            <button type="button" class="btn btn-default" onClick="engine.loadPreset(0)">Solar System</button>
+                            <button type="button" class="btn btn-default" onClick="engine.loadPreset(1)">Double Star</button>
+                            <button type="button" class="btn btn-default" onClick="engine.loadPreset(2)">Fixed Figure 8</button>
+                            <button type="button" class="btn btn-default" onClick="engine.loadPreset(3)">Lagrange Points</button>
+                            <button type="button" class="btn btn-default" onClick="engine.loadPreset(4)">Three Body Figure 8</button>
+                            <button type="button" class="btn btn-default" onClick="engine.loadPreset(5)">Butterfly I</button>
+                            <button type="button" class="btn btn-default" onClick="engine.loadPreset(6)">Butterfly II</button>
+                            <button type="button" class="btn btn-default" onClick="engine.loadPreset(7)">Bumblebee</button>
+                            <button type="button" class="btn btn-default" onClick="engine.loadPreset(8)">Moth I</button>
+                            <button type="button" class="btn btn-default" onClick="engine.loadPreset(9)">Moth II</button>
+                            <button type="button" class="btn btn-default" onClick="engine.loadPreset(10)">Butterfly III</button>
+                            <button type="button" class="btn btn-default" onClick="engine.loadPreset(11)">Moth III</button>
+                            <button type="button" class="btn btn-default" onClick="engine.loadPreset(12)">Goggles</button>
+                            <button type="button" class="btn btn-default" onClick="engine.loadPreset(13)">Dragonfly</button>
+                            <button type="button" class="btn btn-default" onClick="engine.loadPreset(14)">Yarn</button>
+                            <button type="button" class="btn btn-default" onClick="engine.loadRandomPlanets(500);">Random</button>
                         </div>
                     </div>
                 </div>
-                <div id="pullout_menu">
-                    <img src="images/ic_menu_white_48dp.png"/>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="engine-menu">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#engine-controls" >Engine</a>
+                        </h4>
+                    </div>
+                    <div id="engine-controls"  class="panel-collapse collapse" role="tabpanel">
+                        <div class="panel-body">
+                            <form class="form-horizontal" role="form">
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <div class="btn-group" data-toggle="buttons">
+                                            <label class="btn btn-default active" onClick="engine.algorithm='rk'">
+                                                <input type="radio" name="algo" id="algo1" autocomplete="off" checked>Runge-Kutta
+                                            </label>
+                                            <label class="btn btn-default" onClick="engine.algorithm='euler'">
+                                                <input type="radio" id="algo2" name="algo" autocomplete="off">Euler
+                                            </label>
+                                            <label class="btn btn-default" onClick="engine.algorithm='verlet'">
+                                                <input type="radio" id="algo3" name="algo" autocomplete="off">Verlet
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <div class="col-sm-12">
+                                        <div class="btn-group" data-toggle="buttons">
+                                            <label class="btn btn-default" onClick="engine.toggleBarnesHutt()">
+                                                <input type="checkbox" autocomplete="off" name="bhTree" id="bhTree">Barnes-Hut
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="lstorage-menu">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#lstorage-controls" >Local Storage</a>
+                        </h4>
+                    </div>
+                    <div id="lstorage-controls"  class="panel-collapse collapse" role="tabpanel">
+                        <div class="panel-body">
+                            <div class="btn-group" role="group">
+                                <button type="button" class="btn btn-default" id="saveLocal">Save To Browser</button>
+                                <button type="button" class="btn btn-default" id="loadSetup">Load Setup</button>
+                                <button type="button" class="btn btn-default" id="loadState">Load State</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="panel panel-default">
+                    <div class="panel-heading" role="tab" id="fstorage-menu">
+                        <h4 class="panel-title">
+                            <a role="button" data-toggle="collapse" data-parent="#accordion" href="#fstorage-controls" >File Storage</a>
+                        </h4>
+                    </div>
+                    <div id="fstorage-controls"  class="panel-collapse collapse" role="tabpanel">
+                        <div class="panel-body">
+                            <button type="button" class="btn btn-default" id="export" name="export" value="export">Export To File</button><br/><br/>
+                            <label for="import">Upload file: </label>
+                            <span class="btn btn-default btn-file">
+                                Browse <input type="file" id="import" />
+                            </span>
+                            <button type="button" class="btn btn-default" id="loadImport">Load</button><br/>
+                            <div class="btn-group" data-toggle="buttons">
+                                <label class="btn btn-default active">
+                                    <input type="radio" name="LoadOption" id="stateOption" autocomplete="off" checked>State
+                                </label>
+                                <label class="btn btn-default">
+                                    <input type="radio" name="LoadOption" id="setupOption" value="setup">Setup
+                                </label>
+                            </div>
+                            
+                            <button type="button" class="btn btn-default" id="csvexport" name="csvexport" value="csvexport">Export to CSV</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="pullout_menu">
+                <img src="images/ic_menu_white_48dp.png"/>
+            </div>
+        </div>
+
+        <div class="modal fade" id="editmodal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title"><span id="modal_head">New Object</span></h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="name" class="control-label col-sm-2" for="new_name">Name:</label>
+                                <div class="col-sm-4">
+                                    <input id="new_name" type="text" name="name" placeholder="Name" class="form-control">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="hidden_pos">Position:</label>
+                                <div class="col-sm-6">
+                                    <div class="noUi-extended slider_with_pips" id="new_pos"></div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input class="form-control" type="number" name="vel" id="hidden_pos" step="any"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="pos_angle">Angle:</label>
+                                <div class="col-sm-3">
+                                    <input class="form-control" type="number" id="pos_angle" name="pos_angle" value="0" step="any"/>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div id="direction" class="arrowcircle">
+                                        <div id="pos_arrow" class="arrowpointer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="hidden_mass">Mass:</label>
+                                <div class="col-sm-6">
+                                    <div class="noUi-extended slider_with_pips" id="new_mass"></div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input class="form-control" type="number" name="mass" id="hidden_mass" step="any"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="hidden_vel">Velocity:</label>
+                                <div class="col-sm-6">
+                                    <div class="noUi-extended slider_with_pips" id="new_vel"></div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <input class="form-control" type="number" name="vel" id="hidden_vel" step="any"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="vel_angle">Angle:</label>
+                                <div class="col-sm-3">
+                                    <input class="form-control" type="number" id="vel_angle" name="vel_angle" value="0" step="any"/>
+                                </div>
+                                <div class="col-sm-2">
+                                    <div id="direction" class="arrowcircle">
+                                        <div id="vel_arrow" class="arrowpointer"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="new_color">Color:</label>
+                                <div class="col-sm-4">
+                                    <select class="form-control" id="new_color" name="color" placeholder="Color"></select>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="new_rad">Radius:</label>
+                                <div class="col-sm-4">
+                                    <input class="form-control" type="number" id="new_rad" name="new_rad" value="6000" step="any"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="new_fixed">Fixed:</label>
+                                <div class="col-sm-1">
+                                    <input class="form-control" type="checkbox" id="new_fixed" name="new_fixed" value="false" checked="false"/>
+                                </div>
+                            </div>
+                        </form>
+                        <input type="hidden" name="is_edit" id="is_edit" value="false"/><input type="hidden" name="edit_index" id="edit_index" value="-1"/>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="submitEditForm" data-dismiss="modal">OK</button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+                        <button type="button" class="btn btn-danger" id="delete_object" data-dismiss="modal">Delete</button>
+                    </div>
                 </div>
             </div>
 
         </div>
-        <div class="remodal" id="editmodal" data-remodal-id="editmodal" data-remodal-options="hashTracking: false">
-            <h2><span id="modal_head">New Object</span></h2>
-            
-            <div class="modallabel"><label for="name">Name:</label></div>
-            <input class="modalinput" id="new_name" type="text" name="name" placeholder="Name"/><br/>
-            
-            <label class="modallabel" for="new_pos">Position:</label>
-            <div class="noUi-extended slider_with_pips" id="new_pos"></div>
-            <input class="modalinput" type="number" name="vel" id="hidden_pos" step="any"/><br/>
-            <div class="modallabel"><label for="pos_angle">Angle:</label></div>
-            <input class="modalinput" type="number" id="pos_angle" name="pos_angle" value="0" step="any"/>
-            <div id="direction" class="arrowcircle">
-                <div id="pos_arrow" class="arrowpointer"></div>
-            </div><br/>
-            
-            <div class="modallabel"><label for="pos">Mass:</label></div>
-            <div class="noUi-extended slider_with_pips" id="new_mass"></div>
-            <input class="modalinput" type="number" name="mass" id="hidden_mass" step="any"/><br/>
-            
-            <div class="modallabel"><label for="pos">Velocity:</label></div>
-            <div class="noUi-extended slider_with_pips" id="new_vel"></div>
-            <input class="modalinput" type="number" name="vel" id="hidden_vel" step="any"/><br/>
-            <div class="modallabel"><label for="vel_angle">Angle:</label></div>
-            <input class="modalinput" type="number" id="vel_angle" name="vel_angle" value="0" step="any"/>
-            <div id="direction" class="arrowcircle">
-                <div id="vel_arrow" class="arrowpointer"></div>
-            </div><br/>
-            
-            <div class="modallabel"><label for="color">Color:</label></div>
-            <select class="modalinput" id="new_color" name="color" placeholder="Color"></select><br/>
-            
-            <div class="modallabel"><label for="new_rad">Radius:</label></div>
-            <input class="modalinput"type="number" id="new_rad" name="new_rad" value="6000" step="any"/><br/>
-            
-            <div class="modallabel"><label for="new_fixed">Fixed: </label></div>
-            <input type="checkbox" id="new_fixed" name="new_fixed" value="false" checked="false"/><br/>
-            
-            <input type="hidden" name="is_edit" id="is_edit" value="false"/><input type="hidden" name="edit_index" id="edit_index" value="-1"/>
-            <a class="remodal-confirm" href="#">OK</a>
-            <a class="remodal-cancel" href="#">Cancel</a>
-            <a class="remodal-delete" id="delete_object" href="#">Delete</a>
-
-        </div>
-        <div class="remodal" id="precalcmodal" data-remodal-id="precalcmodal" data-remodal-options="hashTracking: false">
-            <h2>Precalculate</h2>
-            <div class="modallabel"><label for="precalc_timestep">Timestep</label>
-            <input class="modalinput" type="number" id="precalc_timestep" name="precalc_timestep" value="3600"/><br/>
-            <div class="modallabel"><label for="precalc_timespan">Timespan</label>
-            <input class="modalinput" type="number" id="precalc_timespan" name="precalc_timespan" value="31557600"/><br/>
-            <a class="remodal-confirm" href="#">OK</a>
-            <a class="remodal-cancel" href="#">Cancel</a>
+        <div class="modal fade" id="precalcmodal" tabindex="-1" role="dialog">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                        <h4 class="modal-title">Precalculate</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="precalc_timestep">Timestep</label>
+                                <div class="col-sm-4">
+                                    <input class="form-control" type="number" id="precalc_timestep" name="precalc_timestep" value="3600"/>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label col-sm-2" for="precalc_timespan">Timespan</label>
+                                <div class="col-sm-4">
+                                    <input class="form-control" type="number" id="precalc_timespan" name="precalc_timestep" value="31557600"/>
+                                </div>
+                            </div>
+                        </form>
+                    </div>
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-primary" id="submitPrecalcForm" data-dismiss="modal">OK</button>
+                        <button type="button" class="btn btn-warning" data-dismiss="modal">Cancel</button>
+                    </div>
+                </div>
+            </div>
         </div>
     </body>
 </html>

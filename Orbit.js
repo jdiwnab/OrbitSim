@@ -49,8 +49,8 @@ engine.reset = function() {
     
     engine.canvas = engine.id("orbit_disp");
     engine.ctx = engine.canvas.getContext("2d");
-    engine.ctx.canvas.width = document.body.clientWidth -16;
-    engine.ctx.canvas.height= document.body.clientHeight -16;
+    engine.ctx.canvas.width = document.body.clientWidth;// -16;
+    engine.ctx.canvas.height= document.body.scrollHeight -6;
     engine.xsize = engine.ctx.canvas.width;
     engine.ysize = engine.ctx.canvas.height;
     engine.yorig = Math.floor(engine.ysize /2 );
@@ -59,7 +59,6 @@ engine.reset = function() {
     engine.yctr  = engine.yorig;
     
     engine.zoom = 1.0;
-    //engine.pFactor = 1000;
     engine.timestepmulti = 10;
     engine.timeStep = engine.basestep * engine.timestepmulti;
     engine.stepsPerFrame = 1;
@@ -67,14 +66,8 @@ engine.reset = function() {
     engine.id('stepvalue').textContent = engine.timestepmulti;
     engine.elapsedTime = 0;
     engine.fps = 0;
-    //engine.algorithm = "rk";
-
     
     engine.legend = true;
-    
-    //$("#timestep").val(10);
-    //$("#framestep").val(1);
-    //engine.id("algo3").checked = true;
 
     engine.orbit_data = orbit_data;
     engine.orbit_data.resetPlanets();
@@ -83,8 +76,8 @@ engine.reset = function() {
 }
 
 engine.resize = function() {
-    engine.ctx.canvas.width = document.body.clientWidth -16;
-    engine.ctx.canvas.height= document.body.clientHeight -16;
+    engine.ctx.canvas.width = document.body.clientWidth;// -16;
+    engine.ctx.canvas.height= document.body.scrollHeight -6;
     engine.xsize = engine.ctx.canvas.width;
     engine.ysize = engine.ctx.canvas.height;
     engine.yorig = Math.floor(engine.ysize /2 );

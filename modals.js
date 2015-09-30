@@ -20,12 +20,7 @@ engine.newPlanetDialog = function() {
     engine.id('new_rad').value=6000;
     engine.id('new_name').value='';
     engine.id('new_fixed').checked = false;
-    /*setTimeout(function() {
-    //    document.getElementById('new_name').focus();
-    }, 300);*/
-    
-    var modal = $.remodal.lookup[$('[data-remodal-id=editmodal]').data('remodal')];
-    modal.open();
+    $('#editmodal').modal('show');
 }
 
 engine.editPlanetDialog = function(i) {
@@ -52,12 +47,8 @@ engine.editPlanetDialog = function(i) {
     engine.id('new_rad').value = p.radius;
     engine.id('new_color').value=p.color;
     engine.id('new_fixed').checked = p.fixed;
-    /*setTimeout(function() {
-        document.getElementById('new_name').focus();
-    }, 300);*/
+    $('#editmodal').modal('show');
 
-    var modal = $.remodal.lookup[$('[data-remodal-id=editmodal]').data('remodal')];
-    modal.open();
 }
 
 engine.createForm = function() {
@@ -134,19 +125,18 @@ engine.createForm = function() {
         colors.add(option);
     }
     
-    $(document).on('confirm', '#editmodal', function () {
+    engine.id('submitEditForm').addEventListener('click', function() {
         if(engine.id('is_edit').value === "false") {
             engine.submitNewForm();
         } else {
             engine.submitEditForm();
         }
-    });
+    }, false);
     engine.id('delete_object').addEventListener('click', function() {
         if(engine.id('is_edit').value === "true") {
             engine.orbit_data.planet_array.splice(engine.id('edit_index').value, 1);
             engine.reset();
         }
-        $.remodal.lookup[$('[data-remodal-id=editmodal]').data('remodal')].close();
     }, false);
 }
 
@@ -183,12 +173,11 @@ engine.submitEditForm = function() {
 }
 
 engine.precalculateDialog = function() {
-    var modal = $.remodal.lookup[$('[data-remodal-id=precalcmodal]').data('remodal')];
-    modal.open();
+    $('#precalcmodal').modal('show');
 }
 
 engine.createPrecalculateForm = function() {
-    $(document).on('confirm', '#precalcmodal', function () {
+    engine.id('submitPrecalcForm').addEventListener('click', function() {
         engine.precalculate(parseInt(engine.id('precalc_timestep').value), parseInt(engine.id('precalc_timespan').value));
-    });
+    }, false);
 }

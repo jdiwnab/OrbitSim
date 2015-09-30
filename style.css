@@ -1,46 +1,65 @@
-.inputpanel {
-    width: 100%;
-    vertical-align: top;
+#accordion {
+    display:none;
+    float: left;
+    width: 85%;
+}
+#accordion.show {
     display: block;
-    margin-top: 2px;
-    margin-bottom: 2px;
-
+}
+.btn-file {
+    position: relative;
+    overflow: hidden;
+}
+.btn-file input[type=file] {
+    position: absolute;
+    top: 0;
+    right: 0;
+    min-width:100%;
+    min-height:100%;
+    font-size:100px;
+    text-align:right;
+    filter: alpha(opacity=0);
+    opacity:0;
+    outline:none;
+    background:white;
+    cursor: inherit;
+    display:block;
+}
+#input_panel {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    width: 45%;
+    max-width: 410px;
 }
 
-.inputmenu {
-    background: rgba(200,200,200,.9);
-    background-image: url(images/ic_expand_more_black_48dp.png);
-    background-position: right center;
-    background-repeat: no-repeat;
-}
-.inputmenu.show {
-    background-image: url(images/ic_expand_less_black_48dp.png);
-}
-.inputmenu h2 {
+#pullout_menu {
+    display: inline-block;
     font-size: 1em;
+    color: #fff;
     margin: 0px;
-    padding: 5px;               
-}
-.inputcontrols {
-    display: none;
     padding: 5px;
+    float: left;
 }
-.inputcontrols.show {
-    display: block;
+#start .stop {
+    display:none;
 }
-.inputcontrols .modallabel {
-    width: 40%;
-}
-.modallabel {
-    width: 75px;
+#start.stop .stop {
     display:inline-block;
-    font-weight: bold;
-    margin-top: 5px;
-    margin-bottom: 5px;
 }
-.modalinput {
-    width: 150px;
+#start.stop .start {
+    display:none;
 }
+#record .stoprec {
+    display:none;
+}
+#record.stop .stoprec {
+    display:inline-block;
+}
+#record.stop .rec {
+    display:none;
+}
+
 .arrowcircle {
     position: relative;
     height: 50px;
@@ -63,89 +82,8 @@
     margin-bottom: 40px;
     margin-top: 5px;
 }
-#input_panel {
-    position: absolute;
-    top: 12px;
-    left: 12px;
-    width: 45%;
-    max-width: 410px;
-}
-#inputpanels {
-    display:none;
-    background-color: rgba(255,255,255,.9);
-    max-width:350px;
-    width: 100%;
-    float: left;
-}
-#inputpanels.show {
-    display: inline-block;
-}
 
-#pullout_menu {
-    display: inline-block;
-    font-size: 1em;
-    color: #fff;
-    margin: 0px;
-    padding: 5px;
-    float: left;
-}
-
-.remodal-confirm, .remodal-cancel {
-    margin-top: 10px;
-}
 div .noUi-extended {
     display: inline-block;
-    width: 50%;
-}
-.inputcontrols label {
-    width: 20%;
-}
-.imgbutton {
-    height: auto;
-    width: 14%;
-    background-size: cover;
-    margin: initial;
-    padding-top: 12%
-}
-select {
-    font-size:1.25em;
-    margin: 5px;
-}
-button {
-    font-size: 1.25em;
-    margin: 5px;
-}
-input[type=radio], input[type="checkbox"] {
-    transform: scale(1.5);
-    -webkit-transform: scale(1.5);
-}
-#start {
-    background-image: url(images/ic_play_arrow_black_48dp.png);
-}
-#start.stop {
-    background-image: url(images/ic_pause_black_48dp.png);
-}
-#reset {
-    background-image: url(images/ic_replay_black_48dp.png);
-}
-#clear {
-    background-image: url(images/ic_clear_black_48dp.png);
-}
-#record {
-    background-image: url(images/ic_brightness_1_black_48dp.png);
-}
-#record.stop {
-    background-image: url(images/ic_stop_black_48dp.png);
-}
-#stepfast {
-    background-image: url(images/ic_skip_next_black_48dp.png);
-}
-#stepslow {
-    background-image: url(images/ic_skip_previous_black_48dp.png);
-}
-#slowfwd {
-    background-image: url(images/ic_fast_rewind_black_48dp.png);
-}
-#fastfwd {
-    background-image: url(images/ic_fast_forward_black_48dp.png);
+    width: 100%;
 }

@@ -1,22 +1,6 @@
 engine.setupControlEvents = function() {
     /* Form Events */
     engine.setupFancyControls();
-    /*$("#timestep").on({
-        slide: function(e) {
-            return engine.updateTimestep(e, this);
-        },
-        set: function(e) {
-            return engine.updateTimestep(e, this);
-        }   
-    });
-    $("#framestep").on({
-        slide: function(e) {
-            return engine.updateFramerate(e, this);
-        },
-        set: function(e) {
-            return engine.updateFramerate(e, this);
-        } 
-    });*/
     engine.id("stepfast").addEventListener('click', function(e) {
         var step = engine.timestepmulti;
         if(step >= 1000) return false;
@@ -59,21 +43,23 @@ engine.setupControlEvents = function() {
         }
         engine.id("stepcount").textContent = engine.stepsPerFrame;
     }, false);
-    engine.id("showHistory").addEventListener('change', function(e) {
-        if( engine.id("showHistory").checked ) {
+    engine.toggleHistory = function() {
+        //fires before checkbox changes
+        if( !engine.id("showHistory").checked ) {
             engine.history = true;
             engine.resetScaledHistory();
         } else {
             engine.history = false;
         }
-    }, false);
-    engine.id('bhTree').addEventListener('change', function(e) {
-        if(engine.id('bhTree').checked) {
+    }
+    engine.toggleBarnesHutt = function() {
+        //fires before checkbox changes
+        if(!engine.id('bhTree').checked) {
             engine.useBhTree = true;
         } else {
             engine.useBhTree = false;
         }
-    }, false);
+    }
     engine.id("start").addEventListener('click', function(e) {
         $('#start').toggleClass('stop');
         engine.pause(e);
@@ -122,64 +108,14 @@ engine.setupControlEvents = function() {
         engine.loadData(localStorage.planetList, true);
         return false;
     }, false);
-    engine.id("loadPreset").addEventListener('click', function(e) {
-        engine.loadPreset(e);
-        return false;
-    }, false);
-    engine.id("loadRandom").addEventListener('click', function(e) {
-        engine.loadRandomPlanets(500);
-        return false;
-    }, false);
-    /*engine.id("loadLagrange").addEventListener('click', function(e) {
-        engine.loadLagrange();
-        return false;
-    }, false);*/
-    /*engine.id("precalculate").addEventListener('click', function(e) {
-        engine.precalculateDialog();
-        return false;
-    }, false);*/
-    engine.id("algo1").addEventListener('change', function(e) {
-        engine.algorithm = e.target.value;
-        return false;
-    }, false);
-    engine.id("algo2").addEventListener('change', function(e) {
-        engine.algorithm =  e.target.value;
-        return false;
-    }, false);
-    engine.id("algo3").addEventListener('change', function(e) {
-        engine.algorithm =  e.target.value;
-        return false;
-    }, false);
       
     //Prevent double-tap-to-zoom on specific elements (like buttons)
     $('.no-zoom').bind('touchend', function(e) {
         e.preventDefault();
     });
-      
-    //Drawer controls
-    engine.id("main-menu").addEventListener('click', function(e) {
-        $('#main-controls').toggleClass('show');
-        $('#main-menu').toggleClass('show');
-    }, false);
-    engine.id("preset-menu").addEventListener('click', function(e) {
-        $('#preset-controls').toggleClass('show');
-        $('#preset-menu').toggleClass('show');
-    }, false);
-    engine.id("lstorage-menu").addEventListener('click', function(e) {
-        $('#lstorage-controls').toggleClass('show');
-        $('#lstorage-menu').toggleClass('show');
-    }, false);
-    engine.id("fstorage-menu").addEventListener('click', function(e) {
-        $('#fstorage-controls').toggleClass('show');
-        $('#fstorage-menu').toggleClass('show');
-    }, false);
-    engine.id("engine-menu").addEventListener('click', function(e) {
-        $('#engine-controls').toggleClass('show');
-        $('#engine-menu').toggleClass('show');
-    }, false);
     
     engine.id("pullout_menu").addEventListener('click', function(e) {
-        $('#inputpanels').toggleClass('show');
+        $('#accordion').toggleClass('show');
     }, false);
 }
 
@@ -231,8 +167,8 @@ engine.setupFancyControls = function() {
     engine.createPrecalculateForm();
 }
 
-engine.loadPreset = function(e) {
-    engine.loadObject(engine.orbit_data.presets[parseInt(engine.id('presetSelect').value)].planetArray, false);
+engine.loadPreset = function(i) {
+    engine.loadObject(engine.orbit_data.presets[parseInt(i)].planetArray, false);
 }
 
 engine.fireEvent = function(element, event) {
