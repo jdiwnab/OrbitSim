@@ -1,7 +1,7 @@
 #accordion {
     display:none;
     float: left;
-    width: 85%;
+    width: 80%;
 }
 #accordion.show {
     display: block;
@@ -29,7 +29,7 @@
     position: absolute;
     top: 12px;
     left: 12px;
-    width: 45%;
+    /*width: 45%*/;
     max-width: 410px;
 }
 

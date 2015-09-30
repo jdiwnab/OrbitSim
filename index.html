@@ -74,8 +74,8 @@
                         <div class="panel-body">
                             <form class="form-horizontal" role="form">
                                 <div class="form-group">
-                                    <label class="control-label col-sm-3">Timestep:</label>
-                                    <div class="col-sm-4">
+                                    <label class="control-label col-sm-3 col-xs-12">Timestep:</label>
+                                    <div class="col-sm-4 col-xs-7">
                                         <div class="btn-group" role="group" aria-labelledby="timestepLabel">
                                             <button type="button" class="no-zoom btn btn-default" id="stepslow" data-toggle="tooltip" title="Slower"><span class="glyphicon glyphicon-step-backward" aria-hidden="true"></span></button>
                                             <button type="button" class="no-zoom btn btn-default" id="stepfast" data-toggle="tooltip" title="Faster"><span class="glyphicon glyphicon-step-forward" aria-hidden="true"></span></button>
@@ -86,8 +86,8 @@
                                     </div>
                                 </div>
                                 <div class="form-group">
-                                    <label class="control-label col-sm-3">Framestep:</label>
-                                    <div class="col-sm-4">
+                                    <label class="control-label col-sm-3 col-xs-12">Framestep:</label>
+                                    <div class="col-sm-4 col-xs-7">
                                         <div class="btn-group" role="group">
                                             <button type="button" class="no-zoom btn btn-default" id="slowfwd" data-toggle="tooltip" title="Slower"><span class="glyphicon glyphicon-backward" aria-hidden="true"></span></button>                        
                                             <button type="button" class="no-zoom btn btn-default" id="fastfwd" data-toggle="tooltip" title="Faster"><span class="glyphicon glyphicon-forward" aria-hidden="true"></span></button>
@@ -236,7 +236,8 @@
                 </div>
             </div>
             <div id="pullout_menu">
-                <img src="images/ic_menu_white_48dp.png"/>
+                <!--<img src="images/ic_menu_white_48dp.png"/>-->
+                <span class="glyphicon glyphicon-menu-hamburger"></span>
             </div>
         </div>
 
@@ -250,75 +251,75 @@
                     <div class="modal-body">
                         <form class="form-horizontal" role="form">
                             <div class="form-group">
-                                <label for="name" class="control-label col-sm-2" for="new_name">Name:</label>
-                                <div class="col-sm-4">
+                                <label for="name" class="control-label col-sm-2 col-xs-12" for="new_name">Name:</label>
+                                <div class="col-sm-4 col-xs-12">
                                     <input id="new_name" type="text" name="name" placeholder="Name" class="form-control">
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="hidden_pos">Position:</label>
-                                <div class="col-sm-6">
+                                <label class="control-label col-sm-2 col-xs-12" for="hidden_pos">Position:</label>
+                                <div class="col-sm-6 col-xs-10 col-xs-offset-1 col-sm-offset-0">
                                     <div class="noUi-extended slider_with_pips" id="new_pos"></div>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-4 col-xs-12">
                                     <input class="form-control" type="number" name="vel" id="hidden_pos" step="any"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="pos_angle">Angle:</label>
-                                <div class="col-sm-3">
+                                <label class="control-label col-sm-2 col-xs-12" for="pos_angle">Angle:</label>
+                                <div class="col-sm-3 col-xs-8">
                                     <input class="form-control" type="number" id="pos_angle" name="pos_angle" value="0" step="any"/>
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-2 col-xs-2">
                                     <div id="direction" class="arrowcircle">
                                         <div id="pos_arrow" class="arrowpointer"></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="hidden_mass">Mass:</label>
-                                <div class="col-sm-6">
+                                <label class="control-label col-sm-2 col-xs-12" for="hidden_mass">Mass:</label>
+                                <div class="col-sm-6 col-xs-10 col-xs-offset-1 col-sm-offset-0">
                                     <div class="noUi-extended slider_with_pips" id="new_mass"></div>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-4 col-xs-12">
                                     <input class="form-control" type="number" name="mass" id="hidden_mass" step="any"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="hidden_vel">Velocity:</label>
-                                <div class="col-sm-6">
+                                <label class="control-label col-sm-2 col-xs-12" for="hidden_vel">Velocity:</label>
+                                <div class="col-sm-6 col-xs-10 col-xs-offset-1 col-sm-offset-0">
                                     <div class="noUi-extended slider_with_pips" id="new_vel"></div>
                                 </div>
-                                <div class="col-sm-4">
+                                <div class="col-sm-4 col-xs-12">
                                     <input class="form-control" type="number" name="vel" id="hidden_vel" step="any"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="vel_angle">Angle:</label>
-                                <div class="col-sm-3">
+                                <label class="control-label col-sm-2 col-xs-12" for="vel_angle">Angle:</label>
+                                <div class="col-sm-3 col-xs-8">
                                     <input class="form-control" type="number" id="vel_angle" name="vel_angle" value="0" step="any"/>
                                 </div>
-                                <div class="col-sm-2">
+                                <div class="col-sm-2 col-xs-2">
                                     <div id="direction" class="arrowcircle">
                                         <div id="vel_arrow" class="arrowpointer"></div>
                                     </div>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="new_color">Color:</label>
-                                <div class="col-sm-4">
+                                <label class="control-label col-sm-2 col-xs-12" for="new_color">Color:</label>
+                                <div class="col-sm-4 col-xs-12">
                                     <select class="form-control" id="new_color" name="color" placeholder="Color"></select>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="new_rad">Radius:</label>
-                                <div class="col-sm-4">
+                                <label class="control-label col-sm-2 col-xs-12" for="new_rad">Radius:</label>
+                                <div class="col-sm-4 col-xs-12">
                                     <input class="form-control" type="number" id="new_rad" name="new_rad" value="6000" step="any"/>
                                 </div>
                             </div>
                             <div class="form-group">
-                                <label class="control-label col-sm-2" for="new_fixed">Fixed:</label>
-                                <div class="col-sm-1">
+                                <label class="control-label col-sm-2 col-xs-2" for="new_fixed">Fixed:</label>
+                                <div class="col-sm-1 col-xs-2">
                                     <input class="form-control" type="checkbox" id="new_fixed" name="new_fixed" value="false" checked="false"/>
                                 </div>
                             </div>
