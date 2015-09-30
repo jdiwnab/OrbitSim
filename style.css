@@ -29,8 +29,9 @@
     position: absolute;
     top: 12px;
     left: 12px;
-    /*width: 45%*/;
+    width: 45%;
     max-width: 410px;
+    min-width: 240px;
 }
 
 #pullout_menu {
