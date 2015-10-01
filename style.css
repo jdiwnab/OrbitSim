@@ -41,6 +41,7 @@
     margin: 0px;
     padding: 5px;
     float: left;
+    font-size: 2em;
 }
 #start .stop {
     display:none;
