@@ -129,6 +129,8 @@ engine.updateObjects = function(array, dt) {
             engine.rkIterate(array[i],dt,array);
         } else if(engine.algorithm === "verlet") {
             engine.verletIntegrate(array[i], dt, array);
+        } else if(engine.algorithm === "ruth2") {
+            engine.ruth2Integrate(array[i], dt, array);
         } else {
             engine.eulerIntegrate(array[i], dt, array);
         }
