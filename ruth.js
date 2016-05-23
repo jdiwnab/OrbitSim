@@ -16,7 +16,7 @@ engine.ruthIntegrate = function(pa, dt, array, c, d) {
   for(var i = 0; i< c.length; i++) {
     var accel = engine.calcAccel(pa, pos, array);
     vel.addTo(accel.multBy(c[i] * dt));
-    pos.addTo(vel.multBy(d[i] * dt));
+    pos.addTo(vel.mult(d[i] * dt));
   }
   pa.deltaV = vel;
   pa.deltaX = pos;
