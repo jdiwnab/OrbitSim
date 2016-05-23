@@ -43,6 +43,7 @@
         <script src="rungekutta.js" type="text/javascript"></script>
         <script src="euler.js" type="text/javascript"></script>
         <script src="verlet.js" type="text/javascript"></script>
+        <script src="ruth.js" type="text/javascript"></script>
         <script src="bhTree.js" type="text/javascript"></script>
 
 
@@ -170,13 +171,16 @@
                                     <div class="col-sm-12">
                                         <div class="btn-group" data-toggle="buttons">
                                             <label class="btn btn-default active" onClick="engine.algorithm='rk'">
-                                                <input type="radio" name="algo" id="algo1" autocomplete="off" checked>Runge-Kutta
+                                                <input type="radio" name="algo" id="algo1" autocomplete="off" checked>Runge-Kutta</input>
                                             </label>
                                             <label class="btn btn-default" onClick="engine.algorithm='euler'">
-                                                <input type="radio" id="algo2" name="algo" autocomplete="off">Euler
+                                                <input type="radio" id="algo2" name="algo" autocomplete="off">Euler</input>
                                             </label>
                                             <label class="btn btn-default" onClick="engine.algorithm='verlet'">
-                                                <input type="radio" id="algo3" name="algo" autocomplete="off">Verlet
+                                                <input type="radio" id="algo3" name="algo" autocomplete="off">Verlet</input>
+                                            </label>
+                                            <label class="btn btn-default" onClick="engine.algorithm='ruth2'">
+                                                <input type="radio" id="algo4" name="algo" autocomplete="off">Ruth2</input>
                                             </label>
                                         </div>
                                     </div>
