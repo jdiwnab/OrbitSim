@@ -13,7 +13,7 @@ engine.ruth3Integrate = function(pa, dt, array) {
 engine.ruthIntegrate = function(pa, dt, array, c, d) {
   var pos = new Cart3(pa.pos);
   var vel = new Cart3(pa.vel);
-  for(var i = 0; i< c.length(), i++) {
+  for(var i = 0; i< c.length(); i++) {
     var accel = engine.calcAccel(pa, pos, array);
     vel.addTo(accel.multBy(c[i] * dt));
     pos.addTo(vel.multBy(d[i] * dt));
