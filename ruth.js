@@ -18,6 +18,6 @@ engine.ruthIntegrate = function(pa, dt, array, c, d) {
     vel.addTo(accel.multBy(c[i] * dt));
     pos.addTo(vel.mult(d[i] * dt));
   }
-  pa.deltaV = vel;
-  pa.deltaX = pos;
+  pa.deltaV = vel.subFrom(pa.vel);
+  pa.deltaX = pos.subFrom(pa.pos);
 }
