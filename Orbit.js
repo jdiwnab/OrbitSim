@@ -131,6 +131,10 @@ engine.updateObjects = function(array, dt) {
             engine.verletIntegrate(array[i], dt, array);
         } else if(engine.algorithm === "ruth2") {
             engine.ruth2Integrate(array[i], dt, array);
+        } else if(engine.algorithm === "ruth3") {
+            engine.ruth3Integrate(array[i], dt, array);
+        } else if(engine.algorithm === "ruth4") {
+            engine.ruth4Integrate(array[i], dt, array);
         } else {
             engine.eulerIntegrate(array[i], dt, array);
         }
