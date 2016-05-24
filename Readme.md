@@ -83,7 +83,7 @@ The trick is the acculated error from large enough time steps. There are three m
   * Third order: ![\begin{pmatrix}\frac{7}{24} & \frac{3}{4} & -\frac{1}{24}\\ \\ \frac{2}{3} & -\frac{2}{3} & 1 \end{pmatrix}](http://mathurl.com/jhdbkb8.png)
   * Fourth order: ![\frac{1}{2-\sqrt[3]{2}} \begin{pmatrix}\frac{1}{2} & \frac{1 - \sqrt[3]{2}}{2} & \frac{1 - \sqrt[3]{2}}{2} & \frac{1}{2}\\ \\0 & 1 & -\sqrt[3]{2} & 1\end{pmatrix}](http://mathurl.com/zejsvto.png)
 
-This simulator defaults to Runge-Kutta, as it is reasonably fast, and very accurate. It also implements Euler and Verlet as options as they are faster, but these tend to be unstable for tight orbits.
+This simulator defaults to Verlet, as it is fast, and reasonably accurate. While RK and Ruth should be more accurate, they seem to accumlate percision error much faster.
 
 ### Orbital velocity
 When adding a new object, the panel is initialized with a resonable first guess of a circular orbit. This is because the velocity of a circular orbit is approximatly:
