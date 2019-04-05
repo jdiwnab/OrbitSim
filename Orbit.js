@@ -77,7 +77,7 @@ engine.reset = function() {
 
 engine.resize = function() {
     engine.ctx.canvas.width = document.body.clientWidth;// -16;
-    engine.ctx.canvas.height= document.body.scrollHeight -6;
+    engine.ctx.canvas.height= window.innerHeight -6;
     engine.xsize = engine.ctx.canvas.width;
     engine.ysize = engine.ctx.canvas.height;
     engine.yorig = Math.floor(engine.ysize /2 );
